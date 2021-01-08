@@ -1,0 +1,32 @@
+[
+    {
+        "name": "TL0.DE",
+        "companyName": "Tesla, Inc.",
+        "entryPrice": 594.0,
+        "currency": "EUR"
+    },
+    {
+        "name": "APC.DE",
+        "companyName": "Apple Inc.",
+        "entryPrice": 107.88,
+        "currency": "EUR"
+    },
+    {
+        "name": "O",
+        "companyName": "Realty Income Corporation",
+        "entryPrice": 61.72,
+        "currency": "USD"
+    },
+    {
+        "name": "ZAP.OL",
+        "companyName": "Zaptec AS",
+        "entryPrice": 28.53,
+        "currency": "NOK"
+    },
+    {
+        "name": "3CP.F",
+        "companyName": "Xiaomi Corporation",
+        "entryPrice": 2.83,
+        "currency": "EUR"
+    }
+]
