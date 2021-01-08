@@ -49,6 +49,7 @@
 </template>
 
 <script>
+
 import axios from "axios";
 import { createWatchItem } from "../libs/stockUtils.js";
 import StockChart from "./StockChart.vue";
@@ -75,7 +76,7 @@ export default {
   methods: {
     fetchStockData (symbol) {
       let baseUrl = "https://query1.finance.yahoo.com/v8/finance/chart/";
-      let path = "?formatted=true&lang=de-DE&region=DE&includeAdjustedClose=true&interval=1d&range=5y&corsDomain=de.finance.yahoo.com";
+      let path = "?formatted=true&lang=de-DE&region=DE&includeAdjustedClose=true&interval=1d&range=max&corsDomain=de.finance.yahoo.com";
       let data = {
         url: baseUrl + symbol + path
       };

@@ -11,7 +11,8 @@
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "trading-vue-js": "^1.0.0",
-    "vue": "^2.6.11",
+    "tvjs-overlays": "^0.3.0",
+    "vue": "^2.6.12",
     "vue-material": "^1.0.0-beta-15"
   },
   "devDependencies": {

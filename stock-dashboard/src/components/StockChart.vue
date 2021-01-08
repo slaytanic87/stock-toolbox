@@ -2,12 +2,12 @@
   <div>
     <md-dialog :md-active.sync="showDialog">
       <md-dialog-content>
-            <trading-vue :title-txt="stockName" 
-                         :toolbar="true" 
-                         :data="chartViewData" 
-                         :width="this.width - 100" 
-                         :height="this.height - 120"
-                         :overlays="overlays"></trading-vue>
+          <trading-vue :title-txt="stockName" 
+                       :toolbar="true" 
+                       :data="chartViewData" 
+                       :width="this.width - 100" 
+                       :height="this.height - 120"
+                       :overlays="overlays"></trading-vue>
       </md-dialog-content>
       <md-dialog-actions>
         <md-button class="md-primary" @click="closeModal()">Close</md-button>
@@ -17,8 +17,8 @@
 </template>
 
 <script>
-import {TradingVue} from 'trading-vue-js'
-import CustomOverlay from "./CustomOverlay.vue";
+import {TradingVue} from 'trading-vue-js';
+import Overlays from 'tvjs-overlays';
 export default {
   name: 'StockChart',
   created () {
@@ -38,6 +38,7 @@ export default {
       let low = this.chartData.chart.low[i];
       let volume = this.chartData.chart.low[i];
       let chartVector = [timestamp, open, high, low, close, volume];
+      
       ohlcvArray.push(chartVector);
     }
     this.chartViewData.chart.data = ohlcvArray;
@@ -57,9 +58,9 @@ export default {
                 data: []
               }
             },
-            overlays: [CustomOverlay],
             width: window.innerWidth,
-            height: window.innerHeight
+            height: window.innerHeight,
+            overlays: Object.values(Overlays)
         }
   },
   methods: {
@@ -90,7 +91,7 @@ export default {
 }
 </script>
 
-<style >
+<style>
 .md-dialog .md-dialog-container {
     max-width: 100%;
     max-height: 100%;

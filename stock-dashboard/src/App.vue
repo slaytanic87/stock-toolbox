@@ -1,6 +1,10 @@
 <template>
   <div id="app">
-      <Watchlist/>
+    <md-card>
+      <md-card-content>
+        <Watchlist/>
+      </md-card-content>
+    </md-card>
   </div>
 </template>
 
