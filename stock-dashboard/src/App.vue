@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="dark:bg-black dark:bg-gray-900 dark:text-purple-50">
+  <div id="app">
       <Watchlist/>
   </div>
 </template>

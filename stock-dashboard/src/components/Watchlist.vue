@@ -19,35 +19,35 @@
               <span class="text-gray-300">Currency</span>
             </th>
             <th class="px-16 py-2">
-              <span class="text-gray-300">Show</span>
+              <span class="text-gray-300"></span>
             </th>
           </tr>
       </thead>
       <tbody>
-        <tr v-for="stock in searched" :key="stock.name" class="bg-white border-4 border-gray-200">
+        <tr v-for="stock in searched" :key="stock.name" class="bg-gray-750 border-4 lg:hover:bg-gray-600 border-gray-700">
           <td class="px-16 py-2">
             <span>
               {{stock.name}}
             </span>
           </td>
           <td class="px-16 py-2">
-            <span class="rounded bg-blue-400 py-1 px-3 text-xs font-bold">
+            <span class="rounded bg-blue-500 py-1 px-3 text-xs font-bold">
               {{stock.currentPrice}}
             </span>
           </td>
           <td class="px-16 py-2">
-            <span class="rounded bg-yellow-400 py-1 px-3 text-xs font-bold">
+            <span class="rounded bg-yellow-600 py-1 px-3 text-xs font-bold">
               {{stock.entryPrice}}
             </span>
           </td>
           <td class="px-16 py-2">
-            <span v-if="stock.status === '-'" class="rounded bg-red-400 py-1 px-3 text-xs font-bold">
+            <span v-if="stock.status === '-'" class="md-course-red py-1 px-3 text-xs font-bold">
               {{stock.win}}
             </span>
-            <span v-if="stock.status === '+'" class="rounded bg-green-400 py-1 px-3 text-xs font-bold">
+            <span v-if="stock.status === '+'" class="md-course-green py-1 px-3 text-xs font-bold">
               {{stock.win}}
             </span>
-            <span v-if="stock.status === '='" class="rounded py-1 px-3 text-xs font-bold">
+            <span v-if="stock.status === '='" class="py-1 px-3 text-xs font-bold">
               {{stock.win}}
             </span>
           </td>
