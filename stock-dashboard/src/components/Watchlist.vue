@@ -1,45 +1,71 @@
 <template>
   <div>
-   <md-table v-model="searched" md-sort="name" md-sort-order="asc" md-card>
-      <md-table-toolbar>
-        <div class="md-toolbar-section-start">
-          <h1 class="md-title">Watchlist</h1>
-        </div>
-
-        <md-field md-clearable class="md-toolbar-section-end">
-          <md-input placeholder="Search by name..." v-model="search" @input="searchOnTable" />
-        </md-field>
-      </md-table-toolbar>
-
-      <md-table-empty-state md-label="No stocks found" :md-description="`No stock found for this '${search}' query. Try a different search term or add a new stock.`">
-        <md-button class="md-primary md-raised" @click="addStock()">Add Stock</md-button>
-      </md-table-empty-state>
-
-      <md-table-row slot="md-table-row" slot-scope="{ item }" style="width:100%;">
-          <md-table-cell md-label="Name" md-sort-by="name">
-              {{item.name}}
-          </md-table-cell>
-          <md-table-cell md-label="Course" md-sort-by="currentPrice">
-              <md-chip class="md-primary">
-                {{item.currentPrice}}
-              </md-chip>
-          </md-table-cell>
-          <md-table-cell md-label="Entry" md-sort-by="entryPrice">
-            <md-chip>
-              {{item.entryPrice}}
-            </md-chip>
-          </md-table-cell>
-          <md-table-cell md-label="Win" md-sort-by="win">
-            <div class="md-course-red" v-if="item.status === '-'">{{item.win}}</div>
-            <div class="md-course-green" v-if="item.status === '+'">{{item.win}}</div>
-            <div v-if="item.status === '='">{{item.win}}</div>
-          </md-table-cell>
-          <md-table-cell md-label="Currency" md-sort-by="currency">{{item.currency}}</md-table-cell>
-          <md-table-cell>
-              <md-button class="md-primary" @click="showChart(item.name, item.chartData)">Show</md-button>
-          </md-table-cell>
-      </md-table-row>
-   </md-table>
+    <table class="min-w-full table-auto">
+      <thead class="justify-between">
+         <tr class="bg-gray-800">
+            <th class="px-16 py-2">
+              <span class="text-gray-300">Name</span>
+            </th>
+            <th class="px-16 py-2">
+              <span class="text-gray-300">Course</span>
+            </th>
+            <th class="px-16 py-2">
+              <span class="text-gray-300">Entry</span>
+            </th>
+            <th class="px-16 py-2">
+              <span class="text-gray-300">Win</span>
+            </th>
+            <th class="px-16 py-2">
+              <span class="text-gray-300">Currency</span>
+            </th>
+            <th class="px-16 py-2">
+              <span class="text-gray-300">Show</span>
+            </th>
+          </tr>
+      </thead>
+      <tbody>
+        <tr v-for="stock in searched" :key="stock.name" class="bg-white border-4 border-gray-200">
+          <td class="px-16 py-2">
+            <span>
+              {{stock.name}}
+            </span>
+          </td>
+          <td class="px-16 py-2">
+            <span class="rounded bg-blue-400 py-1 px-3 text-xs font-bold">
+              {{stock.currentPrice}}
+            </span>
+          </td>
+          <td class="px-16 py-2">
+            <span class="rounded bg-yellow-400 py-1 px-3 text-xs font-bold">
+              {{stock.entryPrice}}
+            </span>
+          </td>
+          <td class="px-16 py-2">
+            <span v-if="stock.status === '-'" class="rounded bg-red-400 py-1 px-3 text-xs font-bold">
+              {{stock.win}}
+            </span>
+            <span v-if="stock.status === '+'" class="rounded bg-green-400 py-1 px-3 text-xs font-bold">
+              {{stock.win}}
+            </span>
+            <span v-if="stock.status === '='" class="rounded py-1 px-3 text-xs font-bold">
+              {{stock.win}}
+            </span>
+          </td>
+          <td class="px-16 py-2">
+            <span>
+              {{stock.currency}}
+            </span>
+          </td>
+          <td class="px-16 py-2">
+              <button 
+                @click="showChart(stock.name, stock.chartData)"
+                class="bg-indigo-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black ">
+                Chart
+              </button>
+          </td>
+        </tr>
+      </tbody>
+   </table>
    <stock-chart v-bind:showDialog="showChartModal" 
                 v-bind:stockName="selectedName"
                 v-bind:chartData="selectedChart"

@@ -1,18 +1,16 @@
 <template>
   <div>
-    <md-dialog :md-active.sync="showDialog">
-      <md-dialog-content>
+    <modal v-show="showDialog">
           <trading-vue :title-txt="stockName" 
                        :toolbar="true" 
                        :data="chartViewData" 
                        :width="this.width - 100" 
                        :height="this.height - 120"
                        :overlays="overlays"></trading-vue>
-      </md-dialog-content>
-      <md-dialog-actions>
-        <md-button class="md-primary" @click="closeModal()">Close</md-button>
-      </md-dialog-actions>
-    </md-dialog>
+        <button @click="closeModal()" class="bg-indigo-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black ">
+          Close
+        </button>
+    </modal>
   </div>
 </template>
 
