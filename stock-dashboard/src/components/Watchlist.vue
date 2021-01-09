@@ -59,7 +59,7 @@
           <td class="px-16 py-2">
               <button 
                 @click="showChart(stock.name, stock.chartData)"
-                class="bg-indigo-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black ">
+                class="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none">
                 Chart
               </button>
           </td>
