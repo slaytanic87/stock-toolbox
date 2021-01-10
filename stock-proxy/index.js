@@ -1,11 +1,11 @@
 var axios = require("axios");
 var express = require("express");
 var app = express();
-var watchlist = require('./watchlist.json')
+var watchlist = require('./watchlist.json');
 
 
-app.use(express.json())
-app.use(express.urlencoded({extended: true}))
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 app.listen(9090);
 
 app.use((req, res, next) => {

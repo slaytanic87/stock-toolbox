@@ -1,6 +1,12 @@
 <template>
   <div>
-    <table class="min-w-full table-auto">
+      <div class="w-full flex justify-end px-2 mt-2">
+        <div class="w-full sm:w-64 inline-block relative ">
+              <input v-model="search" @input="searchOnTable" placeholder="Search" 
+                     class="leading-snug border border-gray-300 block w-full appearance-none bg-gray-100 text-sm text-gray-600 py-1 px-4 pl-8 rounded-lg" />
+        </div>
+      </div>
+    <table class="w-full table-auto">
       <thead class="justify-between">
          <tr class="bg-gray-800">
             <th class="px-16 py-2">
@@ -25,22 +31,22 @@
       </thead>
       <tbody>
         <tr v-for="stock in searched" :key="stock.name" class="bg-gray-750 border-4 lg:hover:bg-gray-600 border-gray-700">
-          <td class="px-16 py-2">
+          <td class="px-16 py-2 text-center">
             <span>
               {{stock.name}}
             </span>
           </td>
-          <td class="px-16 py-2">
-            <span class="rounded bg-blue-500 py-1 px-3 text-xs font-bold">
+          <td class="px-16 py-2 text-center">
+            <span class="rounded-full bg-blue-500 py-1 px-3 text-xs font-bold">
               {{stock.currentPrice}}
             </span>
           </td>
-          <td class="px-16 py-2">
-            <span class="rounded bg-yellow-600 py-1 px-3 text-xs font-bold">
+          <td class="px-16 py-2 text-center">
+            <span class="rounded-full bg-yellow-600 py-1 px-3 text-xs font-bold">
               {{stock.entryPrice}}
             </span>
           </td>
-          <td class="px-16 py-2">
+          <td class="px-16 py-2 text-center">
             <span v-if="stock.status === '-'" class="md-course-red py-1 px-3 text-xs font-bold">
               {{stock.win}}
             </span>
@@ -51,7 +57,7 @@
               {{stock.win}}
             </span>
           </td>
-          <td class="px-16 py-2">
+          <td class="px-16 py-2 text-center">
             <span>
               {{stock.currency}}
             </span>
