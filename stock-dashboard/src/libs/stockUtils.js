@@ -9,6 +9,7 @@ export function createWatchItem(observedStock, stockData) {
     let currency = stockData.chart.result[0].meta.currency;
     let timestamp = stockData.chart.result[0].timestamp.map(time => time * 1000);
     let chartData = stockData.chart.result[0].indicators.quote[0];
+    let adjclose =  stockData.chart.result[0].indicators.adjclose[0]
     let entryPrice = observedStock.entryPrice;
     let name = observedStock.name;
     let companyName = observedStock.companyName;
@@ -21,7 +22,7 @@ export function createWatchItem(observedStock, stockData) {
         status = "-";
     }
 
-    let winPercentage = diffPrice * 100 / regularMarketPrice;
+    let winPercentage = diffPrice * 100 / entryPrice;
     let win = roundTwoDigit(diffPrice) + " ("+ roundTwoDigit(winPercentage) + "%)";
 
     return {
@@ -33,7 +34,8 @@ export function createWatchItem(observedStock, stockData) {
         status: status,
         chartData: {
             timestamp: timestamp,
-            chart: chartData
+            chart: chartData,
+            chartAdjclose: adjclose
         }
     }
 }

@@ -26,6 +26,7 @@
 <script>
 import {TradingVue} from 'trading-vue-js';
 import Overlays from 'tvjs-overlays';
+import PlotOverlay from "./PlotOverlay.vue";
 export default {
   name: 'StockChart',
   created () {
@@ -35,6 +36,7 @@ export default {
   },
   updated () {
     let ohlcvArray = [];
+    let adjArray = []
     let timestamps = this.chartData.timestamp;
 
     for (let i = 0; i < timestamps.length; i++) {
@@ -45,10 +47,21 @@ export default {
       let low = this.chartData.chart.low[i];
       let volume = this.chartData.chart.low[i];
       let chartVector = [timestamp, open, high, low, close, volume];
-      
       ohlcvArray.push(chartVector);
+
+      let adjData = this.chartData.chartAdjclose.adjclose[i];
+      let adjVector = [timestamp, adjData];
+      adjArray.push(adjVector);
     }
     this.chartViewData.chart.data = ohlcvArray;
+
+    let onchart = {
+                name: "Adjclose",
+                type: "PlotOverlay",
+                data: adjArray
+              }
+
+    this.chartViewData.onchart = [onchart];
   },
   mounted() {
         window.addEventListener('resize', this.onResize)
@@ -63,11 +76,12 @@ export default {
               chart: {
                 type: "Candles",
                 data: []
-              }
+              },
+              onchart: []
             },
             width: window.innerWidth,
             height: window.innerHeight,
-            overlays: Object.values(Overlays)
+            overlays: [PlotOverlay].concat(Overlays)
         }
   },
   methods: {
