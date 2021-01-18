@@ -37,7 +37,7 @@ export function createWatchItem(observedStock, stockData) {
     let chartData = mappedChartData.chartData;
     let adjclose =  mappedChartData.adjData;
     let entryPrice = observedStock.entryPrice;
-    let name = observedStock.name;
+    let name = stockData.chart.result[0].meta.symbol;
     let companyName = observedStock.companyName;
 
     let diffPrice = regularMarketPrice - entryPrice;
@@ -63,10 +63,25 @@ export function createWatchItem(observedStock, stockData) {
         status: status,
         rsi: calcRelativeStrengthIndex(stockData, 14),
         chartData: {
+            sym: name,
             chart: chartData,
             chartAdjclose: adjclose
         },
         observedStock: observedStock
+    }
+}
+
+export function mapChartDataFromResponse(stockDataResponse) {
+    let symbol = stockDataResponse.chart.result[0].meta.symbol;
+    let timestamp = stockDataResponse.chart.result[0].timestamp.map(time => time * 1000);
+    let mappedChartData = createChartData(timestamp, 
+                                          stockDataResponse.chart.result[0].indicators.quote[0], 
+                                          stockDataResponse.chart.result[0].indicators.adjclose[0]);
+
+    return  {
+        sym: symbol,
+        chart: mappedChartData.chartData,
+        chartAdjclose: mappedChartData.adjData
     }
 }
 

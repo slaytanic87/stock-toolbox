@@ -90,7 +90,7 @@
 
 <script>
 import axios from "axios";
-import { createWatchItem, fetchStockData } from "../libs/yahooStockUtils.js";
+import { createWatchItem, fetchStockData, mapChartDataFromResponse } from "../libs/yahooStockUtils.js";
 import StockChart from "./StockChart.vue";
 import { DataCube } from "trading-vue-js";
 export default {
@@ -115,11 +115,11 @@ export default {
   },
   methods: {
     fetchWatchList() {
-      this.clearData();
       axios.get("http://localhost:9090/watchlist").then((res) => {
+        this.clearData();
         let watchList = res.data;
         watchList.forEach((item) => {
-          fetchStockData(item.name, "max").then((response) => {
+          fetchStockData(item.name, "1mo").then((response) => {
             let watchItem = createWatchItem(item, response.data);
             this.stocks.push(watchItem);
             this.searched.push(watchItem);
@@ -159,12 +159,15 @@ export default {
       console.log("Not implemented yet.");
     },
     showChart(chartName, chartData) {
-            this.selectedChart = this.createDataCube(chartData);
-            this.selectedName = chartName;
-            this.showChartModal = true;
+      var self = this;
+      fetchStockData(chartData.sym, "max").then((response) => {
+          let watchItem = mapChartDataFromResponse(response.data);
+          self.selectedChart = self.createDataCube(watchItem);
+          self.selectedName = chartName;
+          self.showChartModal = true;
+      });
     },
     createDataCube(chartData) {
-      console.log(chartData)
       let chartViewData = {
         chart: {
           type: "Candles",
@@ -180,7 +183,7 @@ export default {
             backColor: "#9b9ba316",
             bandColor: "#666",
           }
-         }],
+         }]
       };
       return new DataCube(chartViewData);
     },
