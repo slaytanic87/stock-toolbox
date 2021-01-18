@@ -1,120 +1,97 @@
 <template>
   <div>
-    <div v-if="showDialog" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
-        <div class="relative w-auto my-6 mx-auto max-w-6xl">
-            <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-gray-600 text-purple-50 outline-none focus:outline-none">
-              <div class="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t">
-                   <h3 class="text-3xl font-semibold">Chart</h3>
-              </div>
-              <div class="relative p-6 flex-auto">
-                <trading-vue :title-txt="stockName" 
-                             :toolbar="true" 
-                             :data="chartViewData"
-                             :overlays="overlays"></trading-vue>
-              </div>
-              <div class="flex items-center justify-end p-6 border-t border-solid border-gray-300 rounded-b">
-                <button @click="closeModal()" class="bg-indigo-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black ">
-                  Close
-                </button>
-              </div>
-            </div>
+    <div
+      v-if="showDialog"
+      class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex"
+    >
+      <div class="relative w-auto my-6 mx-auto max-w-6xl">
+        <div
+          class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-gray-600 text-purple-50 outline-none focus:outline-none"
+        >
+          <div
+            class="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t"
+          >
+            <h3 class="text-3xl font-semibold">Chart</h3>
+          </div>
+          <div class="relative p-6 flex-auto">
+            <trading-vue
+              :title-txt="stockName"
+              :toolbar="true"
+              :data="chartData"
+              :overlays="overlays"
+            ></trading-vue>
+          </div>
+          <div
+            class="flex items-center justify-end p-6 border-t border-solid border-gray-300 rounded-b"
+          >
+            <button
+              @click="closeModal()"
+              class="bg-indigo-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black"
+            >
+              Close
+            </button>
+          </div>
         </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import {TradingVue} from 'trading-vue-js';
-import Overlays from 'tvjs-overlays';
+import { TradingVue } from "trading-vue-js";
+//import Overlays from "tvjs-overlays";
 import PlotOverlay from "./PlotOverlay.vue";
 export default {
-  name: 'StockChart',
-  created () {
+  name: "StockChart",
+  created() {},
+  components: {
+    "trading-vue": TradingVue,
   },
-  components: { 
-    "trading-vue": TradingVue 
-  },
-  updated () {
-    let ohlcvArray = [];
-    let adjArray = []
-    let timestamps = this.chartData.timestamp;
-
-    for (let i = 0; i < timestamps.length; i++) {
-      let timestamp = timestamps[i];
-      let close = this.chartData.chart.close[i];
-      let open = this.chartData.chart.open[i];
-      let high = this.chartData.chart.high[i];
-      let low = this.chartData.chart.low[i];
-      let volume = this.chartData.chart.low[i];
-      let chartVector = [timestamp, open, high, low, close, volume];
-      ohlcvArray.push(chartVector);
-
-      let adjData = this.chartData.chartAdjclose.adjclose[i];
-      let adjVector = [timestamp, adjData];
-      adjArray.push(adjVector);
-    }
-    this.chartViewData.chart.data = ohlcvArray;
-
-    let onchart = {
-                name: "Adjclose",
-                type: "PlotOverlay",
-                data: adjArray
-              }
-
-    this.chartViewData.onchart = [onchart];
-  },
+  updated() {},
   mounted() {
-        window.addEventListener('resize', this.onResize)
+    window.addEventListener("resize", this.onResize);
   },
   beforeDestroy() {
-        window.removeEventListener('resize', this.onResize)
+    window.removeEventListener("resize", this.onResize);
   },
-  data () {
-        return {
-            // [timestamp, open, high, low, close, volume]
-            chartViewData: { 
-              chart: {
-                type: "Candles",
-                data: []
-              },
-              onchart: []
-            },
-            width: window.innerWidth,
-            height: window.innerHeight,
-            overlays: [PlotOverlay].concat(Overlays)
-        }
+  data() {
+    return {
+      width: window.innerWidth,
+      height: window.innerHeight,
+      overlays: [PlotOverlay],
+    };
   },
   methods: {
     closeModal() {
       this.showDialog = false;
-      this.$emit('chartToDashMessage', this.showDialog)
+      this.$emit("chartToDashMessage", this.showDialog);
     },
     onResize() {
-            this.width = window.innerWidth
-            this.height = window.innerHeight
-    }
+      this.width = window.innerWidth;
+      this.height = window.innerHeight;
+    },
   },
   props: {
-    stockName: { 
+    stockName: {
       type: String,
       default: "N/A",
-      required: true
+      required: true,
     },
     chartData: {
       required: true,
-      default: {}
+      default: {},
     },
     showDialog: {
       type: Boolean,
-      default: false
-    }
-  }
-}
+      default: false,
+    },
+  },
+};
 </script>
 
 <style>
 .md-dialog .md-dialog-container {
-    max-width: 100%;
-    max-height: 100%;
- }
+  max-width: 100%;
+  max-height: 100%;
+}
 </style>
