@@ -8,12 +8,12 @@
           <div class="flex-shrink-0 flex items-center">
             <img
               class="block lg:hidden h-8 w-auto"
-              src="./assets/stocks-icon.png"
+              src="./assets/stocks-icon-blue.png"
               alt="Workflow"
             />
             <img
               class="hidden lg:block h-8 w-auto"
-              src="./assets/stocks-icon.png"
+              src="./assets/stocks-icon-blue.png"
               alt="Workflow"
             />
           </div>
@@ -43,12 +43,8 @@
             </div>
           </div>
         </div>
-        <div
-          class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
-        >
-          <button
-            class="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-          >
+        <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+          <button class="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
             <span class="sr-only">View notifications</span>
             <!-- Heroicon name: bell -->
             <svg
@@ -57,8 +53,7 @@
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
-              aria-hidden="true"
-            >
+              aria-hidden="true">
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -70,29 +65,57 @@
         </div>
       </div>
     </div>
-    <div class="overflow-y-auto">
-      <div class="p-8 bg-gray-900 flex justify-center w-screen h-screen">
-        <div class="px-5 py-4 bg-gray-800 shadow rounded-xl">
+    <div class="container w-full mx-auto">
+    <div class="bg-gray-900">
           <div class="flex mb-4 justify-center">
             <div class="ml-2 mt-0.5">
               <span class="block font-medium text-base leading-snug text-white text-xl">Watchlist</span>
             </div>
           </div>
-          <watchlist />
+          <watchlist @chartToCard="setChartData" />
+    </div>
+    <hr class="border-b-2 border-gray-600 my-8 mx-4">
+    <div class="flex flex-row flex-wrap flex-grow mt-2">
+        <div class="w-full md:w-1/2 p-3">
+            <!--Graph Card-->
+            <div class="bg-gray-900 border border-gray-800 rounded shadow">
+                <div class="border-b border-gray-800 p-3">
+                    <h5 class="font-bold uppercase text-gray-600">Win Pie Chart</h5>
+                </div>
+                <div class="p-5">
+                    <windiagram v-bind:propData="chartData"></windiagram>
+                </div>
+            </div>
+            <!--/Graph Card-->
         </div>
-      </div>
+    </div>
     </div>
   </div>
 </template>
 
 <script>
 import Watchlist from "./components/Watchlist.vue";
+import WinDiagramCard from "./components/WinDiagramCard.vue";
 export default {
   name: "App",
   components: {
-    "watchlist": Watchlist
+    "watchlist": Watchlist,
+    "windiagram": WinDiagramCard
   },
-  created() {},
+  data() {
+    return {
+      chartData: {}
+    }
+  },
+  created() {
+  },
+  mounted() {
+  },
+  methods: {
+    setChartData(data) {
+      this.chartData = data;
+    }
+  }
 };
 </script>
 

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="w-full flex justify-end px-2 mt-2">
-      <div class="w-full sm:w-64 inline-block relative">
+      <div class="w-full sm:w-64 inline-block relative pb-2.5">
         <input v-model="search" @input="searchOnTable" placeholder="Search"
           class="leading-snug border border-gray-300 block w-full appearance-none bg-gray-100 text-sm text-gray-600 py-1 px-4 pl-8 rounded-lg"/>
       </div>
@@ -91,6 +91,7 @@
 <script>
 import axios from "axios";
 import { createWatchItem, fetchStockData, mapChartDataFromResponse } from "../libs/yahooStockUtils.js";
+import { createWinPieDiagram } from "../libs/utils.js";
 import StockChart from "./StockChart.vue";
 import { DataCube } from "trading-vue-js";
 export default {
@@ -112,6 +113,11 @@ export default {
       selectedName: "",
       showChartModal: false,
     };
+  },
+  watch: {
+    stocks: function (val) {
+        this.$emit("chartToCard", createWinPieDiagram(val));
+    }
   },
   methods: {
     fetchWatchList() {
@@ -144,12 +150,8 @@ export default {
       this.searched = this.searchByName(this.stocks, this.search);
     },
     clearData() {
-      while (this.searched.length > 0) {
-        this.searched.pop();
-      }
-      while (this.stocks.length > 0) {
-        this.stocks.pop();
-      }
+      this.searched = [];
+      this.stocks = []
     },
     pollingData() {
       this.interval = setInterval(this.fetchWatchList, 300000);

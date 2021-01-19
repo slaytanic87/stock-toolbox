@@ -12,21 +12,45 @@
         "currency": "EUR"
     },
     {
-        "name": "O",
+        "name": "RY6.F",
         "companyName": "Realty Income Corporation",
-        "entryPrice": 61.72,
-        "currency": "USD"
+        "entryPrice": 50.00,
+        "currency": "EUR"
     },
     {
-        "name": "ZAP.OL",
+        "name": "6I4.MU",
         "companyName": "Zaptec AS",
-        "entryPrice": 28.53,
-        "currency": "NOK"
+        "entryPrice": 2.75,
+        "currency": "EUR"
     },
     {
         "name": "3CP.F",
         "companyName": "Xiaomi Corporation",
         "entryPrice": 2.83,
+        "currency": "EUR"
+    },
+    {
+        "name": "LHL.F",
+        "companyName": "Lenovo Group Limited",
+        "entryPrice": 0.4988,
+        "currency": "EUR"
+    },
+    {
+        "name": "EJZN.F",
+        "companyName": "Wealth Minerals Ltd.",
+        "entryPrice": 0.1498,
+        "currency": "EUR"
+    },
+    {
+        "name": "0223.F",
+        "companyName": "Sigma Labs, Inc. ",
+        "entryPrice": 2.51,
+        "currency": "EUR"
+    },
+    {
+        "name": "PLUN.F",
+        "companyName": "Plug Power Inc.",
+        "entryPrice": 52.30,
         "currency": "EUR"
     }
 ]

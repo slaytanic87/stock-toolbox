@@ -59,6 +59,7 @@ export function createWatchItem(observedStock, stockData) {
         currentPrice: regularMarketPrice,
         entryPrice: entryPrice,
         win: win,
+        winPercentage: winPercentage,
         currency: currency,
         status: status,
         rsi: calcRelativeStrengthIndex(stockData, 14),
@@ -66,8 +67,7 @@ export function createWatchItem(observedStock, stockData) {
             sym: name,
             chart: chartData,
             chartAdjclose: adjclose
-        },
-        observedStock: observedStock
+        }
     }
 }
 
@@ -110,7 +110,7 @@ export function fetchStockData(symbol, range) {
  * @param {number} observeTimeUnits 
  */
 export function calcRelativeStrengthIndex(stockData, observeTimeUnits) {
-    let adjClose = stockData.chart.result[0].indicators.adjclose[0].adjclose;
+    let adjClose = stockData.chart.result[0].indicators.quote[0].close;
     let regularMarketPrice = stockData.chart.result[0].meta.regularMarketPrice;
     let startIndex = adjClose.length - observeTimeUnits;
 
