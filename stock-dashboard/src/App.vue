@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="bg-gray-800">
+  <div id="app">
     <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
       <div class="relative flex items-center justify-between h-16">
         <div
@@ -72,22 +72,12 @@
               <span class="block font-medium text-base leading-snug text-white text-xl">Watchlist</span>
             </div>
           </div>
-          <watchlist @chartToCard="setChartData" />
+          <watchlist @chartToCard="setChartData" @watchlistToCard="setWatchlistData"/>
     </div>
     <hr class="border-b-2 border-gray-600 my-8 mx-4">
     <div class="flex flex-row flex-wrap flex-grow mt-2">
-        <div class="w-full md:w-1/2 p-3">
-            <!--Graph Card-->
-            <div class="bg-gray-900 border border-gray-800 rounded shadow">
-                <div class="border-b border-gray-800 p-3">
-                    <h5 class="font-bold uppercase text-gray-600">Win Pie Chart</h5>
-                </div>
-                <div class="p-5">
-                    <windiagram v-bind:propData="chartData"></windiagram>
-                </div>
-            </div>
-            <!--/Graph Card-->
-        </div>
+        <windiagramcard v-bind:propData="chartData"></windiagramcard>
+        <datacard v-bind:propChartData="watchlist"></datacard>
     </div>
     </div>
   </div>
@@ -96,15 +86,18 @@
 <script>
 import Watchlist from "./components/Watchlist.vue";
 import WinDiagramCard from "./components/WinDiagramCard.vue";
+import DataCard from "./components/DataCard.vue";
 export default {
   name: "App",
   components: {
     "watchlist": Watchlist,
-    "windiagram": WinDiagramCard
+    "windiagramcard": WinDiagramCard,
+    "datacard": DataCard
   },
   data() {
     return {
-      chartData: {}
+      chartData: {},
+      watchlist: []
     }
   },
   created() {
@@ -114,6 +107,9 @@ export default {
   methods: {
     setChartData(data) {
       this.chartData = data;
+    },
+    setWatchlistData(watchlistData) {
+      this.watchlist = watchlistData;
     }
   }
 };

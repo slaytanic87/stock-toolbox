@@ -9,22 +9,22 @@
     <table class="w-full table-auto">
       <thead class="justify-between">
         <tr class="bg-gray-800">
-          <th class="px-16 py-2">
+          <th class="py-2">
             <span class="text-gray-300">Name</span>
           </th>
-          <th class="px-16 py-2">
+          <th class="py-2">
             <span class="text-gray-300">Course</span>
           </th>
-          <th class="px-16 py-2">
+          <th class="py-2">
             <span class="text-gray-300">Entry</span>
           </th>
-          <th class="px-16 py-2">
+          <th class="py-2">
             <span class="text-gray-300">Win</span>
           </th>
-          <th class="px-16 py-2">
-            <span class="text-gray-300">Currency</span>
+          <th class="py-2">
+            <span class="text-gray-300">Quantity</span>
           </th>
-          <th class="px-16 py-2">
+          <th class="py-2">
             <span class="text-gray-300">RSI</span>
           </th>
           <th class="px-16 py-2">
@@ -34,43 +34,43 @@
       </thead>
       <tbody>
         <tr v-for="stock in searched" :key="stock.name" class="bg-gray-750 border-4 lg:hover:bg-gray-600 border-gray-700">
-          <td class="px-16 py-2 text-center">
+          <td class="py-2 text-center">
             <span>
               {{ stock.name }}
             </span>
           </td>
-          <td class="px-16 py-2 text-center">
+          <td class="py-2 text-center">
             <span class="rounded-full bg-blue-500 py-1 px-3 text-xs font-bold">
               {{ stock.currentPrice }}
             </span>
           </td>
-          <td class="px-16 py-2 text-center">
+          <td class="py-2 text-center">
             <span class="rounded-full bg-yellow-600 py-1 px-3 text-xs font-bold">
               {{ stock.entryPrice }}
             </span>
           </td>
-          <td class="px-16 py-2 text-center">
-            <span v-if="stock.status === '-'" class="md-course-red py-1 px-3 text-xs font-bold">
+          <td class="py-2 text-center">
+            <span v-if="stock.status === '-'" class="cus-course-red py-1 px-3 text-xs font-bold">
               {{ stock.win }}
             </span>
-            <span v-if="stock.status === '+'" class="md-course-green py-1 px-3 text-xs font-bold">
+            <span v-if="stock.status === '+'" class="cus-course-green py-1 px-3 text-xs font-bold">
               {{ stock.win }}
             </span>
             <span v-if="stock.status === '='" class="py-1 px-3 text-xs font-bold">
               {{ stock.win }}
             </span>
           </td>
-          <td class="px-16 py-2 text-center">
+          <td class="py-2 text-center">
             <span>
-              {{ stock.currency }}
+              {{ stock.quantity }}
             </span>
           </td>
-          <td class="px-16 py-2 text-center">
+          <td class="py-2 text-center">
             <span>
               {{ stock.rsi }}
             </span>
           </td>
-          <td class="px-16 py-2">
+          <td class="py-2 text-center">
             <button @click="showChart(stock.name, stock.chartData)"
               class="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none">
               Chart
@@ -117,6 +117,7 @@ export default {
   watch: {
     stocks: function (val) {
         this.$emit("chartToCard", createWinPieDiagram(val));
+        this.$emit("watchlistToCard", this.stocks);
     }
   },
   methods: {
@@ -197,16 +198,16 @@ export default {
 </script>
 
 <style scoped>
-.md-course-red {
+.cus-course-red {
   color: #f10b0b;
 }
-.md-course-green {
+.cus-course-green {
   color: #00f014;
 }
-.md-course-bg-blue {
+.cus-course-bg-blue {
   background-color: #448aff;
 }
-.md-course-bg-red {
+.cus-course-bg-red {
   background-color: #f10b0b;
 }
 </style>

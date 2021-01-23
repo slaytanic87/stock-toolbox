@@ -10,7 +10,6 @@ export default {
   },
   watch: {
     propData: function (newVal) {
-        //console.log(newVal)
         this.renderChart({
             labels: newVal.labels,
             datasets: [

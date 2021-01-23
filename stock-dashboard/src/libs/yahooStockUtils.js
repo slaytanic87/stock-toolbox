@@ -40,7 +40,7 @@ export function createWatchItem(observedStock, stockData) {
     let name = stockData.chart.result[0].meta.symbol;
     let companyName = observedStock.companyName;
 
-    let diffPrice = regularMarketPrice - entryPrice;
+    let diffPrice = (regularMarketPrice * observedStock.quantity) - (entryPrice * observedStock.quantity);
     let status = "="
     if (diffPrice > 0) {
         status = "+"
@@ -48,10 +48,10 @@ export function createWatchItem(observedStock, stockData) {
         status = "-";
     }
 
-    let winPercentage = diffPrice * 100 / entryPrice;
+    let winPercentage = diffPrice * 100 / (entryPrice * observedStock.quantity);
     let rounded = roundTwoDigit(winPercentage);
     let displayed = rounded > 0 ? "+" + rounded : rounded;
-    let win = roundTwoDigit(diffPrice) + " ("+ displayed + "%)";
+    let win = roundTwoDigit(diffPrice)+ " "+currency + " ("+ displayed + "%)";
 
     return {
         name: companyName + ` (${name})`,
@@ -60,6 +60,7 @@ export function createWatchItem(observedStock, stockData) {
         entryPrice: entryPrice,
         win: win,
         winPercentage: winPercentage,
+        quantity: observedStock.quantity,
         currency: currency,
         status: status,
         rsi: calcRelativeStrengthIndex(stockData, 14),

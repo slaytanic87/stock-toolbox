@@ -1,3 +1,10 @@
+
+function roundTwoDigit(value) {
+    let calced = (Math.round(value * 100) / 100);
+    return calced;
+}
+
+
 /**
  * @param {Array} watchlist 
  */
@@ -18,5 +25,64 @@ export function createWinPieDiagram(watchlist) {
         data: pieWinPercentage,
         labels: pieNameLabel,
         backgroundColor: pieColors
+    }
+}
+
+export function createWinLostList(watchlist) {
+    let win = {};
+    let lost = {};
+    watchlist.forEach(stock => {
+        let diff = (stock.currentPrice * stock.quantity) - (stock.entryPrice * stock.quantity);
+        if (diff > 0) {
+            if (win[stock.currency]) {
+                win[stock.currency] += diff;
+            } else {
+                win[stock.currency] = diff;
+            }
+        } else {
+            if (lost[stock.currency]) {
+                lost[stock.currency] += diff;
+            } else {
+                lost[stock.currency] = diff;
+            }
+        }
+    });
+
+    let mappedWinArr = [];
+    let mappedLostArr = [];
+
+    Object.keys(win).forEach((key) => {
+        mappedWinArr.push({
+            currency: key,
+            win: roundTwoDigit(win[key])
+        });
+    });
+    Object.keys(lost).forEach((key) => {
+        mappedLostArr.push({
+            currency: key,
+            lost: roundTwoDigit(lost[key])
+        });
+    });
+
+    return {
+        win: mappedWinArr,
+        lost: mappedLostArr
+    }
+}
+
+export function createWinLost(watchlist) {
+    let win = 0;
+    let lost = 0;
+    watchlist.forEach(stock => {
+        let diff = (stock.currentPrice * stock.quantity) - (stock.entryPrice * stock.quantity);
+        if (diff > 0) {
+            win += diff;
+        } else {
+            lost += diff;
+        }
+    });
+    return {
+        win: roundTwoDigit(win),
+        lost: roundTwoDigit(lost)
     }
 }
