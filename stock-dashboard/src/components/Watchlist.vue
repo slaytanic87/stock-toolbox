@@ -1,9 +1,15 @@
 <template>
   <div>
-    <div class="w-full flex justify-end px-2 mt-2">
-      <div class="w-full sm:w-64 inline-block relative pb-2.5">
+    <div class="flex justify-end px-2 mt-2">
+      <div class="sm:w-10 pb-2.5">
+          <button @click="showAddStock()" class="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+              <span class="sr-only">Add</span>
+              <img class="h-8 w-8 rounded-full" src="../assets/add-icon.png" alt="">
+          </button>
+      </div>
+      <div class=" sm:w-64 inline-block relative pb-2.5">
         <input v-model="search" @input="searchOnTable" placeholder="Search"
-          class="leading-snug border border-gray-300 block w-full appearance-none bg-gray-100 text-sm text-gray-600 py-1 px-4 pl-8 rounded-lg"/>
+          class="leading-snug border border-gray-300 block w-full appearance-none text-sm bg-gray-900 text-sm text-gray-400 py-1 px-4 pl-8 rounded-lg"/>
       </div>
     </div>
     <table class="w-full table-auto">
@@ -83,8 +89,13 @@
       v-bind:showDialog="showChartModal"
       v-bind:stockName="selectedName"
       v-bind:chartData="selectedChart"
-      v-on:chartToDashMessage="closeDialog">
+      v-on:chartToDashMessage="closeChartDialog">
     </stock-chart>
+    <stock-add-modal 
+      v-bind:showDialog="showAddStockModal"
+      v-on:addChartModalToDashMessage="closeAddStockModal"
+      >
+    </stock-add-modal>
   </div>
 </template>
 
@@ -93,6 +104,7 @@ import axios from "axios";
 import { createWatchItem, fetchStockData, mapChartDataFromResponse } from "../libs/yahooStockUtils.js";
 import { createWinPieDiagram } from "../libs/utils.js";
 import StockChart from "./StockChart.vue";
+import StockAddModal from "./StockAddModal.vue";
 import { DataCube } from "trading-vue-js";
 export default {
   name: "Watchlist",
@@ -102,6 +114,7 @@ export default {
   },
   components: {
     "stock-chart": StockChart,
+    "stock-add-modal": StockAddModal
   },
   data() {
     return {
@@ -112,6 +125,7 @@ export default {
       selectedChart: {},
       selectedName: "",
       showChartModal: false,
+      showAddStockModal: false
     };
   },
   watch: {
@@ -170,6 +184,9 @@ export default {
           self.showChartModal = true;
       });
     },
+    showAddStock() {
+      this.showAddStockModal = true;
+    },
     createDataCube(chartData) {
       let chartViewData = {
         chart: {
@@ -190,8 +207,11 @@ export default {
       };
       return new DataCube(chartViewData);
     },
-    closeDialog(show) {
+    closeChartDialog(show) {
       this.showChartModal = show;
+    },
+    closeAddStockModal(show) {
+      this.showAddStockModal = show;
     }
   }
 };

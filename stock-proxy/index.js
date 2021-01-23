@@ -21,7 +21,7 @@ app.post('/', (req, res) => {
         res.json(resp.data);
         res.end();
     }).catch((error) => {
-        console.log(error);
+        console.log(error.response.statusText);
     });
 });
 
@@ -29,3 +29,9 @@ app.get("/watchlist", (req, res) => {
     res.json(watchlist);
     res.end();
 });
+
+app.post("/addStock", (req, res) => {
+    let watchStock = req.body;
+    console.log(watchStock);
+    watchlist.push(watchStock);
+})
