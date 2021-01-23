@@ -81,7 +81,6 @@ export default {
   },
   watch: {
       propChartData: function (newVal) {
-          console.log(newVal)
           let calcedData = createWinLost(newVal);
           this.invested = calcedData.invested;
           this.win = calcedData.win;
