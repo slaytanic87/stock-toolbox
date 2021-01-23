@@ -10,7 +10,7 @@
       <thead class="justify-between">
         <tr class="bg-gray-800">
           <th class="py-2">
-            <span class="text-gray-300">Name</span>
+            <span class="text-gray-300">Stock</span>
           </th>
           <th class="py-2">
             <span class="text-gray-300">Course</span>

@@ -71,9 +71,12 @@ export function createWinLostList(watchlist) {
 }
 
 export function createWinLost(watchlist) {
+
     let win = 0;
     let lost = 0;
+    let investedCapital = 0;
     watchlist.forEach(stock => {
+        investedCapital += stock.entryPrice * stock.quantity;
         let diff = (stock.currentPrice * stock.quantity) - (stock.entryPrice * stock.quantity);
         if (diff > 0) {
             win += diff;
@@ -83,6 +86,7 @@ export function createWinLost(watchlist) {
     });
     return {
         win: roundTwoDigit(win),
-        lost: roundTwoDigit(lost)
+        lost: roundTwoDigit(lost),
+        invested: roundTwoDigit(investedCapital)
     }
 }
