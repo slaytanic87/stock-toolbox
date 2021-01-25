@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-  <div>
     <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
       <div class="relative flex items-center justify-between h-16">
         <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
@@ -15,17 +14,23 @@
           <div class="hidden sm:block sm:ml-6">
             <div class="flex space-x-4">
               <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-              <a href="#" class="bg-gray-900 hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">
-                 Watchlist
+              <button @click="changeView('Overview')">
+                <a href="#" class="block py-1 md:py-3 pl-1 align-middle text-blue-400 no-underline hover:text-gray-100 border-b-2 border-blue-400 hover:border-blue-400">
+                  <font-awesome-icon :icon="['fas', 'home']" class="fa-fw mr-3"/>
+                    <span class="pb-1 md:pb-0 text-sm">Overview</span>
+                </a>
+              </button>
+              <button @click="changeView('News')">
+                <a href="#" class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-gray-100 border-b-2 border-gray-900 hover:border-pink-400">
+                <font-awesome-icon :icon="['fa', 'envelope']" class="fa-fw mr-3"/>
+                  <span class="pb-1 md:pb-0 text-sm">News</span>
+                </a>
+              </button>
+              <a href="#" class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-gray-100 border-b-2 border-gray-900  hover:border-purple-400">
+                <span class="pb-1 md:pb-0 text-sm">Projects</span>
               </a>
-              <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                 News
-              </a>
-              <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                 Projects
-              </a>
-              <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                 Calendar
+              <a href="#" class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-gray-100 border-b-2 border-gray-900  hover:border-green-400">
+                <span class="pb-1 md:pb-0 text-sm">Calendar</span>
               </a>
             </div>
           </div>
@@ -53,17 +58,26 @@
       </div>
     </div>
     <component v-bind:is="view"></component>
-  </div>
 </div>
 </template>
 
 <script>
 import Overview from "./components/overview/Overview.vue";
+import News from "./components/news/News.vue";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+  faBars,
+  faHome,
+  faEnvelope
+} from "@fortawesome/free-solid-svg-icons";
+
+library.add(faBars, faHome, faEnvelope);
 
 export default {
   name: "App",
   components: {
-    Overview
+    Overview,
+    News
   },
   data() {
     return {

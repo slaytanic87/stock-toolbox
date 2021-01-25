@@ -100,7 +100,7 @@ export default {
   methods: {
       addStock() {
         if (!this.symbol || !this.stockName ||
-            !this.currency || !this.quantity ||
+            !this.currency || !this.quantity || this.currency < 0 || this.quantity < 0 ||
             !this.entryPrice) {
             return;
         }

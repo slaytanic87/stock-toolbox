@@ -39,7 +39,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="stock in searched" :key="stock.name" class="bg-gray-750 border-4 lg:hover:bg-gray-600 border-gray-700">
+        <tr v-for="stock in searched" :key="stock.name" class="bg-gray-750 border-2 lg:hover:bg-blue-900 border-gray-700">
           <td class="py-2 text-center">
             <span>
               {{ stock.name }}
