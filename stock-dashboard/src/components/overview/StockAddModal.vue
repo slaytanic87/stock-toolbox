@@ -99,8 +99,8 @@ export default {
   },
   methods: {
       addStock() {
-        if (!this.symbol || !this.stockName || 
-            !this.currency || !this.quantity || 
+        if (!this.symbol || !this.stockName ||
+            !this.currency || !this.quantity ||
             !this.entryPrice) {
             return;
         }
@@ -112,7 +112,11 @@ export default {
             currency: this.currency,
             quantity: Math.floor(this.quantity)
         }
-        axios.post("http://localhost:9090/addStock", body).then((res) => {
+        let url = "/addStock";
+        if (process.env.NODE_ENV === "development") {
+            url = "http://localhost:9090/addStock";
+        }
+        axios.post(url, body).then((res) => {
             console.log(res.status);
         }).catch((error) => {
             console.log(error);

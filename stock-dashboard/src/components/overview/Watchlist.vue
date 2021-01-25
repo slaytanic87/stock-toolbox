@@ -136,7 +136,11 @@ export default {
   },
   methods: {
     fetchWatchList() {
-      axios.get("http://localhost:9090/watchlist").then((res) => {
+        let url = "/watchlist";
+        if (process.env.NODE_ENV === "development") {
+          url = "http://localhost:9090/watchlist";
+        }
+        axios.get(url).then((res) => {
         this.clearData();
         let watchList = res.data;
         watchList.forEach((item) => {
@@ -170,10 +174,6 @@ export default {
     },
     pollingData() {
       this.interval = setInterval(this.fetchWatchList, 300000);
-    },
-    addStock() {
-      // TODO
-      console.log("Not implemented yet.");
     },
     showChart(chartName, chartData) {
       var self = this;

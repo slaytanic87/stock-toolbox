@@ -75,8 +75,8 @@ export function createWatchItem(observedStock, stockData) {
 export function mapChartDataFromResponse(stockDataResponse) {
     let symbol = stockDataResponse.chart.result[0].meta.symbol;
     let timestamp = stockDataResponse.chart.result[0].timestamp.map(time => time * 1000);
-    let mappedChartData = createChartData(timestamp, 
-                                          stockDataResponse.chart.result[0].indicators.quote[0], 
+    let mappedChartData = createChartData(timestamp,
+                                          stockDataResponse.chart.result[0].indicators.quote[0],
                                           stockDataResponse.chart.result[0].indicators.adjclose[0]);
 
     return  {
@@ -102,13 +102,17 @@ export function fetchStockData(symbol, range) {
     let data = {
       url: baseUrl + symbol + path,
     };
-    return axios.post("http://localhost:9090/", data);
+    let url = "/";
+    if (process.env.NODE_ENV === "development") {
+        url = "http://localhost:9090/";
+    }
+    return axios.post(url, data);
 }
 
 /**
- * 
- * @param {*} stockData 
- * @param {number} observeTimeUnits 
+ *
+ * @param {*} stockData
+ * @param {number} observeTimeUnits
  */
 export function calcRelativeStrengthIndex(stockData, observeTimeUnits) {
     let adjClose = stockData.chart.result[0].indicators.quote[0].close;
