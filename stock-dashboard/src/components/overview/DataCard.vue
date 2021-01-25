@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import { createWinLost } from "../libs/utils.js";
+import { createWinLost } from "../../libs/utils.js";
 
 export default {
   name: "App",

@@ -4,7 +4,7 @@
       <div class="sm:w-10 pb-2.5">
           <button @click="showAddStock()" class="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
               <span class="sr-only">Add</span>
-              <img class="h-8 w-8 rounded-full" src="../assets/add-icon.png" alt="">
+              <img class="h-8 w-8 rounded-full" src="src/assets/add-icon.png" alt="">
           </button>
       </div>
       <div class=" sm:w-64 inline-block relative pb-2.5">
@@ -91,7 +91,7 @@
       v-bind:chartData="selectedChart"
       v-on:chartToDashMessage="closeChartDialog">
     </stock-chart>
-    <stock-add-modal 
+    <stock-add-modal
       v-bind:showDialog="showAddStockModal"
       v-on:addChartModalToDashMessage="closeAddStockModal"
       >
@@ -101,8 +101,8 @@
 
 <script>
 import axios from "axios";
-import { createWatchItem, fetchStockData, mapChartDataFromResponse } from "../libs/yahooStockUtils.js";
-import { createWinPieDiagram } from "../libs/utils.js";
+import { createWatchItem, fetchStockData, mapChartDataFromResponse } from "../../libs/yahooStockUtils.js";
+import { createWinPieDiagram } from "../../libs/utils.js";
 import StockChart from "./StockChart.vue";
 import StockAddModal from "./StockAddModal.vue";
 import { DataCube } from "trading-vue-js";

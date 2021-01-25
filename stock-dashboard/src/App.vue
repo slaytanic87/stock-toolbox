@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+  <div>
     <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
       <div class="relative flex items-center justify-between h-16">
         <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
@@ -51,39 +52,22 @@
         </div>
       </div>
     </div>
-    <div class="container w-full mx-auto">
-    <div class="bg-gray-900">
-          <div class="flex mb-4 justify-center">
-            <div class="ml-2 mt-0.5">
-              <span class="block font-medium text-base leading-snug text-white text-xl">Watchlist</span>
-            </div>
-          </div>
-          <watchlist @chartToCard="setChartData" @watchlistToCard="setWatchlistData"/>
-    </div>
-    <hr class="border-b-2 border-gray-600 my-8 mx-4">
-    <div class="flex flex-row flex-wrap flex-grow mt-2">
-        <windiagramcard v-bind:propData="chartData"></windiagramcard>
-        <datacard v-bind:propChartData="watchlist"></datacard>
-    </div>
-    </div>
+    <overview></overview>
   </div>
+</div>
 </template>
 
 <script>
-import Watchlist from "./components/Watchlist.vue";
-import WinDiagramCard from "./components/WinDiagramCard.vue";
-import DataCard from "./components/DataCard.vue";
+import Overview from "./components/overview/Overview.vue";
+
 export default {
   name: "App",
   components: {
-    "watchlist": Watchlist,
-    "windiagramcard": WinDiagramCard,
-    "datacard": DataCard
+    "overview": Overview,
   },
   data() {
     return {
-      chartData: {},
-      watchlist: []
+
     }
   },
   created() {
@@ -91,12 +75,7 @@ export default {
   mounted() {
   },
   methods: {
-    setChartData(data) {
-      this.chartData = data;
-    },
-    setWatchlistData(watchlistData) {
-      this.watchlist = watchlistData;
-    }
+
   }
 };
 </script>
