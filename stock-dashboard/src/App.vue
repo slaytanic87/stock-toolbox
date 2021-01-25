@@ -52,7 +52,7 @@
         </div>
       </div>
     </div>
-    <overview></overview>
+    <component v-bind:is="view"></component>
   </div>
 </div>
 </template>
@@ -63,11 +63,16 @@ import Overview from "./components/overview/Overview.vue";
 export default {
   name: "App",
   components: {
-    "overview": Overview,
+    Overview
   },
   data() {
     return {
 
+    }
+  },
+  computed: {
+    view: function () {
+        return this.$store.state.navigation.view;
     }
   },
   created() {
@@ -75,7 +80,9 @@ export default {
   mounted() {
   },
   methods: {
-
+    changeView(viewName) {
+      this.$store.commit("navigation/setView", viewName);
+    }
   }
 };
 </script>
