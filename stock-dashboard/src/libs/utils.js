@@ -1,12 +1,11 @@
 
-function roundTwoDigit(value) {
-    let calced = (Math.round(value * 100) / 100);
-    return calced;
+export function roundTwoDigit(value) {
+    return (Math.round(value * 100) / 100);
 }
 
 
 /**
- * @param {Array} watchlist 
+ * @param {Array} watchlist
  */
 export function createWinPieDiagram(watchlist) {
     let pieNameLabel = [];
@@ -16,6 +15,7 @@ export function createWinPieDiagram(watchlist) {
     watchlist.forEach(stock => {
         if (stock.winPercentage > 0) {
             let randomColor = Math.floor(Math.random() * 16777215).toString(16);
+
             pieNameLabel.push(stock.name);
             pieColors.push("#" + randomColor);
             pieWinPercentage.push(Math.floor(stock.winPercentage));
@@ -32,6 +32,9 @@ export function createWinLostList(watchlist) {
     let win = {};
     let lost = {};
     watchlist.forEach(stock => {
+        if (stock.observeOnly) {
+            return;
+        }
         let diff = (stock.currentPrice * stock.quantity) - (stock.entryPrice * stock.quantity);
         if (diff > 0) {
             if (win[stock.currency]) {
@@ -71,11 +74,13 @@ export function createWinLostList(watchlist) {
 }
 
 export function createWinLost(watchlist) {
-
     let win = 0;
     let lost = 0;
     let investedCapital = 0;
     watchlist.forEach(stock => {
+        if (stock.observeOnly) {
+            return;
+        }
         investedCapital += stock.entryPrice * stock.quantity;
         let diff = (stock.currentPrice * stock.quantity) - (stock.entryPrice * stock.quantity);
         if (diff > 0) {
@@ -89,4 +94,15 @@ export function createWinLost(watchlist) {
         lost: roundTwoDigit(lost),
         invested: roundTwoDigit(investedCapital)
     }
+}
+
+export function getCurrencySymbol(currency) {
+    let currencyMap = {
+        EUR: "€",
+        USD: "$"
+    }
+    if (currencyMap[currency]) {
+        return currencyMap[currency];
+    }
+    return currency;
 }

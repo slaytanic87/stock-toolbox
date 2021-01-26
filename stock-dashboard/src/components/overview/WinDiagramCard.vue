@@ -3,7 +3,10 @@
     <!--Graph Card-->
     <div class="bg-gray-900 border border-gray-800 rounded shadow">
         <div class="border-b border-gray-800 p-3">
-            <h5 class="font-bold uppercase text-gray-600">Win Pie Chart</h5>
+            <h5 class="font-bold uppercase text-gray-600">
+              Win Pie Chart
+              <font-awesome-icon :icon="['fa', 'chart-pie']"/>
+            </h5>
         </div>
         <div class="p-5">
           <div class="bg-gray-800">
@@ -17,6 +20,11 @@
 
 <script>
 import PieChart from "./PieChart.js";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+  faChartPie
+} from "@fortawesome/free-solid-svg-icons";
+library.add(faChartPie);
 export default {
   name: "WinDiagramCard",
   components: {

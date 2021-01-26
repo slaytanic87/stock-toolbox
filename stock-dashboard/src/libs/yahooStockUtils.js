@@ -63,6 +63,7 @@ export function createWatchItem(observedStock, stockData) {
         quantity: observedStock.quantity,
         currency: currency,
         status: status,
+        observeOnly: observedStock.observeOnly,
         rsi: calcRelativeStrengthIndex(stockData, 14),
         chartData: {
             sym: name,

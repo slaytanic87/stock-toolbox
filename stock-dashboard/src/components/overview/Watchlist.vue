@@ -3,8 +3,7 @@
     <div class="flex justify-end px-2 mt-2">
       <div class="sm:w-10 pb-2.5">
           <button @click="showAddStock()" class="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-              <span class="sr-only">Add</span>
-              <img class="h-8 w-8 rounded-full" src="../../assets/add-icon.png" alt="">
+            <font-awesome-icon :icon="['fa', 'plus-circle']" class="fa-2x fa-fw fa-inverse"/>
           </button>
       </div>
       <div class=" sm:w-64 inline-block relative pb-2.5">
@@ -31,7 +30,10 @@
             <span class="text-gray-300">Quantity</span>
           </th>
           <th class="py-2">
-            <span class="text-gray-300">RSI</span>
+            <span class="text-gray-300">RSI (14)</span>
+          </th>
+          <th class="py-2">
+            <span class="text-gray-300">Observe</span>
           </th>
           <th class="px-16 py-2">
             <span class="text-gray-300"></span>
@@ -42,6 +44,7 @@
         <tr v-for="stock in searched" :key="stock.name" class="bg-gray-750 border-2 lg:hover:bg-blue-900 border-gray-700">
           <td class="py-2 text-center">
             <span>
+              <font-awesome-icon :icon="['fa', 'industry']" class="fa-fw mr-3"/>
               {{ stock.name }}
             </span>
           </td>
@@ -75,10 +78,16 @@
             <span>
               {{ stock.rsi }}
             </span>
+          <td class="py-2 text-center">
+            <span>
+              <font-awesome-icon v-if="stock.observeOnly" :icon="['fas', 'eye']" class="fa-fw mr-3"/>
+              <font-awesome-icon v-else :icon="['fas', 'money-bill-alt']" class="fa-fw mr-3"/>
+            </span>
           </td>
           <td class="py-2 text-center">
             <button @click="showChart(stock.name, stock.chartData)"
               class="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none">
+              <font-awesome-icon :icon="['fa', 'chart-bar']" class="fa-fw mr-3"/>
               Chart
             </button>
           </td>
@@ -106,6 +115,16 @@ import { createWinPieDiagram } from "../../libs/utils.js";
 import StockChart from "./StockChart.vue";
 import StockAddModal from "./StockAddModal.vue";
 import { DataCube } from "trading-vue-js";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+  faEye,
+  faMoneyBillAlt,
+  faChartBar,
+  faIndustry,
+  faPlusCircle
+} from "@fortawesome/free-solid-svg-icons";
+library.add(faEye, faMoneyBillAlt, faChartBar, faIndustry, faPlusCircle);
+
 export default {
   name: "Watchlist",
   created() {

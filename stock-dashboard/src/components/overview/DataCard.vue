@@ -3,9 +3,10 @@
         <div class="bg-gray-900 border border-gray-800 rounded shadow p-2">
             <div class="flex flex-row items-center">
                 <div class="flex-shrink pr-4">
-                    <div class="rounded p-3 bg-pink-600">
+                    <div class="rounded p-3 bg-blue-600">
                     <!--
                     <i class="fas fa-server fa-2x fa-fw fa-inverse"></i> -->
+                      <font-awesome-icon :icon="['fa', 'money-bill-alt']" class="fa-2x fa-fw fa-inverse"/>
                     </div>
                 </div>
                 <div class="flex-1 text-right md:text-center">
@@ -18,8 +19,8 @@
         <div class="bg-gray-900 border border-gray-800 rounded shadow p-2">
             <div class="flex flex-row items-center">
                 <div class="flex-shrink pr-4">
-                    <div class="rounded p-3 bg-indigo-600">
-                    <!-- <i class="fas fa-tasks fa-2x fa-fw fa-inverse"></i> -->
+                    <div class="rounded p-3 bg-green-600">
+                      <font-awesome-icon :icon="['fa', 'arrow-circle-up']" class="fa-2x fa-fw fa-inverse"/>
                     </div>
                 </div>
                 <div class="flex-1 text-right md:text-center">
@@ -34,9 +35,8 @@
         <div class="bg-gray-900 border border-gray-800 rounded shadow p-2">
             <div class="flex flex-row items-center">
                 <div class="flex-shrink pr-4">
-                    <div class="rounded p-3 bg-blue-600">
-                    <!--
-                    <i class="fas fa-server fa-2x fa-fw fa-inverse"></i> -->
+                    <div class="rounded p-3 bg-red-600">
+                      <font-awesome-icon :icon="['fa', 'arrow-circle-down']" class="fa-2x fa-fw fa-inverse"/>
                     </div>
                 </div>
                 <div class="flex-1 text-right md:text-center">
@@ -51,8 +51,7 @@
             <div class="flex flex-row items-center">
                 <div class="flex-shrink pr-4">
                     <div class="rounded p-3 bg-yellow-600">
-                    <!--
-                    <i class="fas fa-server fa-2x fa-fw fa-inverse"></i> -->
+                      <font-awesome-icon :icon="['fa', 'university']" class="fa-2x fa-fw fa-inverse"/>
                     </div>
                 </div>
                 <div class="flex-1 text-right md:text-center">
@@ -67,8 +66,15 @@
 </template>
 
 <script>
-import { createWinLost } from "../../libs/utils.js";
-
+import { createWinLost, roundTwoDigit } from "../../libs/utils.js";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+  faUniversity,
+  faMoneyBillAlt,
+  faArrowCircleUp,
+  faArrowCircleDown
+} from "@fortawesome/free-solid-svg-icons";
+library.add(faUniversity, faMoneyBillAlt, faArrowCircleUp, faArrowCircleDown);
 export default {
   name: "App",
   components: {
@@ -76,7 +82,7 @@ export default {
   },
   props: {
       propChartData: {
-          required: true,
+          required: true
       }
   },
   watch: {
@@ -85,7 +91,7 @@ export default {
           this.invested = calcedData.invested;
           this.win = calcedData.win;
           this.lost = calcedData.lost;
-          this.total = this.win + this.lost;
+          this.total = roundTwoDigit(this.win + this.lost);
       }
   },
   data() {

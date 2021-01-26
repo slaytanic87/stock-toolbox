@@ -3,7 +3,10 @@
     <div class="bg-gray-900">
         <div class="flex mb-4 justify-center">
             <div class="ml-2 mt-0.5">
-            <span class="block font-medium text-base leading-snug text-white text-xl">Watchlist</span>
+            <span class="block font-medium text-base leading-snug text-white text-xl">
+              <font-awesome-icon :icon="['fa', 'binoculars']" class="fa-fw mr-3"/>
+              Watchlist
+            </span>
             </div>
         </div>
         <watchlist @chartToCard="setChartData" @watchlistToCard="setWatchlistData"/>
@@ -20,6 +23,12 @@
 import Watchlist from "./Watchlist.vue";
 import WinDiagramCard from "./WinDiagramCard.vue";
 import DataCard from "./DataCard.vue";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+  faBinoculars
+} from "@fortawesome/free-solid-svg-icons";
+library.add(faBinoculars);
+
 export default {
   name: "App",
   components: {

@@ -21,7 +21,7 @@ app.post('/', (req, res) => {
         res.json(resp.data);
         res.end();
     }).catch((error) => {
-        console.log(error.response.statusText);
+        console.log(error.response);
     });
 });
 

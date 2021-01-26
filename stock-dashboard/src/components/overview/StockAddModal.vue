@@ -8,58 +8,67 @@
           </div>
           <div class="relative p-6 flex-auto">
 
-          <div class="grid lg:grid-cols-2 gap-6">
-                <div class="border focus-within:border-blue-500 focus-within:text-blue-500 transition-all duration-500 relative rounded p-1">
-                    <div class="-mt-4 absolute tracking-wider px-1 uppercase text-xs">
+            <div class="grid lg:grid-cols-2 gap-6">
+                  <div class="border focus-within:border-blue-500 focus-within:text-blue-500 transition-all duration-500 relative rounded p-1">
+                      <div class="-mt-4 absolute tracking-wider px-1 uppercase text-xs">
+                        <p>
+                          <label for="symbol" class="bg-white text-blue-600 px-1">Symbol</label>
+                        </p>
+                      </div>
                       <p>
-                        <label for="symbol" class="bg-white text-blue-600 px-1">Symbol</label>
+                        <input id="symbol" v-model="symbol" autocomplete="false" tabindex="0" type="text" class="py-1 px-1 text-gray-500 outline-none block h-full w-full">
                       </p>
-                    </div>
-                    <p>
-                      <input id="symbol" v-model="symbol" autocomplete="false" tabindex="0" type="text" class="py-1 px-1 text-gray-500 outline-none block h-full w-full">
-                    </p>
-                </div>
-                <div class="border focus-within:border-blue-500 focus-within:text-blue-500 transition-all duration-500 relative rounded p-1">
-                    <div class="-mt-4 absolute tracking-wider px-1 uppercase text-xs">
+                  </div>
+                  <div class="border focus-within:border-blue-500 focus-within:text-blue-500 transition-all duration-500 relative rounded p-1">
+                      <div class="-mt-4 absolute tracking-wider px-1 uppercase text-xs">
+                        <p>
+                          <label for="stockName" class="bg-white text-blue-600 px-1">Stock name</label>
+                        </p>
+                      </div>
                       <p>
-                        <label for="stockName" class="bg-white text-blue-600 px-1">Stock name</label>
+                        <input id="stockName" v-model="stockName" autocomplete="false" tabindex="0" type="text" class="py-1 text-gray-500 px-1 outline-none block h-full w-full">
                       </p>
-                    </div>
-                    <p>
-                      <input id="stockName" v-model="stockName" autocomplete="false" tabindex="0" type="text" class="py-1 text-gray-500 px-1 outline-none block h-full w-full">
-                    </p>
-                </div>
-                <div class="border focus-within:border-blue-500 focus-within:text-blue-500 transition-all duration-500 relative rounded p-1">
-                    <div class="-mt-4 absolute tracking-wider px-1 uppercase text-xs">
+                  </div>
+                  <div class="border focus-within:border-blue-500 focus-within:text-blue-500 transition-all duration-500 relative rounded p-1">
+                      <div class="-mt-4 absolute tracking-wider px-1 uppercase text-xs">
+                        <p>
+                          <label for="entryPrice" class="bg-white text-blue-600 px-1">Entry price</label>
+                        </p>
+                      </div>
                       <p>
-                        <label for="entryPrice" class="bg-white text-blue-600 px-1">Entry price</label>
+                        <input id="entryPrice" v-model="entryPrice" autocomplete="false" tabindex="0" type="number" class="py-1 px-1 text-gray-500 outline-none block h-full w-full">
                       </p>
-                    </div>
-                    <p>
-                      <input id="entryPrice" v-model="entryPrice" autocomplete="false" tabindex="0" type="number" class="py-1 px-1 text-gray-500 outline-none block h-full w-full">
-                    </p>
-                </div>
-                <div class="border focus-within:border-blue-500 focus-within:text-blue-500 transition-all duration-500 relative rounded p-1">
-                    <div class="-mt-4 absolute tracking-wider px-1 uppercase text-xs">
+                  </div>
+                  <div class="border focus-within:border-blue-500 focus-within:text-blue-500 transition-all duration-500 relative rounded p-1">
+                      <div class="-mt-4 absolute tracking-wider px-1 uppercase text-xs">
+                        <p>
+                          <label for="quantity" class="bg-white text-blue-600 px-1">Quantity</label>
+                        </p>
+                      </div>
                       <p>
-                        <label for="quantity" class="bg-white text-blue-600 px-1">Quantity</label>
+                        <input id="quantity" v-model="quantity" autocomplete="false" tabindex="0" type="number" class="py-1 px-1 text-gray-500 outline-none block h-full w-full">
                       </p>
-                    </div>
-                    <p>
-                      <input id="quantity" v-model="quantity" autocomplete="false" tabindex="0" type="number" class="py-1 px-1 text-gray-500 outline-none block h-full w-full">
-                    </p>
-                </div>
-                <div class="border focus-within:border-blue-500 focus-within:text-blue-500 transition-all duration-500 relative rounded p-1">
-                    <div class="-mt-4 absolute tracking-wider px-1 uppercase text-xs">
+                  </div>
+                  <div class="border focus-within:border-blue-500 focus-within:text-blue-500 transition-all duration-500 relative rounded p-1">
+                      <div class="-mt-4 absolute tracking-wider px-1 uppercase text-xs">
+                        <p>
+                          <label for="currency" class="bg-white text-blue-600 px-1">Currency</label>
+                        </p>
+                      </div>
                       <p>
-                        <label for="currency" class="bg-white text-blue-600 px-1">Currency</label>
+                        <input id="currency" v-model="currency" autocomplete="false" tabindex="0" type="text" class="py-1 px-1 text-gray-500 outline-none block h-full w-full">
                       </p>
-                    </div>
-                    <p>
-                      <input id="currency" v-model="currency" autocomplete="false" tabindex="0" type="text" class="py-1 px-1 text-gray-500 outline-none block h-full w-full">
-                    </p>
-                </div>
-            </div>
+                  </div>
+                  <div class="focus-within:border-blue-500 focus-within:text-blue-500 transition-all duration-500 relative rounded p-1">
+                    <label class="inline-flex items-center">
+                      <input v-model="observeOnly" type="checkbox" class="form-checkbox text-indigo-600" checked>
+                      <span class="ml-2">
+                        Observe
+                        <font-awesome-icon :icon="['fas', 'eye']" class="fa-fw"/>
+                      </span>
+                    </label>
+                  </div>
+              </div>
 
           </div>
           <div class="flex items-center justify-end p-3 border-t border-solid border-gray-300 rounded-b">
@@ -78,6 +87,12 @@
 
 <script>
 import axios from "axios";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+  faEye
+} from "@fortawesome/free-solid-svg-icons";
+library.add(faEye);
+
 export default {
   name: "StockAddModal",
   created() {},
@@ -94,7 +109,8 @@ export default {
         entryPrice: 0,
         stockName: "",
         currency: "",
-        quantity: 0
+        quantity: 0,
+        observeOnly: true
     };
   },
   methods: {
@@ -110,6 +126,7 @@ export default {
             companyName: this.stockName,
             entryPrice: this.entryPrice,
             currency: this.currency,
+            observeOnly: this.observeOnly,
             quantity: Math.floor(this.quantity)
         }
         let url = "/addStock";
