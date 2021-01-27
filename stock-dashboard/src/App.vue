@@ -15,24 +15,24 @@
             <div class="flex space-x-4">
               <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
               <button @click="changeView('Overview')">
-                <a href="#" class="block py-1 md:py-3 pl-1 align-middle text-blue-400 no-underline hover:text-gray-100 border-b-2 border-blue-400 hover:border-blue-400">
+                <a href="#" v-bind:class="`block py-1 md:py-3 pl-1 align-middle no-underline hover:text-gray-100 border-b-2 hover:border-blue-400 ${overview}`">
                   <font-awesome-icon :icon="['fas', 'home']" class="fa-fw mr-3"/>
                   <span class="pb-1 md:pb-0 text-sm">Overview</span>
                 </a>
               </button>
               <button @click="changeView('News')">
-                <a href="#" class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-gray-100 border-b-2 border-gray-900 hover:border-pink-400">
+                <a href="#" v-bind:class="`block py-1 md:py-3 pl-1 align-middle no-underline hover:text-gray-100 border-b-2 hover:border-pink-400 ${news}`">
                 <font-awesome-icon :icon="['fa', 'envelope']" class="fa-fw mr-3"/>
                   <span class="pb-1 md:pb-0 text-sm">News</span>
                 </a>
               </button>
               <button>
-                <a href="#" class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-gray-100 border-b-2 border-gray-900  hover:border-purple-400">
+                <a href="#" class="block py-1 md:py-3 pl-1 align-middle no-underline hover:text-gray-100 border-b-2 hover:border-purple-400 text-gray-500 border-gray-900">
                   <span class="pb-1 md:pb-0 text-sm">Projects</span>
                 </a>
               </button>
               <button>
-                <a href="#" class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-gray-100 border-b-2 border-gray-900  hover:border-green-400">
+                <a href="#" class="block py-1 md:py-3 pl-1 align-middle no-underline hover:text-gray-100 border-b-2 hover:border-green-400 text-gray-500 border-gray-900">
                   <span class="pb-1 md:pb-0 text-sm">Calendar</span>
                 </a>
               </button>
@@ -85,12 +85,17 @@ export default {
   },
   data() {
     return {
-
     }
   },
   computed: {
     view: function () {
         return this.$store.state.navigation.view;
+    },
+    overview: function () {
+       return this.$store.state.navigation.overviewBarCss;
+    },
+    news: function () {
+      return this.$store.state.navigation.newsBarCss;
     }
   },
   created() {

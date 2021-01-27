@@ -1,8 +1,8 @@
-var axios = require("axios");
-var express = require("express");
-var app = express();
-var watchlist = require('./watchlist.json');
-
+const axios = require("axios");
+const express = require("express");
+const app = express();
+let watchlist = require('./watchlist.json');
+const boersennews = require("./boersennews");
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -34,4 +34,9 @@ app.post("/addStock", (req, res) => {
     let watchStock = req.body;
     console.log(watchStock);
     watchlist.push(watchStock);
+})
+
+app.get("/news", (req, res) => {
+    const topNewsUrl = "https://www.boersennews.de/nachrichten/top-news/";
+    boersennews.fetchNews(topNewsUrl, res);
 })
