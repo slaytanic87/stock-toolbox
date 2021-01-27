@@ -33,7 +33,7 @@
             <span class="text-gray-300">RSI (14)</span>
           </th>
           <th class="py-2">
-            <span class="text-gray-300">Observe</span>
+            <span class="text-gray-300">Mode</span>
           </th>
           <th class="px-16 py-2">
             <span class="text-gray-300"></span>

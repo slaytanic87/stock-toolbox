@@ -13,7 +13,7 @@ export function createWinPieDiagram(watchlist) {
     let pieWinPercentage = [];
 
     watchlist.forEach(stock => {
-        if (stock.winPercentage > 0) {
+        if (stock.winPercentage > 0 && !stock.observeOnly) {
             let randomColor = Math.floor(Math.random() * 16777215).toString(16);
 
             pieNameLabel.push(stock.name);
