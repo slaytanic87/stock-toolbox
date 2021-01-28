@@ -3,6 +3,8 @@
     <div class="flex flex-col lg:grid lg:gap-4 2xl:gap-6 lg:grid-cols-4 2xl:row-span-2 2xl:pb-8 ml-2 pt-4 px-6">
       <article-card v-for="card in newsList" :key="card.cardStyle" :class="card.cardStyle"
                       v-bind:propOrigin="card.origin"
+                      v-bind:propCategory="card.category"
+                      v-bind:propLink="card.href"
                       v-bind:propItem="card.cardType"
                       v-bind:propTitle="card.title"
                       v-bind:propMain="card.main"></article-card>
@@ -55,6 +57,8 @@ export default {
         let article = unmappedNewsList[i-1];
         this.newsList.push({
           title: article.title,
+          category: article.category,
+          href: article.href,
           origin: article.origin,
           main: article.main + "...",
           cardType: cardType,

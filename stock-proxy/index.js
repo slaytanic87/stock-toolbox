@@ -37,6 +37,5 @@ app.post("/addStock", (req, res) => {
 })
 
 app.get("/news", (req, res) => {
-    const topNewsUrl = "https://www.boersennews.de/nachrichten/top-news/";
-    boersennews.fetchNews(topNewsUrl, res);
+    boersennews.fetchNews(res);
 })
