@@ -1,9 +1,6 @@
 import axios from "axios";
+import { roundDigits } from "./utils.js";
 
-function roundTwoDigit(value) {
-    let calced = (Math.round(value * 100) / 100);
-    return calced;
-}
 
 function createChartData(timestamps, chartData, chartAdjclose) {
     let ohlcvArray = [];
@@ -49,9 +46,9 @@ export function createWatchItem(observedStock, stockData) {
     }
 
     let winPercentage = diffPrice * 100 / (entryPrice * observedStock.quantity);
-    let rounded = roundTwoDigit(winPercentage);
+    let rounded = roundDigits(winPercentage, 2);
     let displayed = rounded > 0 ? "+" + rounded : rounded;
-    let win = roundTwoDigit(diffPrice)+ " "+currency + " ("+ displayed + "%)";
+    let win = roundDigits(diffPrice, 4)+ " "+currency + " ("+ displayed + "%)";
 
     return {
         name: companyName + ` (${name})`,
@@ -143,5 +140,5 @@ export function calcRelativeStrengthIndex(stockData, observeTimeUnits) {
     let meaPositive = positiveSum / observeTimeUnits;
     let meanNegative = negativeSum / observeTimeUnits;
     let rsi = meaPositive / (meaPositive + meanNegative) * 100;
-    return roundTwoDigit(rsi);
+    return roundDigits(rsi, 2);
 }

@@ -1,8 +1,8 @@
 
-export function roundTwoDigit(value) {
-    return (Math.round(value * 100) / 100);
+export function roundDigits(number, decimalPlaces) {
+    const factorOfTen = Math.pow(10, decimalPlaces);
+    return Math.round(number * factorOfTen) / factorOfTen;
 }
-
 
 /**
  * @param {Array} watchlist
@@ -57,13 +57,13 @@ export function createWinLostList(watchlist) {
     Object.keys(win).forEach((key) => {
         mappedWinArr.push({
             currency: key,
-            win: roundTwoDigit(win[key])
+            win: roundDigits(win[key], 4)
         });
     });
     Object.keys(lost).forEach((key) => {
         mappedLostArr.push({
             currency: key,
-            lost: roundTwoDigit(lost[key])
+            lost: roundDigits(lost[key], 4)
         });
     });
 
@@ -90,9 +90,9 @@ export function createWinLost(watchlist) {
         }
     });
     return {
-        win: roundTwoDigit(win),
-        lost: roundTwoDigit(lost),
-        invested: roundTwoDigit(investedCapital)
+        win: roundDigits(win, 4),
+        lost: roundDigits(lost, 4),
+        invested: roundDigits(investedCapital, 4)
     }
 }
 

@@ -76,10 +76,9 @@
         {{propTitle}}
       </p>
       <br />
-      <p class="text-white text-opacity-50 font-medium md:text-sm px-4 mt-1 lg:-mt-3 2xl:mt-6">
+      <p class="text-white text-opacity-50 font-medium md:text-sm px-4 mt-3 lg:-mt-3">
         “ {{propMain}} ”
       </p>
-
       <a v-if="propLink" :href="propLink" class="no-underline hover:underline mb-3 2xl:pb-8 2xl:mx-4">Link</a>
     </div>
   </div>

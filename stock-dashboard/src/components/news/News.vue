@@ -1,7 +1,7 @@
 <template>
   <div class="container w-full mx-auto pt-3">
     <div class="flex flex-col lg:grid lg:gap-4 2xl:gap-6 lg:grid-cols-4 2xl:row-span-2 2xl:pb-8 ml-2 pt-4 px-6">
-      <article-card v-for="card in newsList" :key="card.cardStyle" :class="card.cardStyle"
+      <article-card v-for="card in sortList(newsList)" :key="card.index" :class="card.cardStyle"
                       v-bind:propOrigin="card.origin"
                       v-bind:propCategory="card.category"
                       v-bind:propLink="card.href"
@@ -46,7 +46,7 @@ export default {
       this.createNewsModelList(newsList);
     }).catch((err) => {
       console.log(err);
-    })
+    });
   },
   mounted() {
   },
@@ -56,6 +56,7 @@ export default {
         let cardType = (i % 5) === 0 ? 5 : (i % 5);
         let article = unmappedNewsList[i-1];
         this.newsList.push({
+          index: i - 1,
           title: article.title,
           category: article.category,
           href: article.href,
@@ -65,6 +66,9 @@ export default {
           cardStyle: this.cardTypeClass[cardType - 1] + " lg:order-" + i
         });
       }
+    },
+    sortList(list) {
+      return list.sort((valA, valB) => { return valB.index - valA.index});
     }
   }
 }

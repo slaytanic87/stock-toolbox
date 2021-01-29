@@ -15,6 +15,8 @@
     <div class="flex flex-row flex-wrap flex-grow mt-2">
         <windiagramcard v-bind:propData="chartData"></windiagramcard>
         <datacard v-bind:propChartData="watchlist"></datacard>
+        <progression-bar-card v-bind:propChartData="watchlist"
+                            v-bind:propTarget="20000"></progression-bar-card>
     </div>
 </div>
 </template>
@@ -23,6 +25,7 @@
 import Watchlist from "./Watchlist.vue";
 import WinDiagramCard from "./WinDiagramCard.vue";
 import DataCard from "./DataCard.vue";
+import ProgressionBarCard from "@/components/overview/ProgressionBarCard";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faBinoculars
@@ -34,7 +37,8 @@ export default {
   components: {
     "watchlist": Watchlist,
     "windiagramcard": WinDiagramCard,
-    "datacard": DataCard
+    "datacard": DataCard,
+    "progression-bar-card": ProgressionBarCard
   },
   data() {
     return {
