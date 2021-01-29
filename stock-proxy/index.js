@@ -15,17 +15,6 @@ app.use((req, res, next) => {
     next();
 });
 
-app.post('/', (req, res) => {
-    let url = req.body.url;
-    axios.get(url).then((resp) => {
-        console.log(url);
-        res.json(resp.data);
-        res.end();
-    }).catch((error) => {
-        console.log(error.response);
-    });
-});
-
 app.get("/watchlist", (req, res) => {
     res.json(watchlist);
     res.end();
