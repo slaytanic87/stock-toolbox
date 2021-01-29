@@ -1,5 +1,5 @@
 <template>
-  <div class="container w-full mx-auto pt-3">
+  <div class="container w-full mx-auto pt-20">
     <div class="flex flex-col lg:grid lg:gap-4 2xl:gap-6 lg:grid-cols-4 2xl:row-span-2 2xl:pb-8 ml-2 pt-4 px-6">
       <article-card v-for="card in sortList(newsList)" :key="card.index" :class="card.cardStyle"
                       v-bind:propOrigin="card.origin"
