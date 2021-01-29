@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 let watchlist = require('./watchlist.json');
 const boersennews = require("./boersennews");
+const yahoo = require("./yahoo");
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -29,6 +30,39 @@ app.get("/watchlist", (req, res) => {
     res.json(watchlist);
     res.end();
 });
+
+app.get("/v2/watchlist", (req, res) => {
+    let result = [];
+    let promises = [];
+    watchlist.forEach((item) => {
+        promises.push(new Promise((resolve, reject) => {
+            yahoo.fetchStockData(item.name, "1mo").then((response) => {
+                let watchItem = yahoo.createWatchItem(item, response.data);
+                result.push(watchItem);
+                resolve();
+            }).catch((err)=> {
+                reject(err);
+            });
+        }));
+    });
+    Promise.allSettled(promises).then((results) => {
+        res.json(result);
+        res.end();
+    });
+})
+
+app.get("/stock", (req, res) => {
+    let range = req.body.range;
+    let sym = req.body.sym;
+    yahoo.fetchStockData(sym, range).then((response)=> {
+        let watchItem = yahoo.mapChartDataFromResponse(response.data);
+        res.json(watchItem);
+        res.end();
+    }).catch((err) => {
+        console.log(err);
+        res.error();
+    })
+})
 
 app.post("/addStock", (req, res) => {
     let watchStock = req.body;

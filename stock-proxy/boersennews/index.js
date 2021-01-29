@@ -1,5 +1,6 @@
 const axios = require("axios");
 const cheerio = require("cheerio");
+
 const baseUrl = "https://www.boersennews.de";
 const topNewsUrl = baseUrl + "/nachrichten/top-news/";
 const exclusiveNews = baseUrl + "/nachrichten/id/183/";

@@ -107,6 +107,8 @@ export function fetchStockData(symbol, range) {
     return axios.post(url, data);
 }
 
+
+
 /**
  *
  * @param {*} stockData
