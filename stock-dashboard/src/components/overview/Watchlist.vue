@@ -110,7 +110,6 @@
 
 <script>
 import axios from "axios";
-import { createWatchItem, fetchStockData, mapChartDataFromResponse } from "../../libs/yahooStockUtils.js";
 import { createWinPieDiagram } from "../../libs/utils.js";
 import StockChart from "./StockChart.vue";
 import StockAddModal from "./StockAddModal.vue";
@@ -155,20 +154,15 @@ export default {
   },
   methods: {
     fetchWatchList() {
-        let url = "/watchlist";
+        let url = "/v2/watchlist";
         if (process.env.NODE_ENV === "development") {
-          url = "http://localhost:9090/watchlist";
+          url = "http://localhost:9090/v2/watchlist";
         }
         axios.get(url).then((res) => {
         this.clearData();
         let watchList = res.data;
-        watchList.forEach((item) => {
-          fetchStockData(item.name, "1mo").then((response) => {
-            let watchItem = createWatchItem(item, response.data);
-            this.stocks.push(watchItem);
-            this.searched.push(watchItem);
-          });
-        });
+        this.stocks = watchList;
+        this.searched = watchList;
       }).catch((error) => {
         console.log(error);
       });
@@ -196,12 +190,20 @@ export default {
     },
     showChart(chartName, chartData) {
       var self = this;
-      fetchStockData(chartData.sym, "max").then((response) => {
-          let watchItem = mapChartDataFromResponse(response.data);
-          self.selectedChart = self.createDataCube(watchItem);
+      let url = "/stock";
+      if (process.env.NODE_ENV === "development") {
+          url = "http://localhost:9090/stock";
+      }
+      axios.post(url, {
+        sym: chartData.sym,
+        range: "max"
+      }).then((response) => {
+          self.selectedChart = self.createDataCube(response.data);
           self.selectedName = chartName;
           self.showChartModal = true;
-      });
+      }).catch((error) => {
+        console.log(error);
+      })
     },
     showAddStock() {
       this.showAddStockModal = true;

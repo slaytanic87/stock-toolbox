@@ -51,7 +51,7 @@ app.get("/v2/watchlist", (req, res) => {
     });
 })
 
-app.get("/stock", (req, res) => {
+app.post("/stock", (req, res) => {
     let range = req.body.range;
     let sym = req.body.sym;
     yahoo.fetchStockData(sym, range).then((response)=> {

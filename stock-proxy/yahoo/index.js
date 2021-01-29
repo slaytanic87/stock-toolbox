@@ -1,4 +1,4 @@
-import axios from "axios";
+const axios = require("axios");
 
 function roundDigits(number, decimalPlaces) {
     const factorOfTen = Math.pow(10, decimalPlaces);
