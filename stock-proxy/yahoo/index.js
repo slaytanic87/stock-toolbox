@@ -5,7 +5,7 @@ function roundDigits(number, decimalPlaces) {
     return Math.round(number * factorOfTen) / factorOfTen;
 }
 
-function calcRelativeStrengthIndex(stockData, observeTimeUnits) {
+function calcRelativeStrengthIndexForLastCourse(stockData, observeTimeUnits) {
     let adjClose = stockData.chart.result[0].indicators.quote[0].close;
     let regularMarketPrice = stockData.chart.result[0].meta.regularMarketPrice;
     let startIndex = adjClose.length - observeTimeUnits;
@@ -29,7 +29,7 @@ function calcRelativeStrengthIndex(stockData, observeTimeUnits) {
         } else {
             negativeSum += Math.abs(elem);
         }
-    })
+    });
     let meaPositive = positiveSum / observeTimeUnits;
     let meanNegative = negativeSum / observeTimeUnits;
     let rsi = meaPositive / (meaPositive + meanNegative) * 100;
@@ -39,7 +39,7 @@ function calcRelativeStrengthIndex(stockData, observeTimeUnits) {
 function fetchStockData(symbol, range) {
     let baseUrl = "https://query1.finance.yahoo.com/v8/finance/chart/";
     let path = "?formatted=true&lang=de-DE&region=DE&includeAdjustedClose=true&interval=1d&range="
-        +range+"&corsDomain=de.finance.yahoo.com";
+        + range + "&corsDomain=de.finance.yahoo.com";
 
     return axios.get(baseUrl + symbol + path);
 }
@@ -84,7 +84,9 @@ function mapChartDataFromResponse(stockDataResponse) {
     return  {
         sym: symbol,
         chart: mappedChartData.chartData,
-        chartAdjclose: mappedChartData.adjData
+        chartAdjclose: mappedChartData.adjData,
+        sma30: calcSMA(stockDataResponse, 30),
+        sma100: calcSMA(stockDataResponse, 100)
     }
 }
 
@@ -100,9 +102,9 @@ function createWatchItem(observedStock, stockData) {
     let companyName = observedStock.companyName;
 
     let diffPrice = (regularMarketPrice * observedStock.quantity) - (entryPrice * observedStock.quantity);
-    let status = "="
+    let status = "=";
     if (diffPrice > 0) {
-        status = "+"
+        status = "+";
     } else if (diffPrice < 0) {
         status = "-";
     }
@@ -123,7 +125,7 @@ function createWatchItem(observedStock, stockData) {
         currency: currency,
         status: status,
         observeOnly: observedStock.observeOnly,
-        rsi: calcRelativeStrengthIndex(stockData, 14),
+        rsi: calcRelativeStrengthIndexForLastCourse(stockData, 14),
         chartData: {
             sym: name,
             chart: chartData,
@@ -131,6 +133,33 @@ function createWatchItem(observedStock, stockData) {
         }
     }
 }
+
+/**
+ * Simple Moving Average
+ * @param stockData
+ * @param lastPeriodDays
+ * @returns {*[][]|[]}
+ */
+function calcSMA(stockData, lastPeriodDays) {
+    let sma = [];
+    let timestamp = stockData.chart.result[0].timestamp.map(time => time * 1000);
+    let close = stockData.chart.result[0].indicators.quote[0].close;
+    if (lastPeriodDays === 0 || close.length < lastPeriodDays) {
+        return [[]];
+    }
+
+    for (let i = lastPeriodDays - 1; i < close.length; i++) {
+        let closeEntry = 0;
+        for (let d = i - (lastPeriodDays - 1); d <= i; d++) {
+            closeEntry += close[d];
+        }
+        let entryVec = [timestamp[i], closeEntry / lastPeriodDays];
+        sma.push(entryVec);
+    }
+
+    return sma;
+}
+
 
 module.exports = {
     fetchStockData,

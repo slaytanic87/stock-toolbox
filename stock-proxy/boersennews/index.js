@@ -4,6 +4,7 @@ const cheerio = require("cheerio");
 const baseUrl = "https://www.boersennews.de";
 const topNewsUrl = baseUrl + "/nachrichten/top-news/";
 const exclusiveNews = baseUrl + "/nachrichten/id/183/";
+const calendar = baseUrl + "/handelskalender/"
 
 function fetchNews(res) {
     let newsList = [];
@@ -14,6 +15,20 @@ function fetchNews(res) {
     Promise.allSettled(promises).then((results) => {
         res.json(newsList);
         res.end();
+    });
+}
+
+function fetchCalendar(res) {
+    axios.get(calendar).then((resp) => {
+        const dom = cheerio.load(resp.data);
+        let rows = dom("div[class=row]").find("table[id=calendarTable] > tbody > tr");
+        rows.each((index, elem) => {
+            let dayElem = dom(elem).find("span[class=text-white]").text();
+        })
+        res.end();
+    }).catch((err) => {
+       console.log(err);
+       res.error();
     });
 }
 
@@ -48,5 +63,6 @@ function callNews(url, newsList, category) {
 
 
 module.exports = {
-    fetchNews
+    fetchNews,
+    fetchCalendar
 }

@@ -196,7 +196,7 @@ export default {
       }
       axios.post(url, {
         sym: chartData.sym,
-        range: "max"
+        range: "3y"
       }).then((response) => {
           self.selectedChart = self.createDataCube(response.data);
           self.selectedName = chartName;
@@ -215,15 +215,26 @@ export default {
           data: chartData.chart, // [timestamp, open, high, low, close, volume]
         },
         onchart: [{
-          name: "Adjclose",
+          name: "SMA, 100",
           type: "PlotOverlay",
-          data: chartData.chartAdjclose, // [timestamp, adjclose]
+          data: chartData.sma100, // [timestamp, adjclose]
           settings: {
             upper: 70,
             lower: 30,
-            backColor: "#9b9ba316",
-            bandColor: "#666",
+            backColor: "#e5ec09",
+            bandColor: "#666"
           }
+         },
+         {
+           name: "SMA, 30",
+           type: "PlotOverlay",
+           data: chartData.sma30,
+           settings: {
+             upper: 70,
+             lower: 30,
+             backColor: "#9b9ba316",
+             bandColor: "#666"
+           }
          }]
       };
       return new DataCube(chartViewData);

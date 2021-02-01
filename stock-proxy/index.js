@@ -7,7 +7,12 @@ const yahoo = require("./yahoo");
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-app.listen(9090);
+
+const port = 9090;
+
+app.listen(port, ()=> {
+    console.log("stock backend is listening at: " + 9090);
+});
 
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -61,4 +66,8 @@ app.post("/addStock", (req, res) => {
 
 app.get("/news", (req, res) => {
     boersennews.fetchNews(res);
+})
+
+app.get("/calendar", (reqm, res) => {
+    boersennews.fetchCalendar(res);
 })

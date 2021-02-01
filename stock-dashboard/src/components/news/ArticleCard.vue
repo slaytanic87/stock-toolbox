@@ -13,7 +13,9 @@
       <p class="text-white text-opacity-50 font-medium md:text-sm px-7 lg:px-9 mb-3 2xl:pb-8 2xl:mx-2">
         “ {{propMain}} ”
       </p>
-      <a v-if="propLink" :href="propLink" class="no-underline hover:underline mb-3 2xl:pb-8 2xl:mx-9">Link</a>
+      <div class="mb-3">
+        <a v-if="propLink" :href="propLink" class="no-underline hover:underline 2xl:pb-8 2xl:mx-9">Link</a>
+      </div>
     </div>
 
     <div v-if="propItem === 2" class="mx-8 2xl:mx-10 my-10">
@@ -29,7 +31,9 @@
       <p class="text-white text-opacity-50 font-medium md:text-sm pl-6 lg:pl-5 pr-4 -mt-1 lg:mt-6 2xl:mt-2 2xl:px-8">
         “ {{propMain}} ”
       </p>
-      <a v-if="propLink" :href="propLink" class="no-underline hover:underline pl-3  2xl:mx-5">Link</a>
+      <div class="mb-3 mt-3">
+        <a v-if="propLink" :href="propLink" class="no-underline hover:underline pl-3  2xl:mx-5">Link</a>
+      </div>
     </div>
 
     <div v-if="propItem === 3" class="mx-8 my-10 lg:pl-4">
@@ -42,12 +46,12 @@
           {{propTitle}}
       </p>
       <br />
-      <p class="primary-color-blackish-blue-opacity font-medium md:text-sm px-4 lg:px-0 2xl:px-4 lg:pr-3 mt-2 lg:-mt-1 2xl:mt-2 2xl:pb-64">
+      <p class="primary-color-blackish-blue-opacity font-medium md:text-sm px-4 lg:px-0 2xl:px-4 lg:pr-3 mt-2 lg:-mt-1 2xl:mt-2 2xl:pb-3">
           “ {{propMain}} ”
-        <br/>
-        <br/>
-        <a v-if="propLink" :href="propLink" class="no-underline hover:underline mb-3 2xl:pb-8">Link</a>
       </p>
+      <div class="mt-3">
+        <a v-if="propLink" :href="propLink" class="no-underline hover:underline 2xl:px-3 mb-3 2xl:pb-8">Link</a>
+      </div>
     </div>
 
     <div v-if="propItem === 4" class="mx-8 my-10 lg:my-8">
@@ -56,14 +60,16 @@
       <h2 class="primary-color-blackish-blue-opacity text-xs md:text-base pl-11 md:pl-12 lg:pl-14 2xl:pl-24">{{propCategory}}</h2>
     </div>
     <div v-if="propItem === 4" class="-mt-4 ml-5 mr-11">
-      <p class="primary-color-blackish-blue px-2 lg:px-3 -mt-6 lg:-mt-5 2xl:mt-12 2xl:pb-5">
+      <p class="primary-color-blackish-blue px-2 lg:px-3 -mt-6 lg:-mt-5 2xl:mt-10 2xl:pb-2">
         {{propTitle}}
       </p>
       <br />
-      <p class="primary-color-blackish-blue-opacity font-medium md:text-sm pl-2 lg:pl-3 lg:pr-4 mb-6 2xl:pt-2 -mt-3">
+      <p class="primary-color-blackish-blue-opacity font-medium md:text-sm pl-2 lg:pl-3 lg:pr-4 mb-3 2xl:pt-2 -mt-3">
         “ {{propMain}} ”
       </p>
-      <a v-if="propLink" :href="propLink" class="no-underline hover:underline mb-3 2xl:pb-8 2xl:mx-2">Link</a>
+      <div class="mb-3">
+      <a v-if="propLink" :href="propLink" class="no-underline hover:underline mb-2 2xl:pb-8 2xl:mx-3">Link</a>
+      </div>
     </div>
 
     <div v-if="propItem === 5" class="mx-8 my-8">
@@ -79,7 +85,9 @@
       <p class="text-white text-opacity-50 font-medium md:text-sm px-4 mt-3 lg:-mt-3">
         “ {{propMain}} ”
       </p>
-      <a v-if="propLink" :href="propLink" class="no-underline hover:underline mb-3 2xl:pb-8 2xl:mx-4">Link</a>
+      <div class="mb-4 mt-3">
+        <a v-if="propLink" :href="propLink" class="no-underline hover:underline mb-3 2xl:pb-8 2xl:mx-4">Link</a>
+      </div>
     </div>
   </div>
 </template>

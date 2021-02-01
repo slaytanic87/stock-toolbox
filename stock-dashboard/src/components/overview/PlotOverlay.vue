@@ -63,7 +63,7 @@ export default {
             return this.$props.settings
         },
         line_width() {
-            return this.sett.lineWidth || 3
+            return this.sett.lineWidth || 1
         },
         color() {
             const n = this.$props.num % 5
