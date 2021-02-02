@@ -46,8 +46,18 @@ function fetchCalendar(res) {
 function getStatus(dom, rows) {
     let status = [];
     rows.each((index, elem) => {
-        status.push(dom(elem).attr("title"));
-    });  
+        let statusStr = String.prototype.toLowerCase.apply(dom(elem).attr("title"))
+            .replace(/\s+/g, "");
+        let color = "green";
+        if (statusStr === String.prototype.toLowerCase.apply("eingeschränkter Handel")
+            .replace(/\s+/g, "")) {
+            color = "yellow";
+        } else if (statusStr === String.prototype.toLowerCase.apply("kein Handel")
+            .replace(/\s+/g, "")) {
+            color = "red";
+        }
+        status.push(color);
+    });
     return status;
 }
 

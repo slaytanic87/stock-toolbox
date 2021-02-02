@@ -153,7 +153,7 @@ export default {
     }
   },
   methods: {
-    fetchWatchList() {
+    fetchWatchList () {
         let url = "/v2/watchlist";
         if (process.env.NODE_ENV === "development") {
           url = "http://localhost:9090/v2/watchlist";

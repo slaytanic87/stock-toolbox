@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-   <nav class="bg-gray-900 fixed w-full z-10 top-0 shadow"> 
+   <nav class="bg-gray-900 fixed w-full z-10 top-0 shadow">
     <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
       <div class="relative flex items-center justify-between h-16">
         <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
@@ -23,7 +23,7 @@
               </button>
               <button @click="changeView('News')">
                 <a href="#" v-bind:class="`block py-1 md:py-3 pl-1 align-middle no-underline hover:text-gray-100 border-b-2 hover:border-pink-400 ${news}`">
-                <font-awesome-icon :icon="['fa', 'envelope']" class="fa-fw mr-3"/>
+                  <font-awesome-icon :icon="['fa', 'envelope']" class="fa-fw mr-3"/>
                   <span class="pb-1 md:pb-0 text-sm">News</span>
                 </a>
               </button>
@@ -32,8 +32,9 @@
                   <span class="pb-1 md:pb-0 text-sm">Projects</span>
                 </a>
               </button>
-              <button>
-                <a href="#" class="block py-1 md:py-3 pl-1 align-middle no-underline hover:text-gray-100 border-b-2 hover:border-green-400 text-gray-500 border-gray-900">
+              <button @click="changeView('Calendar')">
+                <a href="#" v-bind:class="`block py-1 md:py-3 pl-1 align-middle no-underline hover:text-gray-100 border-b-2 hover:border-green-400 ${calendar}`">
+                  <font-awesome-icon :icon="['fa', 'calendar-alt']" class="fa-fw mr-3"/>
                   <span class="pb-1 md:pb-0 text-sm">Calendar</span>
                 </a>
               </button>
@@ -70,20 +71,23 @@
 <script>
 import Overview from "./components/overview/Overview.vue";
 import News from "./components/news/News.vue";
+import Calendar from "@/components/calendar/Calendar";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faBars,
   faHome,
-  faEnvelope
+  faEnvelope,
+  faCalendarAlt
 } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faBars, faHome, faEnvelope);
+library.add(faBars, faHome, faEnvelope, faCalendarAlt);
 
 export default {
   name: "App",
   components: {
     Overview,
-    News
+    News,
+    Calendar
   },
   data() {
     return {
@@ -98,6 +102,9 @@ export default {
     },
     news: function () {
       return this.$store.state.navigation.newsBarCss;
+    },
+    calendar: function () {
+      return this.$store.state.navigation.calendarBarCss;
     }
   },
   created() {
