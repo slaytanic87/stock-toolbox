@@ -1,6 +1,6 @@
 <template>
 <div class="container w-full mx-auto pt-20">
-    <div class="bg-gray-900">
+  <div class="bg-gray-900">
         <div class="flex mb-4 justify-center">
             <div class="ml-2 mt-0.5">
             <span class="block font-medium text-base leading-snug text-white text-xl">
@@ -12,12 +12,14 @@
         <watchlist @chartToCard="setChartData" @watchlistToCard="setWatchlistData"/>
     </div>
     <hr class="border-b-2 border-gray-600 my-8 mx-4">
-    <div class="flex flex-row flex-wrap flex-grow mt-2">
+  <div class="flex flex-row flex-wrap flex-grow mt-2">
         <windiagramcard v-bind:propData="chartData"></windiagramcard>
         <datacard v-bind:propChartData="watchlist"></datacard>
         <progression-bar-card v-bind:propChartData="watchlist"
                             v-bind:propTarget="20000"></progression-bar-card>
-    </div>
+
+
+      </div>
 </div>
 </template>
 

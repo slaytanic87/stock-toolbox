@@ -13,8 +13,8 @@
       <p class="text-white text-opacity-50 font-medium md:text-sm px-7 lg:px-9 mb-3 2xl:pb-8 2xl:mx-2">
         “ {{propMain}} ”
       </p>
-      <div class="mb-3">
-        <a v-if="propLink" :href="propLink" class="no-underline hover:underline 2xl:pb-8 2xl:mx-9">Link</a>
+      <div class="mb-3 relative">
+        <a v-if="propLink" :href="propLink" class="no-underline hover:underline 2xl:pb-8 pl-3 2xl:mx-9">Link</a>
       </div>
     </div>
 
