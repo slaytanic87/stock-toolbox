@@ -39,7 +39,6 @@ function calcRSIOverAll(stockData, observeTimeUnits) {
 
 function calcRelativeStrengthIndexForLastCourse(stockData, observeTimeUnits) {
     let adjClose = stockData.chart.result[0].indicators.quote[0].close;
-    let regularMarketPrice = stockData.chart.result[0].meta.regularMarketPrice;
     let startIndex = adjClose.length - observeTimeUnits;
 
     if (startIndex < 0) {
@@ -51,8 +50,6 @@ function calcRelativeStrengthIndexForLastCourse(stockData, observeTimeUnits) {
         let diffPrice = adjClose[i + 1] - adjClose[i];
         directionVector.push(diffPrice);
     }
-    directionVector.push(regularMarketPrice - adjClose[adjClose.length - 1]);
-
     let positiveSum = 0;
     let negativeSum = 0;
     directionVector.forEach(elem => {
