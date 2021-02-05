@@ -27,7 +27,7 @@ export default {
   components: {
     "day": Day
   },
-  data() {
+  data () {
     return {
       calendar: []
     }
@@ -48,12 +48,16 @@ export default {
         let dataArr = resp.data;
         dataArr.forEach( (elem) => {
           let dayArr = elem.day.split(".");
-          let day = Date.parse(dayArr[1] + "." +dayArr[0]+ "." + "20"+dayArr[2]);
-          let now = Date.parse(new Date().getDate() +"."+ new Date().getMonth() +"."+new Date().getFullYear());
-          if (day >= now) {
+          let currentYear = new Date().getFullYear();
+          let currentDay = new Date().getDate();
+          let currentMonth = new Date().getMonth() + 1;
+          if (currentYear === parseInt("20" + dayArr[2]) &&
+              currentDay <= parseInt(dayArr[0]) &&
+              currentMonth <= parseInt(dayArr[1])) {
             this.calendar.push(elem);
           }
-        })
+
+        });
       });
     }
   }

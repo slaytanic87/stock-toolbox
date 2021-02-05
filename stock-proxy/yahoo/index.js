@@ -5,6 +5,38 @@ function roundDigits(number, decimalPlaces) {
     return Math.round(number * factorOfTen) / factorOfTen;
 }
 
+function calcRSIOverAll(stockData, observeTimeUnits) {
+    let adjClose = stockData.chart.result[0].indicators.quote[0].close;
+    let timestamp = stockData.chart.result[0].timestamp.map(time => time * 1000);
+    let startIndex = observeTimeUnits - 1;
+    if (startIndex > adjClose.length) {
+        return [[]];
+    }
+    let rsiVec = [];
+    for (let i = startIndex; i < adjClose.length - 1; i++) {
+        let directionVector = [];
+        for (let t = i - startIndex; t <= i; t++) {
+            let diffPrice = adjClose[t + 1] - adjClose[t];
+            directionVector.push(diffPrice);
+        }
+        let positiveSum = 0;
+        let negativeSum = 0;
+        directionVector.forEach(elem => {
+            if (elem >= 0) {
+                positiveSum += elem;
+            } else {
+                negativeSum += Math.abs(elem);
+            }
+        });
+        let meaPositive = positiveSum / observeTimeUnits;
+        let meanNegative = negativeSum / observeTimeUnits;
+        let rsi =  roundDigits(meaPositive / (meaPositive + meanNegative) * 100, 2);
+        let resultVec = [timestamp[i], rsi];
+        rsiVec.push(resultVec);
+    }
+    return rsiVec;
+}
+
 function calcRelativeStrengthIndexForLastCourse(stockData, observeTimeUnits) {
     let adjClose = stockData.chart.result[0].indicators.quote[0].close;
     let regularMarketPrice = stockData.chart.result[0].meta.regularMarketPrice;
@@ -75,26 +107,26 @@ function createChartData(timestamps, chartData, chartAdjclose) {
 }
 
 function mapChartDataFromResponse(stockDataResponse) {
-    let symbol = stockDataResponse.chart.result[0].meta.symbol;
     let timestamp = stockDataResponse.chart.result[0].timestamp.map(time => time * 1000);
     let mappedChartData = createChartData(timestamp,
         stockDataResponse.chart.result[0].indicators.quote[0],
         stockDataResponse.chart.result[0].indicators.adjclose[0]);
 
     return  {
-        sym: symbol,
+        sym: stockDataResponse.chart.result[0].meta.symbol,
         chart: mappedChartData.chartData,
         chartAdjclose: mappedChartData.adjData,
         sma30: calcSMA(stockDataResponse, 30),
-        sma100: calcSMA(stockDataResponse, 100)
+        sma100: calcSMA(stockDataResponse, 100),
+        rsi14: calcRSIOverAll(stockDataResponse, 14)
     }
 }
 
 function createWatchItem(observedStock, stockData) {
     let regularMarketPrice = stockData.chart.result[0].meta.regularMarketPrice;
-    let currency = stockData.chart.result[0].meta.currency;
     let timestamp = stockData.chart.result[0].timestamp.map(time => time * 1000);
     let mappedChartData = createChartData(timestamp, stockData.chart.result[0].indicators.quote[0], stockData.chart.result[0].indicators.adjclose[0]);
+    let currency = stockData.chart.result[0].meta.currency;
     let chartData = mappedChartData.chartData;
     let adjclose =  mappedChartData.adjData;
     let entryPrice = observedStock.entryPrice;

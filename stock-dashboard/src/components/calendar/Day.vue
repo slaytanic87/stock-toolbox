@@ -21,9 +21,11 @@
             <tr>
               <td v-for="(status, index) in propStatus" :key="index">
                 <div v-bind:class="`category-badge flex-1  h-4 w-4 m rounded-full m-1`">
-                  <font-awesome-icon v-if="status==='red'" :icon="['fa', 'ban']" class="fa-fw mr-3 justify-center"/>
-                  <font-awesome-icon v-else-if="status==='yellow'" :icon="['fa', 'clock']" class="fa-fw mr-3 justify-center"/>
-                  <font-awesome-icon v-else-if="status==='green'" :icon="['fa', 'check-circle']" class="fa-fw mr-3 justify-center"/>
+                  <div :class="`rounded bg-${status}-700`">
+                    <font-awesome-icon v-if="status==='red'" :icon="['fa', 'ban']" class="fa-fw mr-3 justify-center"/>
+                    <font-awesome-icon v-else-if="status==='yellow'" :icon="['fa', 'clock']" class="fa-fw mr-3 justify-center"/>
+                    <font-awesome-icon v-else-if="status==='green'" :icon="['fa', 'check-circle']" class="fa-fw mr-3 justify-center"/>
+                  </div>
                 </div>
               </td>
             </tr>

@@ -235,7 +235,18 @@ export default {
              backColor: "#9b9ba316",
              bandColor: "#666"
            }
-         }]
+         }],
+        offchart: [
+          {
+            name: "RSI, 14",
+            type: "RSI",
+            data: chartData.rsi14,
+            settings: {
+              upper: 70,
+              lower: 30
+            }
+          }
+        ]
       };
       return new DataCube(chartViewData);
     },
