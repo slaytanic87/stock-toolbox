@@ -5,18 +5,17 @@ function roundDigits(number, decimalPlaces) {
     return Math.round(number * factorOfTen) / factorOfTen;
 }
 
-function calcRSIOverAll(stockData, observeTimeUnits) {
-    let adjClose = stockData.chart.result[0].indicators.quote[0].close;
-    let timestamp = stockData.chart.result[0].timestamp.map(time => time * 1000);
+function calcRSIOverAll(timestamp, adjClose, observeTimeUnits) {
+
     let startIndex = observeTimeUnits - 1;
     if (startIndex > adjClose.length) {
         return [[]];
     }
     let rsiVec = [];
-    for (let i = startIndex; i < adjClose.length - 1; i++) {
+    for (let i = startIndex; i < adjClose.length; i++) {
         let directionVector = [];
-        for (let t = i - startIndex; t <= i; t++) {
-            let diffPrice = adjClose[t + 1] - adjClose[t];
+        for (let t = i - startIndex + 1; t <= i; t++) {
+            let diffPrice = adjClose[t] - adjClose[t - 1];
             directionVector.push(diffPrice);
         }
         let positiveSum = 0;
@@ -108,14 +107,15 @@ function mapChartDataFromResponse(stockDataResponse) {
     let mappedChartData = createChartData(timestamp,
         stockDataResponse.chart.result[0].indicators.quote[0],
         stockDataResponse.chart.result[0].indicators.adjclose[0]);
-
+    let close = stockDataResponse.chart.result[0].indicators.quote[0].close;
     return  {
         sym: stockDataResponse.chart.result[0].meta.symbol,
         chart: mappedChartData.chartData,
         chartAdjclose: mappedChartData.adjData,
-        sma30: calcSMA(stockDataResponse, 30),
-        sma100: calcSMA(stockDataResponse, 100),
-        rsi14: calcRSIOverAll(stockDataResponse, 14)
+        sma30: calcSMA(timestamp, close, 30),
+        sma100: calcSMA(timestamp, close,100),
+        macd: calcMACD(timestamp, close, 12, 26),
+        rsi14: calcRSIOverAll(timestamp, close, 14)
     }
 }
 
@@ -124,11 +124,8 @@ function createWatchItem(observedStock, stockData) {
     let timestamp = stockData.chart.result[0].timestamp.map(time => time * 1000);
     let mappedChartData = createChartData(timestamp, stockData.chart.result[0].indicators.quote[0], stockData.chart.result[0].indicators.adjclose[0]);
     let currency = stockData.chart.result[0].meta.currency;
-    let chartData = mappedChartData.chartData;
-    let adjclose =  mappedChartData.adjData;
     let entryPrice = observedStock.entryPrice;
     let name = stockData.chart.result[0].meta.symbol;
-    let companyName = observedStock.companyName;
 
     let diffPrice = (regularMarketPrice * observedStock.quantity) - (entryPrice * observedStock.quantity);
     let status = "=";
@@ -141,10 +138,10 @@ function createWatchItem(observedStock, stockData) {
     let winPercentage = diffPrice * 100 / (entryPrice * observedStock.quantity);
     let rounded = roundDigits(winPercentage, 2);
     let displayed = rounded > 0 ? "+" + rounded : rounded;
-    let win = roundDigits(diffPrice, 4)+ " "+currency + " ("+ displayed + "%)";
+    let win = roundDigits(diffPrice, 4) + " " + currency + " ("+ displayed + "%)";
 
     return {
-        name: companyName + ` (${name})`,
+        name: observedStock.companyName + ` (${name})`,
         sym: name,
         currentPrice: regularMarketPrice,
         entryPrice: entryPrice,
@@ -157,8 +154,8 @@ function createWatchItem(observedStock, stockData) {
         rsi: calcRelativeStrengthIndexForLastCourse(stockData, 14),
         chartData: {
             sym: name,
-            chart: chartData,
-            chartAdjclose: adjclose
+            chart: mappedChartData.chartData,
+            chartAdjclose: mappedChartData.adjData
         }
     }
 }
@@ -169,10 +166,9 @@ function createWatchItem(observedStock, stockData) {
  * @param lastPeriodDays
  * @returns {*[][]|[]}
  */
-function calcSMA(stockData, lastPeriodDays) {
+function calcSMA(timestamp, close, lastPeriodDays) {
     let sma = [];
-    let timestamp = stockData.chart.result[0].timestamp.map(time => time * 1000);
-    let close = stockData.chart.result[0].indicators.quote[0].close;
+
     if (lastPeriodDays === 0 || close.length < lastPeriodDays) {
         return [[]];
     }
@@ -189,6 +185,45 @@ function calcSMA(stockData, lastPeriodDays) {
     return sma;
 }
 
+function calcEMA(timestamp, close, lastPeriodDays) {
+    if ((lastPeriodDays - 1) > close.length) {
+        return [[]];
+    }
+
+    let emaVec = [];
+    let sum = 0;
+    for (let i = 0; i < lastPeriodDays; i++) {
+        sum += close[i];
+    }
+
+    emaVec.push([timestamp[lastPeriodDays - 1], sum / lastPeriodDays]);
+    let indexVec = 1;
+    for (let i = lastPeriodDays; i < close.length; i++) {
+        let emaPrevious = emaVec[indexVec - 1][1];
+        let multiplier = (2 / (lastPeriodDays + 1));
+        let ema = (close[i] - emaPrevious)  * multiplier + emaPrevious;
+        emaVec.push([timestamp[i], ema]);
+        indexVec++;
+    }
+    return emaVec;
+}
+
+function calcMACD(timestamp, close, shortPeriod, longPeriod) {
+    let emaShortTerm = calcEMA(timestamp, close, shortPeriod);
+    let emaLongTerm = calcEMA(timestamp, close, longPeriod);
+    let startIndex =  emaShortTerm.length - emaLongTerm.length;
+    let macdVec = [];
+
+    for (let i = startIndex; i < emaShortTerm.length; i++) {
+        macdVec.push(emaShortTerm[i]);
+    }
+
+    for (let i = 0; i < emaLongTerm.length; i++) {
+        let closeLong = emaLongTerm[i][1];
+        macdVec[i][1] = macdVec[i][1] - closeLong;
+    }
+    return macdVec;
+}
 
 module.exports = {
     fetchStockData,
