@@ -245,6 +245,15 @@ export default {
               upper: 70,
               lower: 30
             }
+          },
+          {
+            name: "MACD Signal, 12/26/9",
+            type: "Splines",
+            data: chartData.macd,
+            settings: {
+              upper: 70,
+              lower: 30
+            }
           }
         ]
       };

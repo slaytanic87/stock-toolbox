@@ -114,7 +114,7 @@ function mapChartDataFromResponse(stockDataResponse) {
         chartAdjclose: mappedChartData.adjData,
         sma30: calcSMA(timestamp, close, 30),
         sma100: calcSMA(timestamp, close,100),
-        macd: calcMACD(timestamp, close, 12, 26),
+        macd: calcMACD(timestamp, close, 12, 26, 9),
         rsi14: calcRSIOverAll(timestamp, close, 14)
     }
 }
@@ -205,10 +205,11 @@ function calcEMA(timestamp, close, lastPeriodDays) {
         emaVec.push([timestamp[i], ema]);
         indexVec++;
     }
+
     return emaVec;
 }
 
-function calcMACD(timestamp, close, shortPeriod, longPeriod) {
+function calcMACD(timestamp, close, shortPeriod, longPeriod, signalPeriod) {
     let emaShortTerm = calcEMA(timestamp, close, shortPeriod);
     let emaLongTerm = calcEMA(timestamp, close, longPeriod);
     let startIndex =  emaShortTerm.length - emaLongTerm.length;
@@ -218,9 +219,23 @@ function calcMACD(timestamp, close, shortPeriod, longPeriod) {
         macdVec.push(emaShortTerm[i]);
     }
 
+    let sigTimestamp = [];
+    let sigMacd = [];
+
     for (let i = 0; i < emaLongTerm.length; i++) {
         let closeLong = emaLongTerm[i][1];
-        macdVec[i][1] = macdVec[i][1] - closeLong;
+        let macd = macdVec[i][1] - closeLong;
+        macdVec[i][1] = macd;
+
+        sigTimestamp.push(macdVec[i][0]);
+        sigMacd.push(macd);
+    }
+
+    let signal = calcEMA(sigTimestamp, sigMacd, signalPeriod);
+    let signalIndex = 0;
+    for (let i = signalPeriod - 1; i < macdVec.length; i++) {
+        macdVec[i].push(signal[signalIndex][1]);
+        signalIndex++;
     }
     return macdVec;
 }
