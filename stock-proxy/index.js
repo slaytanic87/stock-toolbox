@@ -71,3 +71,19 @@ app.get("/news", (req, res) => {
 app.get("/calendar", (reqm, res) => {
     boersennews.fetchCalendar(res);
 })
+
+app.get("/social", (req, res) => {
+    let social = [];
+    social.push({
+        author: "MC Magga",
+        username: "@mcmagga",
+        date: new Date().toLocaleDateString(),
+        content: "Hello traders!!!",
+        imageUrl: "https://pbs.twimg.com/media/D3h0Ot3U0AAoX7j?format=jpg&name=large",
+        numberOfComments: 0,
+        numberOfSharing: 0,
+        numberOfLikes: 0
+    })
+    res.json(social);
+    res.end();
+})

@@ -27,9 +27,9 @@
                   <span class="pb-1 md:pb-0 text-sm">News</span>
                 </a>
               </button>
-              <button>
-                <a href="#" class="block py-1 md:py-3 pl-1 align-middle no-underline hover:text-gray-100 border-b-2 hover:border-purple-400 text-gray-500 border-gray-900">
-                  <span class="pb-1 md:pb-0 text-sm">Projects</span>
+              <button @click="changeView('SocialMedia')">
+                <a href="#" v-bind:class="`block py-1 md:py-3 pl-1 align-middle no-underline hover:text-gray-100 border-b-2 hover:border-purple-400 ${socialMedia}`">
+                  <span class="pb-1 md:pb-0 text-sm">Social Media</span>
                 </a>
               </button>
               <button @click="changeView('Calendar')">
@@ -72,6 +72,7 @@
 import Overview from "./components/overview/Overview.vue";
 import News from "./components/news/News.vue";
 import Calendar from "@/components/calendar/Calendar";
+import SocialMedia from "@/components/social_media/SocialMedia";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faBars,
@@ -87,7 +88,8 @@ export default {
   components: {
     Overview,
     News,
-    Calendar
+    Calendar,
+    SocialMedia
   },
   data() {
     return {
@@ -105,6 +107,9 @@ export default {
     },
     calendar: function () {
       return this.$store.state.navigation.calendarBarCss;
+    },
+    socialMedia: function () {
+      return this.$store.state.navigation.socialMediaBarCss;
     }
   },
   created() {
