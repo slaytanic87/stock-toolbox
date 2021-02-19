@@ -5,7 +5,8 @@
         "entryPrice": 594.0,
         "currency": "EUR",
         "quantity": 1,
-        "observeOnly": true
+        "observeOnly": true,
+        "category": "OTHER"
     },
     {
         "name": "APC.F",
@@ -13,7 +14,8 @@
         "entryPrice": 107.88,
         "currency": "EUR",
         "quantity": 37,
-        "observeOnly": false
+        "observeOnly": false,
+        "category": "LONG"
     },
     {
         "name": "RY6.F",
@@ -21,7 +23,8 @@
         "entryPrice": 50.00,
         "currency": "EUR",
         "quantity": 40,
-        "observeOnly": false
+        "observeOnly": false,
+        "category": "DIVIDEND"
     },
     {
         "name": "6I4.MU",
@@ -29,7 +32,8 @@
         "entryPrice": 2.75,
         "currency": "EUR",
         "quantity": 2100,
-        "observeOnly": false
+        "observeOnly": false,
+        "category": "LONG"
     },
     {
         "name": "3CP.F",
@@ -37,7 +41,8 @@
         "entryPrice": 2.83,
         "currency": "EUR",
         "quantity": 1379,
-        "observeOnly": false
+        "observeOnly": false,
+        "category": "LONG"
     },
     {
         "name": "LHL.F",
@@ -45,7 +50,8 @@
         "entryPrice": 0.4988,
         "currency": "EUR",
         "quantity": 2700,
-        "observeOnly": false
+        "observeOnly": false,
+        "category": "DIVIDEND"
     },
     {
         "name": "EJZN.F",
@@ -53,7 +59,8 @@
         "entryPrice": 0.1498,
         "currency": "EUR",
         "quantity": 1,
-        "observeOnly": true
+        "observeOnly": true,
+        "category": "OTHER"
     },
     {
         "name": "0223.F",
@@ -61,7 +68,8 @@
         "entryPrice": 2.51,
         "currency": "EUR",
         "quantity": 1000,
-        "observeOnly": false
+        "observeOnly": false,
+        "category": "LONG"
     },
     {
         "name": "PLUN.F",
@@ -69,6 +77,16 @@
         "entryPrice": 52.30,
         "currency": "EUR",
         "quantity": 1,
-        "observeOnly": true
+        "observeOnly": true,
+        "category": "OTHER"
+    },
+    {
+        "name": "22UA.F",
+        "companyName": "BioNTech",
+        "entryPrice": 84.05,
+        "currency": "EUR",
+        "quantity": 23,
+        "observeOnly": false,
+        "category": "SHORT_PERIOD"
     }
 ]

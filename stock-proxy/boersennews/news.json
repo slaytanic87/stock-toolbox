@@ -1,0 +1,52 @@
+[
+  {
+      "name": "Börsennews.de",
+      "category": "TopNews",
+      "url": "https://www.boersennews.de/nachrichten/top-news/",
+      "baseUrl": "https://www.boersennews.de",
+      "query": "div[class=row] div > a",
+      "row": {
+        "title": {
+          "query": "h4"
+        },
+        "main": {
+          "query": "p"
+        },
+        "link": {
+          "query": "",
+          "baseUrl": "https://www.boersennews.de",
+          "attr": "href"
+        },
+        "image": {
+          "query": "p > img",
+          "baseUrl": "",
+          "attr": "data-src"
+        }
+      }
+  },
+  {
+    "name": "Börsennews.de",
+    "category": "Exclusive",
+    "url": "https://www.boersennews.de/nachrichten/id/183/",
+    "baseUrl": "https://www.boersennews.de",
+    "query": "div[class=row] div > a",
+    "row": {
+      "title": {
+        "query": "h4"
+      },
+      "main": {
+        "query": "p"
+      },
+      "link": {
+        "query": "",
+        "baseUrl": "https://www.boersennews.de",
+        "attr": "href"
+      },
+      "image": {
+        "query": "p > img",
+        "baseUrl": "",
+        "attr": "data-src"
+      }
+    }
+  }
+]

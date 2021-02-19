@@ -2,7 +2,7 @@
       <section class="blog text-gray-400 body-font">
       <div class="container px-5 py-24 mx-auto">
         <div class="flex flex-wrap w-full mb-20 flex-col items-center text-center">
-          <h1 class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-300">Trading Calendar</h1>
+          <h1 class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-300">Trading Event Calendar</h1>
           <p class="lg:w-1/2 w-full leading-relaxed text-base">
             Handelstage <br/>
             {{new Date()}}

@@ -18,7 +18,12 @@
           </svg>
         </div>
         <div class="flex h-12 font-medium rounded-full bg-gray-700">
-          <div @click="setNewsChunk(p - 1)" class="w-12 md:flex justify-center items-center hidden cursor-pointer leading-5 transition duration-150 ease-in rounded-full" v-for="p in pages" :key="p">{{p}}</div>
+          <div @click="setNewsChunk(p - 1)"
+               class="w-12 md:flex justify-center items-center hidden cursor-pointer leading-5 transition duration-150 ease-in rounded-full"
+               v-for="p in pages" :key="p">
+            <div v-if="(p - 1) === currentPage" class="text-red-500">{{p}}</div>
+            <div v-else>{{p}}</div>
+          </div>
         </div>
         <div @click="switchPage(1)" class="h-12 w-12 ml-1 flex justify-center items-center rounded-full bg-blue-700 cursor-pointer">
           <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right w-6 h-6">
@@ -44,14 +49,14 @@ export default {
       newsListModel: [],
       partitions: [],
       pages: 1,
-      currentPage: 1,
+      currentPage: 0,
       order: 1,
       cardTypeClass: [
-        "bg-indigo-600 lg:row-span-1 2xl:row-span-1 lg:col-span-2 rounded-lg shadow-xl lg:mb-0",
-        "bg-gray-900 lg:row-span-1 2xl:row-span-1 lg:col-span-1 rounded-lg shadow-xl lg:mb-0",
-        "bg-blue-800 lg:row-span-2 2xl:row-span-2 lg:col-span-1 rounded-lg shadow-xl lg:pb-0 2xl:h-screen",
-        "bg-red-800 lg:row-span-1 2xl:row-span-1 lg:col-span-1 rounded-lg shadow-xl lg:mb-0",
-        "bg-purple-800 lg:row-span-1 2xl:row-span-1 col-span-2 rounded-lg shadow-xl lg:mb-0"
+        "bg-indigo-600 lg:hover:bg-gray-700 lg:row-span-1 2xl:row-span-1 lg:col-span-2 rounded-lg shadow-xl lg:mb-0",
+        "bg-gray-900 lg:hover:bg-gray-700 lg:row-span-1 2xl:row-span-1 lg:col-span-1 rounded-lg shadow-xl lg:mb-0",
+        "bg-blue-800 lg:hover:bg-gray-700 lg:row-span-2 2xl:row-span-2 lg:col-span-1 rounded-lg shadow-xl lg:pb-0 2xl:h-screen",
+        "bg-red-800 lg:hover:bg-gray-700 lg:row-span-1 2xl:row-span-1 lg:col-span-1 rounded-lg shadow-xl lg:mb-0",
+        "bg-purple-800 lg:hover:bg-gray-700 lg:row-span-1 2xl:row-span-1 col-span-2 rounded-lg shadow-xl lg:mb-0"
       ]
     }
   },
@@ -64,10 +69,9 @@ export default {
     axios.get(url).then((resp) => {
       let newsList = resp.data;
       const spaces = 10;
-      this.pages = Math.round(newsList.length / spaces);
-      this.pages = newsList.length % spaces !== 0 ? this.pages++ : this.pages;
       let mapped = this.createNewsModelList(newsList);
       this.partitions = this.createPartition(mapped, spaces);
+      this.pages = this.partitions.length;
       this.setNewsChunk(0);
     }).catch((err) => {
       console.log(err);

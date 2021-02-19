@@ -16,7 +16,7 @@
         <windiagramcard v-bind:propData="chartData"></windiagramcard>
         <datacard v-bind:propChartData="watchlist"></datacard>
         <progression-bar-card v-bind:propChartData="watchlist"
-                            v-bind:propTarget="20000"></progression-bar-card>
+                            v-bind:propTargetStep="2000"></progression-bar-card>
 
 
       </div>

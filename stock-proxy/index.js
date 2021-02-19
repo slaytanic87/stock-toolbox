@@ -4,6 +4,7 @@ const app = express();
 let watchlist = require('./watchlist.json');
 const boersennews = require("./boersennews");
 const yahoo = require("./yahoo");
+const scraper = require("./lib/scraper.js");
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));

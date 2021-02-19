@@ -10,13 +10,13 @@
       <div class="relative pt-1">
         <div class="flex mb-2 items-center justify-between">
           <div>
-            <span class="text-xs font-semibold inline-block py-1 px-2 uppercase text-indigo-600 ">
+            <span class="text-xs font-semibold inline-block py-1 px-2 uppercase text-indigo-400 ">
               {{currentAmount}}{{propCurrency}}
             </span>
           </div>
           <div class="text-right">
-            <span class="text-xs font-semibold inline-block text-indigo-600">
-              {{propTarget}}{{propCurrency}}
+            <span class="text-xs font-semibold inline-block text-indigo-400">
+              {{currentTarget}}{{propCurrency}}
             </span>
           </div>
         </div>
@@ -24,6 +24,17 @@
           <div :style="`width:${currentPercentage}%`" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-indigo-500"></div>
         </div>
       </div>
+      <table class="rounded-t-lg m-5 w-5/6 mx-auto bg-gray-600 text-gray-200">
+        <tr>
+          <th>Milestones</th>
+        </tr>
+        <tr v-for="(item) in milestonesList" :key="item" class="bg-indigo-800 border-b border-gray-600">
+          <td class="px-4 py-3 lg:hover:bg-indigo-600 text-center">
+              {{item}}{{propCurrency}}
+              <font-awesome-icon :icon="['fa', 'check']" class="rounded bg-green-500"/>
+          </td>
+        </tr>
+      </table>
     </div>
   </div>
 </template>
@@ -32,13 +43,14 @@
 import { createWinLost, roundDigits } from "../../libs/utils.js";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
-  faCoins
+  faCoins,
+  faCheck
 } from "@fortawesome/free-solid-svg-icons";
-library.add(faCoins);
+library.add(faCoins, faCheck);
 export default {
   name: "ProgressionBarCard",
   props: {
-    propTarget: {
+    propTargetStep: {
       required: true
     },
     propChartData: {
@@ -52,7 +64,10 @@ export default {
   data() {
     return {
       currentPercentage: 0,
-      currentAmount: 0
+      currentAmount: 0,
+      currentTarget: 0,
+      targetFactor: 2,
+      milestonesList: []
     }
   },
   watch: {
@@ -62,7 +77,15 @@ export default {
       let lost = calcedData.lost;
       let total = roundDigits(win + lost, 4);
       this.currentAmount = total;
-      this.currentPercentage = total * 100 / this.propTarget;
+
+      while (this.currentAmount > this.currentTarget) {
+        this.currentTarget += this.targetFactor * this.propTargetStep;
+        if (this.currentAmount >= this.currentTarget) {
+          this.milestonesList.push(this.currentTarget);
+        }
+      }
+      this.milestonesList = this.milestonesList.reverse();
+      this.currentPercentage = total * 100 / this.currentTarget;
     }
   }
 }
