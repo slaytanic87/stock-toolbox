@@ -6,7 +6,8 @@
         "currency": "EUR",
         "quantity": 1,
         "observeOnly": true,
-        "category": "OTHER"
+        "category": "OTHER",
+        "countryCode": "US"
     },
     {
         "name": "APC.F",
@@ -15,7 +16,8 @@
         "currency": "EUR",
         "quantity": 37,
         "observeOnly": false,
-        "category": "LONG"
+        "category": "LONG",
+        "countryCode": "US"
     },
     {
         "name": "RY6.F",
@@ -24,7 +26,8 @@
         "currency": "EUR",
         "quantity": 40,
         "observeOnly": false,
-        "category": "DIVIDEND"
+        "category": "DIVIDEND",
+        "countryCode": "US"
     },
     {
         "name": "6I4.MU",
@@ -33,7 +36,8 @@
         "currency": "EUR",
         "quantity": 2100,
         "observeOnly": false,
-        "category": "LONG"
+        "category": "LONG",
+        "countryCode": "NO"
     },
     {
         "name": "3CP.F",
@@ -42,7 +46,8 @@
         "currency": "EUR",
         "quantity": 1379,
         "observeOnly": false,
-        "category": "LONG"
+        "category": "LONG",
+        "countryCode": "CN"
     },
     {
         "name": "LHL.F",
@@ -51,7 +56,8 @@
         "currency": "EUR",
         "quantity": 2700,
         "observeOnly": false,
-        "category": "DIVIDEND"
+        "category": "DIVIDEND",
+        "countryCode": "HK"
     },
     {
         "name": "EJZN.F",
@@ -60,7 +66,8 @@
         "currency": "EUR",
         "quantity": 1,
         "observeOnly": true,
-        "category": "OTHER"
+        "category": "OTHER",
+        "countryCode": "CA"
     },
     {
         "name": "0223.F",
@@ -69,7 +76,8 @@
         "currency": "EUR",
         "quantity": 1000,
         "observeOnly": false,
-        "category": "LONG"
+        "category": "LONG",
+        "countryCode": "US"
     },
     {
         "name": "PLUN.F",
@@ -78,7 +86,8 @@
         "currency": "EUR",
         "quantity": 1,
         "observeOnly": true,
-        "category": "OTHER"
+        "category": "OTHER",
+        "countryCode": "US"
     },
     {
         "name": "22UA.F",
@@ -87,6 +96,7 @@
         "currency": "EUR",
         "quantity": 23,
         "observeOnly": false,
-        "category": "SHORT_PERIOD"
+        "category": "SHORT_PERIOD",
+        "countryCode": "DE"
     }
 ]

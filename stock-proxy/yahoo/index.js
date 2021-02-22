@@ -142,6 +142,7 @@ function createWatchItem(observedStock, stockData) {
 
     return {
         name: observedStock.companyName + ` (${name})`,
+        countryCode: observedStock.countryCode,
         sym: name,
         currentPrice: regularMarketPrice,
         entryPrice: entryPrice,

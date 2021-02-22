@@ -110,8 +110,8 @@
 
 <script>
 import axios from "axios";
-import { createWinPieDiagram } from "../../libs/utils.js";
-import StockChart from "./StockChart.vue";
+import { createWinPieDiagram } from "../../../libs/utils.js";
+import StockChart from "../chartmodal/StockChart.vue";
 import StockAddModal from "./StockAddModal.vue";
 import { DataCube } from "trading-vue-js";
 import { library } from "@fortawesome/fontawesome-svg-core";

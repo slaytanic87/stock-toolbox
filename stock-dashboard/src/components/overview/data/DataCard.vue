@@ -72,7 +72,7 @@
 </template>
 
 <script>
-import { createWinLost, roundDigits } from "../../libs/utils.js";
+import { createWinLost, roundDigits } from "../../../libs/utils.js";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faUniversity,

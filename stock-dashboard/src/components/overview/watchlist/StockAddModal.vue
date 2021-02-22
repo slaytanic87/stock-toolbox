@@ -68,7 +68,22 @@
                       </span>
                     </label>
                   </div>
-              </div>
+                  <div class="border focus-within:border-blue-500 focus-within:text-blue-500 transition-all duration-500 relative rounded p-1">
+                    <div class="-mt-4 absolute tracking-wider px-1 uppercase text-xs">
+                      <p>
+                        <label for="countryCode" class="bg-white text-blue-600 px-1">Country</label>
+                      </p>
+                    </div>
+                    <p>
+                      <select id="countryCode" v-model="selectedCountryCode" class="w-full border bg-white rounded px-3 py-2 outline-none text-gray-500">
+                        <option v-for="country in countries" :key="country.code" v-bind:value="country.code" class="py-1">
+                          {{country.name}} {{country.code}}
+                        </option>
+                      </select>
+                    </p>
+                  </div>
+
+            </div>
 
           </div>
           <div class="flex items-center justify-end p-3 border-t border-solid border-gray-300 rounded-b">
@@ -87,6 +102,8 @@
 
 <script>
 import axios from "axios";
+import countries from "../map/countries.js";
+
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faEye
@@ -105,12 +122,14 @@ export default {
   },
   data() {
     return {
-        symbol: "",
-        entryPrice: 0,
-        stockName: "",
-        currency: "",
-        quantity: 0,
-        observeOnly: true
+      symbol: "",
+      entryPrice: 0,
+      stockName: "",
+      currency: "",
+      quantity: 0,
+      observeOnly: true,
+      countries: countries,
+      selectedCountryCode: "DE"
     };
   },
   methods: {
@@ -127,7 +146,8 @@ export default {
             entryPrice: this.entryPrice,
             currency: this.currency,
             observeOnly: this.observeOnly,
-            quantity: Math.floor(this.quantity)
+            quantity: Math.floor(this.quantity),
+            countryCode: this.selectedCountryCode
         }
         let url = "/addStock";
         if (process.env.NODE_ENV === "development") {

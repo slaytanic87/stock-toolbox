@@ -10,24 +10,25 @@
             </div>
         </div>
         <watchlist @chartToCard="setChartData" @watchlistToCard="setWatchlistData"/>
-    </div>
-    <hr class="border-b-2 border-gray-600 my-8 mx-4">
+  </div>
+  <hr class="border-b-2 border-gray-600 my-8 mx-4">
   <div class="flex flex-row flex-wrap flex-grow mt-2">
-        <windiagramcard v-bind:propData="chartData"></windiagramcard>
-        <datacard v-bind:propChartData="watchlist"></datacard>
-        <progression-bar-card v-bind:propChartData="watchlist"
-                            v-bind:propTargetStep="2000"></progression-bar-card>
+    <location-card v-bind:propWatchList="watchlist"></location-card>
+    <datacard v-bind:propChartData="watchlist"></datacard>
+    <windiagramcard v-bind:propData="chartData"></windiagramcard>
+    <progression-bar-card v-bind:propChartData="watchlist"
+                          v-bind:propTargetStep="2000"></progression-bar-card>
 
-
-      </div>
+  </div>
 </div>
 </template>
 
 <script>
-import Watchlist from "./Watchlist.vue";
-import WinDiagramCard from "./WinDiagramCard.vue";
-import DataCard from "./DataCard.vue";
-import ProgressionBarCard from "@/components/overview/ProgressionBarCard";
+import Watchlist from "./watchlist/Watchlist.vue";
+import WinDiagramCard from "./windiagram/WinDiagramCard.vue";
+import DataCard from "./data/DataCard.vue";
+import ProgressionBarCard from "@/components/overview/progression/ProgressionBarCard";
+import LocationCard from "@/components/overview/map/LocationCard";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faBinoculars
@@ -40,7 +41,8 @@ export default {
     "watchlist": Watchlist,
     "windiagramcard": WinDiagramCard,
     "datacard": DataCard,
-    "progression-bar-card": ProgressionBarCard
+    "progression-bar-card": ProgressionBarCard,
+    "location-card": LocationCard
   },
   data() {
     return {
