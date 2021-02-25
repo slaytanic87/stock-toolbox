@@ -7,7 +7,8 @@
                     v-bind:propLink="card.href"
                     v-bind:propItem="card.cardType"
                     v-bind:propTitle="card.title"
-                    v-bind:propMain="card.main"></article-card>
+                    v-bind:propMain="card.main"
+                    v-bind:propImage="card.image"></article-card>
 
     </div>
     <div class="flex flex-col items-center my-12">
@@ -98,6 +99,7 @@ export default {
           category: article.category,
           href: article.href,
           origin: article.origin,
+          image: article.image,
           main: article.main + "...",
           cardType: cardType,
           cardStyle: this.cardTypeClass[cardType - 1] + " lg:order-" + i

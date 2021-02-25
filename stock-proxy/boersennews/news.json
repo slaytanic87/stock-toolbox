@@ -68,7 +68,7 @@
         "attr": "href"
       },
       "image": {
-        "query": "figure[class=post-image] a > img",
+        "query": "figure > a > img",
         "baseUrl": "",
         "attr": "src"
       }

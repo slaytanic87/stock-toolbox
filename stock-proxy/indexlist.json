@@ -5,8 +5,8 @@
     "countryCode": "DE"
   },
   {
-    "symbol": "^SDAXI",
-    "name": "SDAX",
-    "countryCode": "DE"
+    "symbol": "^GSPC",
+    "name": "S&P 500",
+    "countryCode": "US"
   }
 ]

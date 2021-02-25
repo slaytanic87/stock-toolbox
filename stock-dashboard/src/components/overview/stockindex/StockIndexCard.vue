@@ -4,8 +4,8 @@
       <div class="border-b border-gray-800 p-3">
         <h5 class="font-bold uppercase text-gray-600">
           {{indexName}} ({{symbol}})
-          <button @click="syncData()">
-            <font-awesome-icon :icon="['fa', 'sync']" class="fa-fw mr-3"/>
+          <button @click="syncData()" class="rounded-full">
+            <font-awesome-icon :icon="['fa', 'sync']" class="fa-fw fa-inverse"/>
           </button>
         </h5>
       </div>
@@ -58,10 +58,10 @@ export default {
       width: 700,
       config: {
         DEFAULT_LEN: 200,
-        TB_BORDER: 1,
+        TB_BORDER: 3,
         CANDLEW: 1,
         GRIDX: 100,
-        VOLSCALE: 1.5
+        VOLSCALE: 1.0
       },
       dataCube: {}
     }
@@ -84,6 +84,8 @@ export default {
         symbol: this.symbol
       }).then((response) => {
         this.dataCube = this.createDataCube(response.data.chartData);
+      }).catch((err) => {
+        console.log(err);
       });
     },
     createDataCube(chartData) {
