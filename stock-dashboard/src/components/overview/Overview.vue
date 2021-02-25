@@ -18,21 +18,28 @@
     <windiagramcard v-bind:propData="chartData"></windiagramcard>
     <progression-bar-card v-bind:propChartData="watchlist"
                           v-bind:propTargetStep="2000"></progression-bar-card>
-
+    <stock-index-card v-for="stockindex in indexlist" :key="stockindex.symbol"
+                      v-bind:indexName="stockindex.name"
+                      v-bind:symbol="stockindex.symbol"
+                      v-bind:chartData="stockindex.chartDataCube"></stock-index-card>
   </div>
 </div>
 </template>
 
 <script>
+import axios from "axios";
 import Watchlist from "./watchlist/Watchlist.vue";
 import WinDiagramCard from "./windiagram/WinDiagramCard.vue";
 import DataCard from "./data/DataCard.vue";
 import ProgressionBarCard from "@/components/overview/progression/ProgressionBarCard";
 import LocationCard from "@/components/overview/map/LocationCard";
+import StockIndexCard from "@/components/overview/stockindex/StockIndexCard";
+import { createWinPieDiagram } from "../../libs/utils.js";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faBinoculars
 } from "@fortawesome/free-solid-svg-icons";
+import { DataCube } from "trading-vue-js";
 library.add(faBinoculars);
 
 export default {
@@ -42,24 +49,55 @@ export default {
     "windiagramcard": WinDiagramCard,
     "datacard": DataCard,
     "progression-bar-card": ProgressionBarCard,
-    "location-card": LocationCard
+    "location-card": LocationCard,
+    "stock-index-card": StockIndexCard
   },
   data() {
     return {
       chartData: {},
-      watchlist: []
+      watchlist: [],
+      indexlist: []
     }
   },
   created() {
   },
   mounted() {
+    this.fetchChartIndices();
   },
   methods: {
     setChartData(data) {
-      this.chartData = data;
+      this.chartData = createWinPieDiagram(data);
     },
     setWatchlistData(watchlistData) {
       this.watchlist = watchlistData;
+    },
+    fetchChartIndices() {
+      let url = "/indexlist";
+      if (process.env.NODE_ENV === "development") {
+        url = "http://localhost:9090/indexlist";
+      }
+      axios.get(url).then((res) => {
+        let list = res.data;
+        this.indexlist = [];
+        list.forEach((data) => {
+          this.indexlist.push({
+            symbol: data.symbol,
+            name: data.name,
+            chartDataCube: this.createDataCube(data.chartData)
+          });
+        });
+      }).catch((error) => {
+        console.log(error);
+      });
+    },
+    createDataCube(chartData) {
+      let chartViewData = {
+        chart: {
+          type: "Candles",
+          data: chartData.chart, // [timestamp, open, high, low, close, volume]
+        }
+      };
+      return new DataCube(chartViewData);
     }
   }
 };

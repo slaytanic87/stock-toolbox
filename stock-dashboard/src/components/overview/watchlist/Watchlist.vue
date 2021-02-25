@@ -110,7 +110,6 @@
 
 <script>
 import axios from "axios";
-import { createWinPieDiagram } from "../../../libs/utils.js";
 import StockChart from "../chartmodal/StockChart.vue";
 import StockAddModal from "./StockAddModal.vue";
 import { DataCube } from "trading-vue-js";
@@ -148,7 +147,7 @@ export default {
   },
   watch: {
     stocks: function (val) {
-        this.$emit("chartToCard", createWinPieDiagram(val));
+        this.$emit("chartToCard", val);
         this.$emit("watchlistToCard", this.stocks);
     }
   },

@@ -32,7 +32,7 @@ export default {
   name: "StockChart",
   created() {},
   components: {
-    "trading-vue": TradingVue,
+    "trading-vue": TradingVue
   },
   updated() {},
   mounted() {
@@ -62,11 +62,11 @@ export default {
     stockName: {
       type: String,
       default: "N/A",
-      required: true,
+      required: true
     },
     chartData: {
       required: true,
-      default: {},
+      default: {}
     },
     showDialog: {
       type: Boolean,

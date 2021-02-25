@@ -1,7 +1,7 @@
-const axios = require("axios");
 const express = require("express");
 const app = express();
-let watchlist = require('./watchlist.json');
+let watchlist = require("./watchlist.json");
+let indexlist = require("./indexlist.json");
 const boersennews = require("./boersennews");
 const yahoo = require("./yahoo");
 
@@ -20,10 +20,25 @@ app.use((req, res, next) => {
     next();
 });
 
-app.get("/watchlist", (req, res) => {
-    res.json(watchlist);
-    res.end();
-});
+app.get("/indexlist", (req, res) => {
+    let result = [];
+    let promises = [];
+    indexlist.forEach((item) => {
+        promises.push(new Promise((resolve, reject) => {
+            yahoo.indices.fetchIndex(item.symbol, "2m", "1d").then((response) => {
+                let indexItem = yahoo.indices.createIndexItem(response.data, item);
+                result.push(indexItem);
+                resolve();
+            }).catch((err) => {
+                reject(err);
+            })
+        }));
+    });
+    Promise.allSettled(promises).then((results) => {
+        res.json(result);
+        res.end();
+    });
+})
 
 app.get("/v2/watchlist", (req, res) => {
     let result = [];
@@ -43,6 +58,17 @@ app.get("/v2/watchlist", (req, res) => {
         res.json(result);
         res.end();
     });
+})
+
+app.post("/marketIndex", (req, res) => {
+    let sym = req.body.symbol;
+    yahoo.indices.fetchIndex(sym, "2m", "1d").then((response) => {
+        let indexItem = yahoo.indices.createSingleIndexItem(response.data);
+        res.json(indexItem);
+        res.end();
+    }).catch((err) => {
+        res.error();
+    })
 })
 
 app.post("/stock", (req, res) => {

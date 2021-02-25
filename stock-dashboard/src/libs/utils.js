@@ -13,12 +13,14 @@ export function createWinPieDiagram(watchlist) {
     let pieWinPercentage = [];
 
     watchlist.forEach(stock => {
-        if (stock.winPercentage > 0 && !stock.observeOnly) {
+        let diffPrice = (stock.currentPrice * stock.quantity) - (stock.entryPrice * stock.quantity);
+
+        if (diffPrice > 0 && !stock.observeOnly) {
             let randomColor = Math.floor(Math.random() * 16777215).toString(16);
 
             pieNameLabel.push(stock.name);
             pieColors.push("#" + randomColor);
-            pieWinPercentage.push(Math.floor(stock.winPercentage));
+            pieWinPercentage.push(diffPrice);
         }
     });
     return {

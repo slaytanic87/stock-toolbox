@@ -1,0 +1,12 @@
+[
+  {
+    "symbol": "^GDAXI",
+    "name": "DAX",
+    "countryCode": "DE"
+  },
+  {
+    "symbol": "^SDAXI",
+    "name": "SDAX",
+    "countryCode": "DE"
+  }
+]

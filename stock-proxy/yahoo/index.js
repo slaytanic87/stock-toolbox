@@ -1,4 +1,5 @@
 const axios = require("axios");
+const indices = require("./indices.js");
 
 function roundDigits(number, decimalPlaces) {
     const factorOfTen = Math.pow(10, decimalPlaces);
@@ -147,7 +148,6 @@ function createWatchItem(observedStock, stockData) {
         currentPrice: regularMarketPrice,
         entryPrice: entryPrice,
         win: win,
-        winPercentage: winPercentage,
         quantity: observedStock.quantity,
         currency: currency,
         status: status,
@@ -245,5 +245,6 @@ module.exports = {
     fetchStockData,
     fetchFinancials,
     createWatchItem,
-    mapChartDataFromResponse
+    mapChartDataFromResponse,
+    indices
 }

@@ -28,7 +28,9 @@
                       Win
                       <font-awesome-icon :icon="['fa', 'heart']" class="fa-fw mr-3"/>
                     </h5>
-                    <h3 v-if="win > 0" class="font-bold text-3xl text-green-500">{{ win }}</h3>
+                    <h3 v-if="win > 0" class="font-bold text-3xl text-green-500">{{ win }}
+                      <span class="text-green-500"><font-awesome-icon :icon="['fa', 'caret-up']" /></span>
+                    </h3>
                     <h3 v-else class="font-bold text-3xl text-gray-600">{{ win }}</h3>
                 </div>
             </div>
@@ -47,8 +49,11 @@
                       Lost
                       <font-awesome-icon :icon="['fa', 'bolt']" class="fa-fw mr-3"/>
                     </h5>
-                    <h3 v-if="lost < 0" class="font-bold text-3xl text-red-700">{{ lost }}</h3>
+                    <h3 v-if="lost < 0" class="font-bold text-3xl text-red-700">{{ lost }}
+                      <span class="text-red-500"><font-awesome-icon :icon="['fa', 'caret-down']" /></span>
+                    </h3>
                     <h3 v-else class="font-bold text-3xl text-gray-600">{{ lost }}</h3>
+
                 </div>
             </div>
         </div>
@@ -80,9 +85,12 @@ import {
   faArrowCircleUp,
   faArrowCircleDown,
   faBolt,
-  faHeart
+  faHeart,
+  faCaretUp,
+  faCaretDown
 } from "@fortawesome/free-solid-svg-icons";
-library.add(faUniversity, faMoneyBillAlt, faArrowCircleUp, faArrowCircleDown, faBolt, faHeart);
+library.add(faUniversity, faMoneyBillAlt, faArrowCircleUp, faArrowCircleDown, faBolt, faHeart,
+faCaretUp, faCaretDown);
 export default {
   name: "App",
   components: {

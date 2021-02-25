@@ -11,7 +11,6 @@
   "dependencies": {
     "axios": "^0.21.1",
     "cheerio": "^1.0.0-rc.5",
-    "express": "^4.17.1",
-    "twitter-lite": "^0.14.0"
+    "express": "^4.17.1"
   }
 }
