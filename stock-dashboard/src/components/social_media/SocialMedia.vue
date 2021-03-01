@@ -1,5 +1,24 @@
 <template>
 <div class="container w-full mx-auto pt-20">
+  <div class="grid lg:grid-cols-2 gap-2 mx-5">
+    <div class="focus-within:border-blue-500 focus-within:text-blue-500 transition-all duration-500 rounded p-1">
+      <div class="-mt-4 absolute tracking-wider px-1 uppercase text-xs">
+        <p>
+          <label for="countryCode" class="bg-gray text-white-600 px-1 my-2">Platform</label>
+        </p>
+      </div>
+      <p>
+        <select id="countryCode" class=" border rounded px-3 py-2 outline-none text-gray-500">
+          <option class="py-1">
+            Reddit
+          </option>
+          <option class="py-1">
+            Twitter
+          </option>
+        </select>
+      </p>
+    </div>
+  </div>
   <div class="flex justify-between container mx-auto px-6 py-8">
     <div class="w-full lg:w-8/12">
       <social-article></social-article>

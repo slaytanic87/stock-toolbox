@@ -1,9 +1,11 @@
 const express = require("express");
 const app = express();
-let watchlist = require("./watchlist.json");
-let indexlist = require("./indexlist.json");
 const boersennews = require("./boersennews");
 const yahoo = require("./yahoo");
+const bigdata = require("./bigdata");
+
+let watchlist = require("./watchlist.json");
+let indexlist = require("./indexlist.json");
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -109,7 +111,26 @@ app.get("/social", (req, res) => {
         numberOfComments: 0,
         numberOfSharing: 0,
         numberOfLikes: 0
-    })
+    });
     res.json(social);
     res.end();
+})
+
+app.get("/reddit", (req, res) => {
+
+    let urlBuilder = bigdata.queryBuilder();
+    let myUrl = urlBuilder
+        .subreddit("boeing")
+        .fields(["url", "author", "title", "subreddit", "created_utc", "media"])
+        .after("30d").size(200).build();
+
+    bigdata.getSubmission(myUrl).then((result) => {
+        res.json(result);
+        res.end();
+    }).catch((err) => {
+        console.log(err);
+        res.error();
+        res.end();
+    });
+
 })
