@@ -7,7 +7,8 @@
         "quantity": 1,
         "observeOnly": true,
         "category": "OTHER",
-        "countryCode": "US"
+        "countryCode": "US",
+        "tags": ["TL0"]
     },
     {
         "name": "APC.F",
@@ -17,7 +18,8 @@
         "quantity": 37,
         "observeOnly": false,
         "category": "LONG",
-        "countryCode": "US"
+        "countryCode": "US",
+        "tags": ["APC"]
     },
     {
         "name": "RY6.F",
@@ -27,7 +29,8 @@
         "quantity": 40,
         "observeOnly": false,
         "category": "DIVIDEND",
-        "countryCode": "US"
+        "countryCode": "US",
+        "tags": ["RY6"]
     },
     {
         "name": "6I4.MU",
@@ -37,7 +40,8 @@
         "quantity": 2100,
         "observeOnly": false,
         "category": "LONG",
-        "countryCode": "NO"
+        "countryCode": "NO",
+        "tags": ["6I4"]
     },
     {
         "name": "3CP.F",
@@ -47,7 +51,8 @@
         "quantity": 1379,
         "observeOnly": false,
         "category": "LONG",
-        "countryCode": "CN"
+        "countryCode": "CN",
+        "tags": ["3CP"]
     },
     {
         "name": "LHL.F",
@@ -57,7 +62,8 @@
         "quantity": 2700,
         "observeOnly": false,
         "category": "DIVIDEND",
-        "countryCode": "HK"
+        "countryCode": "HK",
+        "tags": ["LHL"]
     },
     {
         "name": "EJZN.F",
@@ -67,7 +73,8 @@
         "quantity": 1,
         "observeOnly": true,
         "category": "OTHER",
-        "countryCode": "CA"
+        "countryCode": "CA",
+        "tags": ["EJZN"]
     },
     {
         "name": "0223.F",
@@ -77,7 +84,8 @@
         "quantity": 1000,
         "observeOnly": false,
         "category": "LONG",
-        "countryCode": "US"
+        "countryCode": "US",
+        "tags": ["0223"]
     },
     {
         "name": "PLUN.F",
@@ -87,7 +95,8 @@
         "quantity": 1,
         "observeOnly": true,
         "category": "OTHER",
-        "countryCode": "US"
+        "countryCode": "US",
+        "tags": ["PLUN"]
     },
     {
         "name": "22UA.F",
@@ -97,6 +106,7 @@
         "quantity": 23,
         "observeOnly": false,
         "category": "SHORT_PERIOD",
-        "countryCode": "DE"
+        "countryCode": "DE",
+        "tags": ["22UA"]
     }
 ]

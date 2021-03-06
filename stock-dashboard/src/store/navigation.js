@@ -12,7 +12,7 @@ const navBarMenueStyles = {
         unselect: "text-gray-500 border-gray-900"
     },
     socialMedia: {
-        selected: "text-green-400 border-purple-400",
+        selected: "text-purple-400 border-purple-400",
         unselect: "text-gray-500 border-gray-900"
     }
 };

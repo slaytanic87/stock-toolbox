@@ -62,25 +62,28 @@ export default {
     }
   },
   created() {
-    this.newsListModel = [];
-    let url = "/";
-    if (process.env.NODE_ENV === "development") {
-      url = "http://localhost:9090/news";
-    }
-    axios.get(url).then((resp) => {
-      let newsList = resp.data;
-      const spaces = 10;
-      let mapped = this.createNewsModelList(newsList);
-      this.partitions = this.createPartition(mapped, spaces);
-      this.pages = this.partitions.length;
-      this.setNewsChunk(0);
-    }).catch((err) => {
-      console.log(err);
-    });
+    this.fetchNews();
   },
   mounted() {
   },
   methods: {
+    async fetchNews() {
+      this.newsListModel = [];
+      let url = "/";
+      if (process.env.NODE_ENV === "development") {
+        url = "http://localhost:9090/news";
+      }
+      axios.get(url).then((resp) => {
+        let newsList = resp.data;
+        const spaces = 10;
+        let mapped = this.createNewsModelList(newsList);
+        this.partitions = this.createPartition(mapped, spaces);
+        this.pages = this.partitions.length;
+        this.setNewsChunk(0);
+      }).catch((err) => {
+        console.log(err);
+      });
+    },
     createPartition(list, spaces) {
       let output = [];
       for (let i = 0; i < list.length; i += spaces) {

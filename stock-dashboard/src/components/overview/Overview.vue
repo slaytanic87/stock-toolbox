@@ -1,15 +1,15 @@
 <template>
 <div class="container w-full mx-auto pt-20">
   <div class="bg-gray-900">
-        <div class="flex mb-4 justify-center">
-            <div class="ml-2 mt-0.5">
+      <div class="flex mb-4 justify-center">
+          <div class="ml-2 mt-0.5">
             <span class="block font-medium text-base leading-snug text-white text-xl">
               <font-awesome-icon :icon="['fa', 'binoculars']" class="fa-fw mr-3"/>
               Watchlist
             </span>
-            </div>
-        </div>
-        <watchlist @chartToCard="setChartData" @watchlistToCard="setWatchlistData"/>
+          </div>
+      </div>
+      <watchlist @chartToCard="setChartData" @watchlistToCard="setWatchlistData"/>
   </div>
   <hr class="border-b-2 border-gray-600 my-8 mx-4">
   <div class="flex flex-row flex-wrap flex-grow mt-2">
@@ -71,7 +71,7 @@ export default {
     setWatchlistData(watchlistData) {
       this.watchlist = watchlistData;
     },
-    fetchChartIndices() {
+    async fetchChartIndices() {
       let url = "/indexlist";
       if (process.env.NODE_ENV === "development") {
         url = "http://localhost:9090/indexlist";

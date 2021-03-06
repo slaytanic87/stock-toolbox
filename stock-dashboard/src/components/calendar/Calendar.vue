@@ -38,7 +38,7 @@ export default {
   mounted () {
   },
   methods: {
-    fetchCalendar () {
+    async fetchCalendar () {
       this.calendar = [];
       let url = "/calendar";
       if (process.env.NODE_ENV === "development") {

@@ -74,7 +74,7 @@ export default {
     onResize() {
       this.setSize();
     },
-    syncData() {
+    async syncData() {
       let url = "/marketIndex";
       if (process.env.NODE_ENV === "development") {
         url = "http://localhost:9090/marketIndex";

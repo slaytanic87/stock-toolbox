@@ -42,6 +42,15 @@ app.get("/indexlist", (req, res) => {
     });
 })
 
+app.get("/tags", (req, res) => {
+    let tags = [];
+    watchlist.forEach((item) => {
+        tags = tags.concat(item.tags);
+    });
+    res.json(tags);
+    res.end();
+})
+
 app.get("/v2/watchlist", (req, res) => {
     let result = [];
     let promises = [];
@@ -52,6 +61,7 @@ app.get("/v2/watchlist", (req, res) => {
                 result.push(watchItem);
                 resolve();
             }).catch((err)=> {
+                console.log(err);
                 reject(err);
             });
         }));
@@ -69,6 +79,7 @@ app.post("/marketIndex", (req, res) => {
         res.json(indexItem);
         res.end();
     }).catch((err) => {
+        console.log(err);
         res.error();
     })
 })

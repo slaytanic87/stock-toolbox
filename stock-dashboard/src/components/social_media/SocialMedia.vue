@@ -8,7 +8,7 @@
         </p>
       </div>
       <p>
-        <select id="countryCode" class=" border rounded px-3 py-2 outline-none text-gray-500">
+        <select id="countryCode" class="border rounded px-3 py-2 outline-none text-gray-500">
           <option class="py-1">
             Reddit
           </option>
@@ -18,6 +18,9 @@
         </select>
       </p>
     </div>
+  </div>
+  <div class="grid lg:grid-cols-2 gap-2 mx-5">
+    <tags-input></tags-input>
   </div>
   <div class="flex justify-between container mx-auto px-6 py-8">
     <div class="w-full lg:w-8/12">
@@ -57,13 +60,14 @@
 
 <script>
 import Article from "@/components/social_media/Article.vue";
-
+import TagsInput from "@/components/social_media/TagsInput";
 // page example https://tailwindcomponents.com/component/blog-page
 
 export default {
   name: "SocialMedia",
   components: {
-    "social-article": Article
+    "social-article": Article,
+    "tags-input": TagsInput
   }
 }
 </script>
