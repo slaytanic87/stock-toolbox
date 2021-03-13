@@ -20,12 +20,12 @@
     </div>
   </div>
   <div class="grid lg:grid-cols-2 gap-2 mx-5">
-    <tags-input></tags-input>
+    <tags-input @tagsToSocialMedia="fetchEvents"></tags-input>
   </div>
   <div class="flex justify-between container mx-auto px-6 py-8">
+    <loading-page v-if="events.length === 0"></loading-page>
     <div class="w-full lg:w-8/12">
-      <social-article></social-article>
-      <social-article></social-article>
+      <social-article v-for="(event, index) in events" v-bind:key="index" :event="event"/>
     </div>
     <div class="-mx-8 w-4/12 hidden lg:block">
       <div class="px-14">
@@ -59,6 +59,8 @@
 </template>
 
 <script>
+import axios from "axios";
+import LoadingPage from "@/components/LoadingPage";
 import Article from "@/components/social_media/Article.vue";
 import TagsInput from "@/components/social_media/TagsInput";
 // page example https://tailwindcomponents.com/component/blog-page
@@ -67,7 +69,24 @@ export default {
   name: "SocialMedia",
   components: {
     "social-article": Article,
-    "tags-input": TagsInput
+    "tags-input": TagsInput,
+    "loading-page": LoadingPage
+  },
+  data () {
+    return {
+      events: []
+    }
+  },
+  methods: {
+    async fetchEvents (tags) {
+      let url = "/reddit";
+      if (process.env.NODE_ENV === "development") {
+        url = "http://localhost:9090/reddit";
+      }
+      axios.post(url, tags).then((response) => {
+        this.events = response.data;
+      })
+    },
   }
 }
 </script>

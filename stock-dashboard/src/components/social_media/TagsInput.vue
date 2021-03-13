@@ -52,6 +52,12 @@ export default {
       textInput: ""
     }
   },
+  watch: {
+    tags (newVal) {
+      this.$emit("tagsToSocialMedia", newVal);
+    }
+
+  },
   methods: {
     addTag () {
       this.textInput = this.textInput.trim();

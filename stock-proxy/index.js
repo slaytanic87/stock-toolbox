@@ -6,6 +6,8 @@ const bigdata = require("./bigdata");
 
 let watchlist = require("./watchlist.json");
 let indexlist = require("./indexlist.json");
+const scraper = require("./lib/scraper.js");
+let articles = require("./news.json");
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -32,6 +34,7 @@ app.get("/indexlist", (req, res) => {
                 result.push(indexItem);
                 resolve();
             }).catch((err) => {
+                console.log(err);
                 reject(err);
             })
         }));
@@ -104,7 +107,23 @@ app.post("/addStock", (req, res) => {
 })
 
 app.get("/news", (req, res) => {
-    boersennews.fetchNews(res);
+    let promises = [];
+    let parsed = [];
+    articles.forEach((article) => {
+        if (article.renderingType === "client".toLowerCase()) {
+            promises.push(scraper.scrapeCSR(article));
+        } else {
+            promises.push(scraper.scrape(article));
+        }
+    });
+
+    Promise.allSettled(promises).then((results) => {
+        results.forEach((newsList) => {
+            parsed = parsed.concat(newsList.value);
+        });
+        res.json(parsed);
+        res.end();
+    });
 })
 
 app.get("/calendar", (reqm, res) => {
@@ -118,7 +137,7 @@ app.get("/social", (req, res) => {
         username: "@mcmagga",
         date: new Date().toLocaleDateString(),
         content: "Hello traders!!!",
-        imageUrl: "https://pbs.twimg.com/media/D3h0Ot3U0AAoX7j?format=jpg&name=large",
+        url: "https://pbs.twimg.com/media/D3h0Ot3U0AAoX7j?format=jpg&name=large",
         numberOfComments: 0,
         numberOfSharing: 0,
         numberOfLikes: 0
@@ -127,21 +146,38 @@ app.get("/social", (req, res) => {
     res.end();
 })
 
-app.get("/reddit", (req, res) => {
-
+app.post("/reddit", (req, res) => {
+    let tags = req.body;
     let urlBuilder = bigdata.queryBuilder();
-    let myUrl = urlBuilder
-        .subreddit("boeing")
-        .fields(["url", "author", "title", "subreddit", "created_utc", "media"])
-        .after("30d").size(200).build();
+    let promises = [];
+    let events = [];
+    tags.forEach((tag) => {
+        let myUrl = urlBuilder
+            .subreddit(tag)
+            .fields(["url", "author", "title", "subreddit", "created_utc", "media"])
+            .after("30d").size(10).build();
+        promises.push(bigdata.getSubmission(myUrl))
+    })
+    Promise.allSettled(promises).then((results) => {
+        results.forEach((result) => {
+            if (result.value === undefined) {
+                return;
+            }
+            result.value.data.forEach((event) => {
+                events.push({
+                    author: event.author,
+                    tag: event.subreddit,
+                    date: new Date(event.created_utc * 1000).toLocaleDateString(),
+                    content: event.title,
+                    url: event.url,
+                    numberOfComments: 0,
+                    numberOfSharing: 0,
+                    numberOfLikes: 0
+                })
+            })
+        });
 
-    bigdata.getSubmission(myUrl).then((result) => {
-        res.json(result);
-        res.end();
-    }).catch((err) => {
-        console.log(err);
-        res.error();
+        res.json(events);
         res.end();
     });
-
 })

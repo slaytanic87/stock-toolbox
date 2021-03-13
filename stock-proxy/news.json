@@ -1,6 +1,7 @@
 [
   {
       "name": "Börsennews.de",
+      "renderingType": "server",
       "category": "TopNews",
       "url": "https://www.boersennews.de/nachrichten/top-news/",
       "baseUrl": "https://www.boersennews.de",
@@ -26,6 +27,7 @@
   },
   {
     "name": "Börsennews.de",
+    "renderingType": "server",
     "category": "Exclusive",
     "url": "https://www.boersennews.de/nachrichten/id/183/",
     "baseUrl": "https://www.boersennews.de",
@@ -51,6 +53,7 @@
   },
   {
     "name": "trendingnews.de",
+    "renderingType": "server",
     "category": "IT-Trends",
     "url": "https://trendingnews.de/category/it-trends",
     "baseUrl": "https://trendingnews.de",

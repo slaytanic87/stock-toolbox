@@ -8,6 +8,7 @@
             {{new Date()}}
           </p>
         </div>
+        <loading-page v-if="calendar.length === 0"></loading-page>
         <div class="flex flex-wrap sm:-m-4 -mx-4 -mb-10 -mt-4">
           <day v-for="(entry, index) in calendar" :key="index"
                :propCountries="entry.countries"
@@ -21,11 +22,13 @@
 
 <script>
 import Day from "@/components/calendar/Day.vue";
+import LoadingPage from "@/components/LoadingPage";
 import axios from "axios";
 export default {
   name: "Calendar",
   components: {
-    "day": Day
+    "day": Day,
+    "loading-page": LoadingPage
   },
   data () {
     return {

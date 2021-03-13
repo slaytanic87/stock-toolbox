@@ -3,15 +3,22 @@ const axios = require("axios");
 //https://github.com/pushshift/api
 //https://api.pushshift.io/reddit/search/submission/?subreddit=wallstreetbets&fields=url,author,title,subreddit&after=10d&size=200
 
+function getRandomNumber(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
 function getSubmission(url) {
+    const randomTimeout = getRandomNumber(200, 900);
     return new Promise((resolve, reject) => {
-        axios.get(url).then((response) => {
-            let responseJson = response.data;
-            resolve(responseJson);
-        }).catch((ex) => {
-            console.log(ex);
-            reject(ex);
-        });
+        setTimeout(() => {
+            axios.get(url).then((response) => {
+                let responseJson = response.data;
+                resolve(responseJson);
+            }).catch((ex) => {
+                console.log("url "+ url + ": " +ex.message);
+                reject(ex);
+            })
+        }, randomTimeout);
     });
 }
 

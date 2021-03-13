@@ -1,5 +1,6 @@
 <template>
   <div class="container w-full mx-auto pt-20">
+    <loading-page v-if="newsListModel.length === 0"></loading-page>
     <div class="flex flex-col lg:grid lg:gap-4 2xl:gap-6 lg:grid-cols-4 2xl:row-span-2 2xl:pb-8 ml-2 pt-4 px-6">
       <article-card v-for="card in newsListModel" :key="card.index" :class="card.cardStyle"
                     v-bind:propOrigin="card.origin"
@@ -38,12 +39,14 @@
 
 <script>
 import ArticleCard from "@/components/news/ArticleCard.vue";
+import LoadingPage from "@/components/LoadingPage";
 import axios from "axios";
 
 export default {
   name: "News",
   components: {
-    "article-card": ArticleCard
+    "article-card": ArticleCard,
+    "loading-page": LoadingPage
   },
   data() {
     return {

@@ -8,7 +8,7 @@
         "observeOnly": true,
         "category": "OTHER",
         "countryCode": "US",
-        "tags": ["TL0"]
+        "tags": ["tesla"]
     },
     {
         "name": "APC.F",
@@ -19,7 +19,7 @@
         "observeOnly": false,
         "category": "LONG",
         "countryCode": "US",
-        "tags": ["APC"]
+        "tags": ["apple"]
     },
     {
         "name": "RY6.F",
@@ -30,7 +30,7 @@
         "observeOnly": false,
         "category": "DIVIDEND",
         "countryCode": "US",
-        "tags": ["RY6"]
+        "tags": []
     },
     {
         "name": "6I4.MU",
@@ -41,7 +41,7 @@
         "observeOnly": false,
         "category": "LONG",
         "countryCode": "NO",
-        "tags": ["6I4"]
+        "tags": ["zaptec"]
     },
     {
         "name": "3CP.F",
@@ -52,7 +52,7 @@
         "observeOnly": false,
         "category": "LONG",
         "countryCode": "CN",
-        "tags": ["3CP"]
+        "tags": ["xiaomi"]
     },
     {
         "name": "LHL.F",
@@ -63,7 +63,7 @@
         "observeOnly": false,
         "category": "DIVIDEND",
         "countryCode": "HK",
-        "tags": ["LHL"]
+        "tags": ["lenovo"]
     },
     {
         "name": "EJZN.F",
@@ -74,7 +74,7 @@
         "observeOnly": true,
         "category": "OTHER",
         "countryCode": "CA",
-        "tags": ["EJZN"]
+        "tags": []
     },
     {
         "name": "0223.F",
@@ -85,7 +85,7 @@
         "observeOnly": false,
         "category": "LONG",
         "countryCode": "US",
-        "tags": ["0223"]
+        "tags": ["sigma labs"]
     },
     {
         "name": "PLUN.F",
@@ -96,7 +96,7 @@
         "observeOnly": true,
         "category": "OTHER",
         "countryCode": "US",
-        "tags": ["PLUN"]
+        "tags": ["plug power"]
     },
     {
         "name": "22UA.F",
@@ -104,9 +104,9 @@
         "entryPrice": 84.05,
         "currency": "EUR",
         "quantity": 23,
-        "observeOnly": false,
+        "observeOnly": true,
         "category": "SHORT_PERIOD",
         "countryCode": "DE",
-        "tags": ["22UA"]
+        "tags": ["biontech"]
     }
 ]
