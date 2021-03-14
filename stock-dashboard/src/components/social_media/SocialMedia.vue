@@ -9,11 +9,8 @@
       </div>
       <p>
         <select id="countryCode" class="border rounded px-3 py-2 outline-none text-gray-500">
-          <option class="py-1">
-            Reddit
-          </option>
-          <option class="py-1">
-            Twitter
+          <option v-for="(option, index) in options" v-bind:key="index" class="py-1">
+            {{option}}
           </option>
         </select>
       </p>
@@ -23,32 +20,22 @@
     <tags-input @tagsToSocialMedia="fetchEvents"></tags-input>
   </div>
   <div class="flex justify-between container mx-auto px-6 py-8">
-    <loading-page v-if="events.length === 0"></loading-page>
     <div class="w-full lg:w-8/12">
       <social-article v-for="(event, index) in events" v-bind:key="index" :event="event"/>
+      <div v-if="events.length === 0" class="text-center">
+        <font-awesome-icon :icon="['fa', 'search']" class="fa-fw mr-3"/>
+        No search result
+      </div>
     </div>
     <div class="-mx-8 w-4/12 hidden lg:block">
       <div class="px-14">
         <h1 class="mb-4 text-xl font-bold text-gray-700">Authors</h1>
         <div class="flex flex-col bg-gray-800 max-w-sm px-6 py-4 mx-auto rounded-lg shadow-md">
           <ul class="-mx-4">
-            <li class="flex items-center mt-6"><img
-                src="https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=333&amp;q=80"
-                alt="avatar" class="w-10 h-10 object-cover rounded-full mx-4">
-              <p><a href="#" class="font-bold mx-1 hover:underline">Jane Doe</a><span
-                  class="text-gray-400 text-sm font-light">Created 52 Posts</span></p>
-            </li>
-            <li class="flex items-center mt-6"><img
-                src="https://images.unsplash.com/photo-1531251445707-1f000e1e87d0?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=281&amp;q=80"
-                alt="avatar" class="w-10 h-10 object-cover rounded-full mx-4">
-              <p><a href="#" class="font-bold mx-1 hover:underline">Lisa Way</a><span
-                  class="text-gray-400 text-sm font-light">Created 73 Posts</span></p>
-            </li>
-            <li class="flex items-center mt-6"><img
-                src="https://images.unsplash.com/photo-1500757810556-5d600d9b737d?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=735&amp;q=80"
-                alt="avatar" class="w-10 h-10 object-cover rounded-full mx-4">
-              <p><a href="#" class="font-bold mx-1 hover:underline">Steve Matt</a><span
-                  class="text-gray-400 text-sm font-light">Created 245 Posts</span></p>
+            <li v-for="(user, index) in authors" v-bind:key="index" class="flex items-center mt-6">
+              <img src="../../assets/reddit_profil.png" alt="avatar" class="w-10 h-10 object-cover rounded-full mx-4">
+              <p><a href="#" class="font-bold mx-1 hover:underline">{{user.author}}</a><span
+                  class="text-gray-400 text-sm font-light">Created {{user.posts}} Posts</span></p>
             </li>
           </ul>
         </div>
@@ -60,21 +47,54 @@
 
 <script>
 import axios from "axios";
-import LoadingPage from "@/components/LoadingPage";
 import Article from "@/components/social_media/Article.vue";
 import TagsInput from "@/components/social_media/TagsInput";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+  faSearch
+} from "@fortawesome/free-solid-svg-icons";
 // page example https://tailwindcomponents.com/component/blog-page
+
+library.add(faSearch);
 
 export default {
   name: "SocialMedia",
   components: {
     "social-article": Article,
-    "tags-input": TagsInput,
-    "loading-page": LoadingPage
+    "tags-input": TagsInput
   },
   data () {
     return {
-      events: []
+      events: [],
+      options: ["Reddit"],
+      authors: []
+    }
+  },
+  watch: {
+    events (newEvents) {
+      let map = {};
+      let results = [];
+      newEvents.forEach((event) => {
+        if (map[event.author] === undefined) {
+          map[event.author] = {
+            posts: 1
+          }
+        } else {
+          let posts = map[event.author].posts
+          map[event.author].posts = posts + 1
+        }
+      });
+
+      Object.keys(map).forEach((key) => {
+        let value = map[key];
+        results.push({
+          author: key,
+          posts: value.posts
+        });
+      })
+      this.authors = results.sort((a, b) => {
+        return b.posts - a.posts;
+      });
     }
   },
   methods: {

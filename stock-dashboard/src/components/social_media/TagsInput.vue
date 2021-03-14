@@ -17,7 +17,10 @@
         </div>
         <!-- selections -->
           <div v-for="(tag, index) in tags" v-bind:key="tag" class="bg-purple-600 inline-flex items-center text-sm rounded mt-2 mr-1">
-            <span class="ml-2 mr-1 leading-relaxed truncate max-w-xs text-gray-200">{{tag}}</span>
+            <div class="tag">
+            <span class="ml-2 mr-1 leading-relaxed truncate max-w-xs text-gray-200"
+                  @click="selectTag(tag)">{{tag}}</span>
+            </div>
             <button @click="removeTag(index)" class="w-6 h-8 inline-block align-middle text-gray-500 hover:text-gray-600 focus:outline-none">
               <font-awesome-icon :icon="['fa', 'times']" class="mr-2 fa-inverse"/>
             </button>
@@ -53,10 +56,6 @@ export default {
     }
   },
   watch: {
-    tags (newVal) {
-      this.$emit("tagsToSocialMedia", newVal);
-    }
-
   },
   methods: {
     addTag () {
@@ -90,14 +89,22 @@ export default {
       }
       axios.get(url).then((res) => {
         this.tags = res.data;
+        if (this.tags.length > 0) {
+          this.selectTag(this.tags[0]);
+        }
       }).catch((error) => {
         console.log(error);
       });
+    },
+    selectTag (tag) {
+      this.$emit("tagsToSocialMedia", [tag]);
     }
   }
 }
 </script>
 
 <style scoped>
-
+.tag {
+  cursor: pointer;
+}
 </style>

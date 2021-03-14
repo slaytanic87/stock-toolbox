@@ -155,7 +155,7 @@ app.post("/reddit", (req, res) => {
         let myUrl = urlBuilder
             .subreddit(tag)
             .fields(["url", "author", "title", "subreddit", "created_utc", "media"])
-            .after("30d").size(10).build();
+            .after("30d").size(200).build();
         promises.push(bigdata.getSubmission(myUrl))
     })
     Promise.allSettled(promises).then((results) => {
