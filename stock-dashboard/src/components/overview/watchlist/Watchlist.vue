@@ -148,7 +148,7 @@ export default {
   watch: {
     stocks: function (val) {
         this.$emit("chartToCard", val);
-        this.$emit("watchlistToCard", this.stocks);
+        this.$emit("watchlistToCard", this.searched);
     }
   },
   methods: {
@@ -158,10 +158,22 @@ export default {
           url = "http://localhost:9090/v2/watchlist";
         }
         axios.get(url).then((res) => {
-        this.clearData();
-        let watchList = res.data;
-        this.stocks = watchList;
-        this.searched = watchList;
+          let watchList = res.data;
+          if (this.stocks.length === 0) {
+            this.stocks = watchList;
+          } else {
+            for (let i = 0; i < this.stocks.length; i++) {
+              let currentStock = this.stocks[i];
+              for (let j = i; j < watchList.length; j++) {
+                let stockNew = watchList[j];
+                if (currentStock.name === stockNew.name && currentStock.observeOnly === stockNew.observeOnly) {
+                  this.stocks[i] = stockNew;
+                  break;
+                }
+              }
+            }
+          }
+          this.searched = this.stocks;
       }).catch((error) => {
         console.log(error);
       });
@@ -179,10 +191,6 @@ export default {
     },
     searchOnTable() {
       this.searched = this.searchByName(this.stocks, this.search);
-    },
-    clearData() {
-      this.searched = [];
-      this.stocks = []
     },
     pollingData() {
       this.interval = setInterval(this.fetchWatchList, 300000);
