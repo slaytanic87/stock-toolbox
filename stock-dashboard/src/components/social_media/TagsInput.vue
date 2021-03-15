@@ -60,6 +60,9 @@ export default {
   methods: {
     addTag () {
       this.textInput = this.textInput.trim();
+      if (!this.textInput || 0 === this.textInput.length) {
+        return;
+      }
       if (this.textInput.includes(",")) {
         this.textInput.split(",").forEach(function (val) {
           this.tags.push(val);

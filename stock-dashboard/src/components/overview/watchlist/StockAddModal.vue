@@ -68,7 +68,7 @@
                       </span>
                     </label>
                   </div>
-                  <div class="border focus-within:border-blue-500 focus-within:text-blue-500 transition-all duration-500 relative rounded p-1">
+                  <div class="focus-within:border-blue-500 focus-within:text-blue-500 transition-all duration-500 relative rounded p-1">
                     <div class="-mt-4 absolute tracking-wider px-1 uppercase text-xs">
                       <p>
                         <label for="countryCode" class="bg-white text-blue-600 px-1">Country</label>
@@ -82,7 +82,32 @@
                       </select>
                     </p>
                   </div>
-
+                  <div class="border focus-within:border-blue-500 focus-within:text-blue-500 transition-all duration-500 relative rounded p-1">
+                    <input v-model="textInput"
+                           v-on:keyup.enter="addTag()"
+                           @keyup="search()"
+                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                           placeholder="Enter some tags">
+                    <div :class="open ? 'block' : 'hidden'">
+                      <div class="absolute z-40 left-0 mt-2 w-full">
+                        <div class="py-1 text-black bg-white rounded shadow-lg border border-gray-300">
+                          <a class="block py-1 px-5 cursor-pointer hover:bg-indigo-600 hover:text-white">
+                            Add tag "<span class="font-semibold">{{textInput}}</span>"
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- selections -->
+                    <div v-for="(tag, index) in tags" v-bind:key="tag" class="bg-indigo-600 inline-flex items-center text-sm rounded mt-2 mr-1">
+                      <div class="tag">
+                        <span class="ml-2 mr-1 leading-relaxed truncate max-w-xs text-gray-200">{{tag}}</span>
+                      </div>
+                      <button @click="removeTag(index)" class="w-6 h-8 inline-block align-middle text-gray-500 hover:text-gray-600 focus:outline-none">
+                        <font-awesome-icon :icon="['fa', 'times']" class="mr-2 fa-inverse"/>
+                      </button>
+                    </div>
+                    <!-- end selection -->
+                  </div>
             </div>
 
           </div>
@@ -112,8 +137,11 @@ library.add(faEye);
 
 export default {
   name: "StockAddModal",
-  created() {},
-  components: {
+  props: {
+    showDialog: {
+      type: Boolean,
+      default: false
+    }
   },
   updated() {},
   mounted() {
@@ -129,7 +157,10 @@ export default {
       quantity: 0,
       observeOnly: true,
       countries: countries,
-      selectedCountryCode: "DE"
+      selectedCountryCode: "DE",
+      open: false,
+      tags: [],
+      textInput: ""
     };
   },
   methods: {
@@ -147,7 +178,8 @@ export default {
             currency: this.currency,
             observeOnly: this.observeOnly,
             quantity: Math.floor(this.quantity),
-            countryCode: this.selectedCountryCode
+            countryCode: this.selectedCountryCode,
+            tags: this.tags
         }
         let url = "/addStock";
         if (process.env.NODE_ENV === "development") {
@@ -162,13 +194,34 @@ export default {
       closeModal() {
         this.showDialog = false;
         this.$emit("addChartModalToDashMessage", this.showDialog);
+      },
+      addTag () {
+        this.textInput = this.textInput.trim();
+        if (!this.textInput || 0 === this.textInput.length) {
+          return;
+        }
+        if (this.textInput.includes(",")) {
+          this.textInput.split(",").forEach(function (val) {
+            this.tags.push(val);
+          }, this);
+        } else {
+          this.tags.push(this.textInput);
+        }
+        this.clearSearch();
+      },
+      removeTag (index) {
+        this.tags.splice(index, 1)
+      },
+      search () {
+        this.toggleSearch();
+      },
+      clearSearch () {
+        this.textInput = "";
+        this.toggleSearch();
+      },
+      toggleSearch () {
+        this.open = this.textInput !== ''
       }
-  },
-  props: {
-      showDialog: {
-      type: Boolean,
-      default: false
-    }
   }
 };
 </script>
