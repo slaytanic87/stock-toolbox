@@ -56,11 +56,11 @@ export default {
       currentPage: 0,
       order: 1,
       cardTypeClass: [
-        "bg-indigo-600 lg:hover:bg-gray-700 lg:row-span-1 2xl:row-span-1 lg:col-span-2 rounded-lg shadow-xl lg:mb-0",
-        "bg-gray-900 lg:hover:bg-gray-700 lg:row-span-1 2xl:row-span-1 lg:col-span-1 rounded-lg shadow-xl lg:mb-0",
-        "bg-blue-800 lg:hover:bg-gray-700 lg:row-span-2 2xl:row-span-2 lg:col-span-1 rounded-lg shadow-xl lg:pb-0 2xl:h-screen",
-        "bg-red-800 lg:hover:bg-gray-700 lg:row-span-1 2xl:row-span-1 lg:col-span-1 rounded-lg shadow-xl lg:mb-0",
-        "bg-purple-800 lg:hover:bg-gray-700 lg:row-span-1 2xl:row-span-1 col-span-2 rounded-lg shadow-xl lg:mb-0"
+        "bg-indigo-600 lg:hover:bg-pink-700 lg:row-span-1 2xl:row-span-1 lg:col-span-2 rounded-lg shadow-xl lg:mb-0",
+        "bg-gray-900 lg:hover:bg-pink-700 lg:row-span-1 2xl:row-span-1 lg:col-span-1 rounded-lg shadow-xl lg:mb-0",
+        "bg-blue-800 lg:hover:bg-pink-700 lg:row-span-2 2xl:row-span-2 lg:col-span-1 rounded-lg shadow-xl lg:pb-0 2xl:h-screen",
+        "bg-red-800 lg:hover:bg-pink-700 lg:row-span-1 2xl:row-span-1 lg:col-span-1 rounded-lg shadow-xl lg:mb-0",
+        "bg-purple-800 lg:hover:bg-pink-700 lg:row-span-1 2xl:row-span-1 col-span-2 rounded-lg shadow-xl lg:mb-0"
       ]
     }
   },

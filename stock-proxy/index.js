@@ -112,9 +112,9 @@ app.get("/news", (req, res) => {
     articles.forEach((article) => {
         if (article.renderingType === "client".toLowerCase()) {
             promises.push(scraper.scrapeCSR(article));
-        } else {
-            promises.push(scraper.scrape(article));
+            return;
         }
+        promises.push(scraper.scrape(article));
     });
 
     Promise.allSettled(promises).then((results) => {
@@ -126,7 +126,7 @@ app.get("/news", (req, res) => {
     });
 })
 
-app.get("/calendar", (reqm, res) => {
+app.get("/calendar", (req, res) => {
     boersennews.fetchCalendar(res);
 })
 

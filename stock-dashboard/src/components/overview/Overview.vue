@@ -18,7 +18,7 @@
     <windiagramcard v-bind:propData="chartData"></windiagramcard>
     <progression-bar-card v-bind:propChartData="watchlist"
                           v-bind:propTargetStep="2000"></progression-bar-card>
-    <stock-index-card v-for="stockindex in indexlist" :key="stockindex.symbol"
+    <stock-index-card v-for="stockindex in indexList" :key="stockindex.symbol"
                       v-bind:indexName="stockindex.name"
                       v-bind:symbol="stockindex.symbol"
                       v-bind:chartData="stockindex.chartDataCube"></stock-index-card>
@@ -56,7 +56,7 @@ export default {
     return {
       chartData: {},
       watchlist: [],
-      indexlist: []
+      indexList: []
     }
   },
   created() {
@@ -78,9 +78,9 @@ export default {
       }
       axios.get(url).then((res) => {
         let list = res.data;
-        this.indexlist = [];
+        this.indexList = [];
         list.forEach((data) => {
-          this.indexlist.push({
+          this.indexList.push({
             symbol: data.symbol,
             name: data.name,
             chartDataCube: this.createDataCube(data.chartData)
