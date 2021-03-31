@@ -20,6 +20,7 @@ app.listen(port, ()=> {
 
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "POST, GET, PUT, PATCH, DELETE, OPTIONS")
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
@@ -97,13 +98,20 @@ app.post("/stock", (req, res) => {
     }).catch((err) => {
         console.log(err);
         res.error();
-    })
+    });
 })
 
 app.post("/addStock", (req, res) => {
     let watchStock = req.body;
     console.log(watchStock);
     watchlist.push(watchStock);
+    res.end();
+})
+
+app.patch("/removeStock", (req, res) => {
+    let watchStock = req.body;
+    watchlist = watchlist.filter((stock) => stock.name.toUpperCase() !== watchStock.sym.toUpperCase());
+    res.end();
 })
 
 app.get("/news", (req, res) => {
@@ -157,7 +165,7 @@ app.post("/reddit", (req, res) => {
             .fields(["url", "author", "title", "subreddit", "created_utc", "media"])
             .before("10d").size(200).build();
         promises.push(bigdata.getSubmission(myUrl))
-    })
+    });
     Promise.allSettled(promises).then((results) => {
         results.forEach((result) => {
             if (result.value === undefined) {

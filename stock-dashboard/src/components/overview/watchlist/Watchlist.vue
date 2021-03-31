@@ -35,6 +35,9 @@
           <th class="py-2">
             <span class="text-gray-300">Mode</span>
           </th>
+          <th class="py-2">
+            <span class="text-gray-300">Remove</span>
+          </th>
           <th class="px-16 py-2">
             <span class="text-gray-300"></span>
           </th>
@@ -85,6 +88,11 @@
             </span>
           </td>
           <td class="py-2 text-center">
+            <button @click="removeStock(stock)">
+              <font-awesome-icon :icon="['fa', 'trash-alt']" class="fa-fw"/>
+            </button>
+          </td>
+          <td class="py-2 text-center">
             <button @click="showChart(stock.name, stock.chartData)"
               class="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none">
               <font-awesome-icon :icon="['fa', 'chart-bar']" class="fa-fw mr-3"/>
@@ -119,9 +127,10 @@ import {
   faMoneyBillAlt,
   faChartBar,
   faIndustry,
-  faPlusCircle
+  faPlusCircle,
+  faTrashAlt
 } from "@fortawesome/free-solid-svg-icons";
-library.add(faEye, faMoneyBillAlt, faChartBar, faIndustry, faPlusCircle);
+library.add(faEye, faMoneyBillAlt, faChartBar, faIndustry, faPlusCircle, faTrashAlt);
 
 export default {
   name: "Watchlist",
@@ -199,7 +208,7 @@ export default {
       var self = this;
       let url = "/stock";
       if (process.env.NODE_ENV === "development") {
-          url = "http://localhost:9090/stock";
+          url = "http://localhost:9090" + url;
       }
       axios.post(url, {
         sym: chartData.sym,
@@ -208,6 +217,29 @@ export default {
           self.selectedChart = self.createDataCube(response.data);
           self.selectedName = chartName;
           self.showChartModal = true;
+      }).catch((error) => {
+        console.log(error);
+      })
+    },
+    removeStock(stock) {
+      let url = "/removeStock";
+      if (process.env.NODE_ENV === "development") {
+        url = "http://localhost:9090" + url;
+      }
+      axios.patch(url, stock).then(() => {
+        let indexToBeRemoved = -1;
+        for (let i = 0; i < this.stocks.length; i++) {
+          let stockObj = this.stocks[i];
+          if (stockObj.name === stock.name) {
+            indexToBeRemoved = i;
+            break;
+          }
+        }
+        if (indexToBeRemoved < 0) {
+          return;
+        }
+        this.stocks.splice(indexToBeRemoved, 1);
+        this.searched = this.stocks;
       }).catch((error) => {
         console.log(error);
       })
