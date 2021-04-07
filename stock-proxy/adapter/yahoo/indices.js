@@ -43,12 +43,12 @@ function createChartData(timestamps, chartData) {
     let ohlcvArray = [];
 
     for (let i = 0; i < timestamps.length; i++) {
-        let timestamp = timestamps[i];
         let close = chartData.close[i];
         let open = chartData.open[i];
         let high = chartData.high[i];
         let low = chartData.low[i];
         let volume = chartData.volume[i];
+        let timestamp = timestamps[i];
         let chartVector = [timestamp, open, high, low, close, volume];
         ohlcvArray.push(chartVector);
     }

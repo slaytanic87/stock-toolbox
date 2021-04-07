@@ -8,7 +8,7 @@ function getRandomNumber(min, max) {
 }
 
 function getSubmission(url) {
-    const randomTimeout = getRandomNumber(200, 900);
+    const randomTimeout = getRandomNumber(200, 1200);
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             axios.get(url).then((response) => {

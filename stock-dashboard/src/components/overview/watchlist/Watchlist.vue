@@ -83,13 +83,13 @@
             </span>
           <td class="py-2 text-center">
             <span>
-              <font-awesome-icon v-if="stock.observeOnly" :icon="['fas', 'eye']" class="fa-fw mr-3"/>
-              <font-awesome-icon v-else :icon="['fas', 'money-bill-alt']" class="fa-fw mr-3"/>
+              <font-awesome-icon v-if="stock.observeOnly" :icon="['fas', 'eye']" class="fa-fw mr-3 cus-course-light-blue"/>
+              <font-awesome-icon v-else :icon="['fas', 'money-bill-alt']" class="fa-fw mr-3 cus-course-dark-green"/>
             </span>
           </td>
           <td class="py-2 text-center">
             <button @click="removeStock(stock)">
-              <font-awesome-icon :icon="['fa', 'trash-alt']" class="fa-fw"/>
+              <font-awesome-icon :icon="['fa', 'trash-alt']" class="fa-fw cus-course-red"/>
             </button>
           </td>
           <td class="py-2 text-center">
@@ -315,9 +315,14 @@ export default {
 .cus-course-green {
   color: #00f014;
 }
-.cus-course-bg-blue {
-  background-color: #448aff;
+.cus-course-light-blue {
+  color: #80b0ef;
 }
+
+.cus-course-dark-green {
+  color: #0f7a18;
+}
+
 .cus-course-bg-red {
   background-color: #f10b0b;
 }

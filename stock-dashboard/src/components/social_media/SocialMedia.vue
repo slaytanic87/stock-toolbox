@@ -30,12 +30,14 @@
     <div class="-mx-8 w-4/12 hidden lg:block">
       <div class="px-14">
         <h1 class="mb-4 text-xl font-bold text-gray-700">Authors</h1>
-        <div class="flex flex-col bg-gray-800 max-w-sm px-6 py-4 mx-auto rounded-lg shadow-md">
+        <div class="flex flex-col bg-gray-800 max-w-sm px-4 py-4 mx-auto rounded-lg shadow-md">
           <ul class="-mx-4">
             <li v-for="(user, index) in authors" v-bind:key="index" class="flex items-center mt-6">
               <img src="../../assets/reddit_profil.png" alt="avatar" class="w-10 h-10 object-cover rounded-full mx-4">
-              <p><a href="#" class="font-bold mx-1 hover:underline">{{user.author}}</a><span
-                  class="text-gray-400 text-sm font-light">Created {{user.posts}} Posts</span></p>
+              <p>
+                <a class="font-bold mx-1 hover:underline">{{user.author}}</a>
+                <span class="text-gray-400 md:block sm:block lg:inline-block text-sm text-xs font-light">Created {{user.posts}} Posts</span>
+              </p>
             </li>
           </ul>
         </div>
