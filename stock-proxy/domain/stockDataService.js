@@ -118,30 +118,24 @@ function calcRSIOverAll(timestamp, adjClose, observeTimeUnits) {
 
 /**
  * Map stock data for ui.
- * @param timestamps array of timestamps
- * @param close array of close course
- * @param open array of open course
- * @param high array of high course
- * @param low array of low course
- * @param volume array of volume
- * @param adjclose array of adjust close course
+ * @param responseData
  * @returns {{chartData: [], adjData: []}}
  */
-function createChartData(timestamps, closes, opens, highs, lows, volumes, adjcloses) {
+function createChartData(responseData) {
     let ohlcvArray = [];
     let adjArray = [];
 
-    for (let i = 0; i < timestamps.length; i++) {
-        let timestamp = timestamps[i];
-        let close = closes[i];
-        let open = opens[i];
-        let high = highs[i];
-        let low = lows[i];
-        let volume = volumes[i];
+    for (let i = 0; i < responseData.timestamps.length; i++) {
+        let timestamp = responseData.timestamps[i];
+        let close = responseData.closes[i];
+        let open = responseData.opens[i];
+        let high = responseData.highs[i];
+        let low = responseData.lows[i];
+        let volume = responseData.volumes[i];
         let chartVector = [timestamp, open, high, low, close, volume];
         ohlcvArray.push(chartVector);
 
-        let adjData = adjcloses[i];
+        let adjData = responseData.adjcloses[i];
         let adjVector = [timestamp, adjData];
         adjArray.push(adjVector);
     }
@@ -178,34 +172,23 @@ function calcRelativeStrengthIndexForLastCourse(adjClose, observeTimeUnits) {
     return roundDigits(rsi, 2);
 }
 
-function createChartDataResponse(symbol, timestamp, close, open, high, low, volume, adjclose) {
-    let mappedChartData = createChartData(timestamp, close, open, high, low, volume, adjclose);
+function createChartDataResponse(responseData) {
+    let mappedChartData = createChartData(responseData);
     return  {
-        sym: symbol,
+        sym: responseData.symbol,
         chart: mappedChartData.chartData,
         chartAdjclose: mappedChartData.adjData,
-        sma30: calcSMA(timestamp, close, 30),
-        sma100: calcSMA(timestamp, close,100),
-        macd: calcMACD(timestamp, close, 12, 26, 9),
-        rsi14: calcRSIOverAll(timestamp, close, 14)
+        sma30: calcSMA(responseData.timestamps, close, 30),
+        sma100: calcSMA(responseData.timestamps, close,100),
+        macd: calcMACD(responseData.timestamps, close, 12, 26, 9),
+        rsi14: calcRSIOverAll(responseData.timestamps, close, 14)
     }
 }
 
-function createWatchItem(observedStock,
-                         name,
-                         currency,
-                         regularMarketPrice,
-                         timestamp,
-                         closes,
-                         opens,
-                         highs,
-                         lows,
-                         volumes,
-                         adjcloses) {
-
-    let mappedChartData = createChartData(timestamp, closes, opens, highs, lows, volumes, adjcloses);
+function createWatchItem(observedStock, responseData) {
+    let mappedChartData = createChartData(responseData);
     let entryPrice = observedStock.entryPrice;
-    let diffPrice = (regularMarketPrice * observedStock.quantity) - (entryPrice * observedStock.quantity);
+    let diffPrice = (responseData.regularMarketPrice * observedStock.quantity) - (entryPrice * observedStock.quantity);
     let status = "=";
     if (diffPrice > 0) {
         status = "+";
@@ -216,47 +199,33 @@ function createWatchItem(observedStock,
     let winPercentage = diffPrice * 100 / (entryPrice * observedStock.quantity);
     let rounded = roundDigits(winPercentage, 2);
     let displayed = rounded > 0 ? "+" + rounded : rounded;
-    let win = roundDigits(diffPrice, 4) + " " + currency + " ("+ displayed + "%)";
+    let win = roundDigits(diffPrice, 4) + " " + responseData.currency + " ("+ displayed + "%)";
 
     return {
-        name: observedStock.companyName + ` (${name})`,
+        name: observedStock.companyName + ` (${responseData.symbol})`,
         countryCode: observedStock.countryCode,
-        sym: name,
-        currentPrice: regularMarketPrice,
+        sym: responseData.symbol,
+        currentPrice: responseData.regularMarketPrice,
         entryPrice: entryPrice,
         win: win,
         quantity: observedStock.quantity,
-        currency: currency,
+        currency: responseData.currency,
         status: status,
         observeOnly: observedStock.observeOnly,
-        rsi: calcRelativeStrengthIndexForLastCourse(closes, 14),
+        rsi: calcRelativeStrengthIndexForLastCourse(responseData.closes, 14),
         chartData: {
-            sym: name,
+            sym: responseData.symbol,
             chart: mappedChartData.chartData,
             chartAdjclose: mappedChartData.adjData
         }
     }
 }
 
-
 function getWatchItem(observedStock, range) {
     return new Promise((resolve, reject) => {
         yahoo.fetchStockData(observedStock.name, range).then((response) => {
-            let responseData = response.data;
-            let indicators = responseData.chart.result[0].indicators;
-            let timestamp = responseData.chart.result[0].timestamp.map(time => time * 1000);
-            let currency = responseData.chart.result[0].meta.currency;
-            let regularMarketPrice = responseData.chart.result[0].meta.regularMarketPrice;
-            let symbol = responseData.chart.result[0].meta.symbol;
-            let closes = indicators.quote[0].close;
-            let opens = indicators.quote[0].open;
-            let highs = indicators.quote[0].high;
-            let lows = indicators.quote[0].low;
-            let volumes = indicators.quote[0].volume;
-            let adjcloses = indicators.adjclose[0].adjclose;
-
-            let watchItem = createWatchItem(observedStock, symbol, currency, regularMarketPrice, timestamp,
-                closes, opens, highs, lows, volumes, adjcloses);
+            let responseData = yahoo.mapStockData(response.data);
+            let watchItem = createWatchItem(observedStock, responseData);
             resolve(watchItem);
         }).catch((err)=> {
             reject(err);
@@ -272,16 +241,8 @@ function getWatchItem(observedStock, range) {
 function getStockData(sym, range) {
     return new Promise((resolve, reject) => {
         yahoo.fetchStockData(sym, range).then((response)=> {
-            let responseData = response.data;
-            let symbol = responseData.chart.result[0].meta.symbol;
-            let timestamps = responseData.chart.result[0].timestamp.map(time => time * 1000);
-            let closes = responseData.chart.result[0].indicators.quote[0].close;
-            let opens = responseData.chart.result[0].indicators.quote[0].open;
-            let highs = responseData.chart.result[0].indicators.quote[0].high;
-            let lows = responseData.chart.result[0].indicators.quote[0].low;
-            let volumes = responseData.chart.result[0].indicators.quote[0].volume;
-            let adjcloses = responseData.chart.result[0].indicators.adjclose[0].adjclose;
-            let watchItem = createChartDataResponse(symbol, timestamps, closes, opens, highs, lows, volumes, adjcloses);
+            let responseData = yahoo.mapStockData(response.data);
+            let watchItem = createChartDataResponse(responseData);
             resolve(watchItem);
         }).catch((err) => {
             console.log(err);

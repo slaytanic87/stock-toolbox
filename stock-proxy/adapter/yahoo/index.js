@@ -16,7 +16,7 @@ function fetchFinancials(symbol) {
 }
 
 function mapStockData(responseData) {
-    let timestamp = responseData.chart.result[0].timestamp.map(time => time * 1000);
+    let timestamps = responseData.chart.result[0].timestamp.map(time => time * 1000);
     let currency = responseData.chart.result[0].meta.currency;
     let regularMarketPrice = responseData.chart.result[0].meta.regularMarketPrice;
     let symbol = responseData.chart.result[0].meta.symbol;
@@ -28,7 +28,7 @@ function mapStockData(responseData) {
     let adjcloses = responseData.chart.result[0].indicators.adjclose[0].adjclose;
 
     return {
-        timestamp: timestamp,
+        timestamps: timestamps,
         currency: currency,
         regularMarketPrice: regularMarketPrice,
         symbol: symbol,
