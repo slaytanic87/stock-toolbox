@@ -22,6 +22,9 @@ app.get("/indexlist", (req, res) => {
     marketIndexService.getIndexList().then((result) => {
         res.json(result);
         res.end();
+    }).catch((err) => {
+        console.log(err);
+        res.error();
     });
 })
 
@@ -35,6 +38,9 @@ app.get("/v2/watchlist", (req, res) => {
     watchListService.getWatchlist().then((result) => {
         res.json(result);
         res.end();
+    }).catch((err) => {
+        console.log(err);
+        res.error();
     })
 })
 
@@ -44,6 +50,7 @@ app.post("/marketIndex", (req, res) => {
         res.json(result);
         res.end();
     }).catch((err) => {
+        console.log(err);
         res.error();
     });
 })
@@ -55,6 +62,7 @@ app.post("/stock", (req, res) => {
         res.json(result);
         res.end();
     }).catch((err) => {
+        console.log(err);
         res.error();
     })
 })
@@ -76,6 +84,9 @@ app.get("/news", (req, res) => {
     newsService.getNews().then((result) => {
         res.json(result);
         res.end();
+    }).catch((err) => {
+        console.log(err);
+        res.error();
     });
 })
 
@@ -83,6 +94,9 @@ app.get("/calendar", (req, res) => {
     calendarService.getCalendar().then((result) => {
         res.json(result);
         res.end();
+    }).catch((err) => {
+        console.log(err);
+        res.error();
     })
 })
 
@@ -108,6 +122,9 @@ app.post("/reddit", (req, res) => {
     socialMediaService.getRedditSubmission(tags).then((events) => {
         res.json(events);
         res.end();
+    }).catch((err) => {
+        console.log(err);
+        res.error();
     });
 })
 
