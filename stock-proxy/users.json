@@ -1,0 +1,217 @@
+[
+    {
+        "username": "testuser",
+        "password": "652c7dc687d98c9889304ed2e408c74b611e86a40caa51c4b43f1dd5913c5cd0",
+        "watchList": [
+            {
+                "name": "TL0.DE",
+                "companyName": "Tesla, Inc.",
+                "entryPrice": 594.0,
+                "currency": "EUR",
+                "quantity": 1,
+                "observeOnly": true,
+                "category": "OTHER",
+                "countryCode": "US",
+                "tags": ["tesla"]
+            },
+            {
+                "name": "APC.F",
+                "companyName": "Apple Inc.",
+                "entryPrice": 107.88,
+                "currency": "EUR",
+                "quantity": 37,
+                "observeOnly": true,
+                "category": "LONG",
+                "countryCode": "US",
+                "tags": ["apple"]
+            },
+            {
+                "name": "RY6.F",
+                "companyName": "Realty Income Corporation",
+                "entryPrice": 50.00,
+                "currency": "EUR",
+                "quantity": 40,
+                "observeOnly": false,
+                "category": "DIVIDEND",
+                "countryCode": "US",
+                "tags": []
+            },
+            {
+                "name": "6I4.MU",
+                "companyName": "Zaptec AS",
+                "entryPrice": 2.75,
+                "currency": "EUR",
+                "quantity": 2100,
+                "observeOnly": false,
+                "category": "LONG",
+                "countryCode": "NO",
+                "tags": ["zaptec"]
+            },
+            {
+                "name": "3CP.F",
+                "companyName": "Xiaomi Corporation",
+                "entryPrice": 2.769,
+                "currency": "EUR",
+                "quantity": 2318,
+                "observeOnly": false,
+                "category": "LONG",
+                "countryCode": "CN",
+                "tags": ["xiaomi"]
+            },
+            {
+                "name": "LHL.F",
+                "companyName": "Lenovo Group Limited",
+                "entryPrice": 0.4988,
+                "currency": "EUR",
+                "quantity": 2700,
+                "observeOnly": false,
+                "category": "DIVIDEND",
+                "countryCode": "HK",
+                "tags": ["lenovo"]
+            },
+            {
+                "name": "EJZN.F",
+                "companyName": "Wealth Minerals Ltd.",
+                "entryPrice": 0.1498,
+                "currency": "EUR",
+                "quantity": 1,
+                "observeOnly": true,
+                "category": "OTHER",
+                "countryCode": "CA",
+                "tags": []
+            },
+            {
+                "name": "0223.F",
+                "companyName": "Sigma Labs, Inc. ",
+                "entryPrice": 2.51,
+                "currency": "EUR",
+                "quantity": 1000,
+                "observeOnly": false,
+                "category": "LONG",
+                "countryCode": "US",
+                "tags": ["sigma labs"]
+            },
+            {
+                "name": "PLUN.F",
+                "companyName": "Plug Power Inc.",
+                "entryPrice": 52.30,
+                "currency": "EUR",
+                "quantity": 1,
+                "observeOnly": true,
+                "category": "OTHER",
+                "countryCode": "US",
+                "tags": ["plug power"]
+            },
+            {
+                "name": "22UA.F",
+                "companyName": "BioNTech",
+                "entryPrice": 84.05,
+                "currency": "EUR",
+                "quantity": 23,
+                "observeOnly": true,
+                "category": "SHORT_PERIOD",
+                "countryCode": "DE",
+                "tags": ["biontech"]
+            }
+        ],
+        "newsScraperRules": [
+            {
+                "name": "Börsennews.de",
+                "renderingType": "server",
+                "category": "TopNews",
+                "url": "https://www.boersennews.de/nachrichten/top-news/",
+                "baseUrl": "https://www.boersennews.de",
+                "query": "div[class=row] div > a",
+                "row": {
+                    "title": {
+                        "query": "h4"
+                    },
+                    "main": {
+                        "query": "p"
+                    },
+                    "link": {
+                        "query": "",
+                        "baseUrl": "https://www.boersennews.de",
+                        "attr": "href"
+                    },
+                    "image": {
+                        "query": "p > img",
+                        "baseUrl": "",
+                        "attr": "data-src"
+                    }
+                }
+            },
+            {
+                "name": "Börsennews.de",
+                "renderingType": "server",
+                "category": "Exclusive",
+                "url": "https://www.boersennews.de/nachrichten/id/183/",
+                "baseUrl": "https://www.boersennews.de",
+                "query": "div[class=row] div > a",
+                "row": {
+                    "title": {
+                        "query": "h4"
+                    },
+                    "main": {
+                        "query": "p"
+                    },
+                    "link": {
+                        "query": "",
+                        "baseUrl": "https://www.boersennews.de",
+                        "attr": "href"
+                    },
+                    "image": {
+                        "query": "p > img",
+                        "baseUrl": "",
+                        "attr": "data-src"
+                    }
+                }
+            },
+            {
+                "name": "trendingnews.de",
+                "renderingType": "server",
+                "category": "IT-Trends",
+                "url": "https://trendingnews.de/category/it-trends",
+                "baseUrl": "https://trendingnews.de",
+                "query": "article",
+                "row": {
+                    "title": {
+                        "query": "h2[class='post-title entry-title']"
+                    },
+                    "main": {
+                        "query": "div[class=entry-content] > p"
+                    },
+                    "link": {
+                        "query": "h2[class='post-title entry-title'] > a",
+                        "baseUrl": "",
+                        "attr": "href"
+                    },
+                    "image": {
+                        "query": "figure > a > img",
+                        "baseUrl": "",
+                        "attr": "src"
+                    }
+                }
+            }
+        ],
+        "indexList": [
+            {
+                "symbol": "^GDAXI",
+                "name": "DAX",
+                "countryCode": "DE"
+            },
+            {
+                "symbol": "^GSPC",
+                "name": "S&P 500",
+                "countryCode": "US"
+            }
+        ]
+    },
+    {
+        "username": "testuser2",
+        "password": "77146644c17e93418c0aef1046d158eda3b41b238db9c651c9551fd664d151de",
+        "watchList": [],
+        "newsScraperRules": [],
+        "indexList": []
+    }
+]

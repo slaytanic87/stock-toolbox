@@ -13,7 +13,8 @@ function fetchIndex(symbol, interval, range) {
 
 
 function createIndexItem(indexData, observedIndex) {
-    let timestamps = indexData.chart.result[0].timestamp.map(time => time * 1000);
+    let timestampsApi = indexData.chart.result[0].timestamp;
+    let timestamps = timestampsApi !== undefined ? indexData.chart.result[0].timestamp.map(time => time * 1000) : [];
     let chartData = indexData.chart.result[0].indicators.quote[0];
     let mappedChartData = createChartData(timestamps, chartData);
     return {

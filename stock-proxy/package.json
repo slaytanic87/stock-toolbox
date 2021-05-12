@@ -11,8 +11,9 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.1",
-    "cheerio": "^1.0.0-rc.5",
+    "cheerio": "^1.0.0-rc.6",
     "express": "^4.17.1",
+    "micro-pubsub": "^1.0.0",
     "puppeteer": "^8.0.0"
   }
 }

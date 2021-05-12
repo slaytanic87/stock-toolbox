@@ -12,7 +12,7 @@ async function scrapeCSR(article) {
     return parseArticle(dom, article);
 }
 
-function scrape(article) {
+function scrapeSSR(article) {
     return new Promise((resolve, reject) => {
         axios.get(article.url).then((resp) => {
             const dom = cheerio.load(resp.data);
@@ -59,6 +59,6 @@ function parseArticle(dom, article) {
 }
 
 module.exports = {
-    scrape,
+    scrapeSSR,
     scrapeCSR
 }

@@ -2,11 +2,12 @@ const yahoo = require("../adapter/yahoo");
 
 /**
  * Simple Moving Average
- * @param stockData
- * @param lastPeriodDays
+ * @param timestamps []
+ * @param close []
+ * @param lastPeriodDays number of days
  * @returns {*[][]|[]}
  */
-function calcSMA(timestamp, close, lastPeriodDays) {
+function calcSMA(timestamps, close, lastPeriodDays) {
     let sma = [];
 
     if (lastPeriodDays === 0 || close.length < lastPeriodDays) {
@@ -18,13 +19,20 @@ function calcSMA(timestamp, close, lastPeriodDays) {
         for (let d = i - (lastPeriodDays - 1); d <= i; d++) {
             closeEntry += close[d];
         }
-        let entryVec = [timestamp[i], closeEntry / lastPeriodDays];
+        let entryVec = [timestamps[i], closeEntry / lastPeriodDays];
         sma.push(entryVec);
     }
 
     return sma;
 }
 
+/**
+ * Exponential moving average
+ * @param timestamp []
+ * @param close []
+ * @param lastPeriodDays number of days
+ * @returns {*[][]|[]}
+ */
 function calcEMA(timestamp, close, lastPeriodDays) {
     if ((lastPeriodDays - 1) > close.length) {
         return [[]];
@@ -49,6 +57,15 @@ function calcEMA(timestamp, close, lastPeriodDays) {
     return emaVec;
 }
 
+/**
+ * Moving average convergence divergence
+ * @param timestamp []
+ * @param close []
+ * @param shortPeriod number of days
+ * @param longPeriod number of days
+ * @param signalPeriod number of days
+ * @returns {[]}
+ */
 function calcMACD(timestamp, close, shortPeriod, longPeriod, signalPeriod) {
     let emaShortTerm = calcEMA(timestamp, close, shortPeriod);
     let emaLongTerm = calcEMA(timestamp, close, longPeriod);
@@ -86,7 +103,6 @@ function roundDigits(number, decimalPlaces) {
 }
 
 function calcRSIOverAll(timestamp, adjClose, observeTimeUnits) {
-
     let startIndex = observeTimeUnits - 1;
     if (startIndex > adjClose.length) {
         return [[]];
@@ -118,8 +134,8 @@ function calcRSIOverAll(timestamp, adjClose, observeTimeUnits) {
 
 /**
  * Map stock data for ui.
- * @param responseData
- * @returns {{chartData: [], adjData: []}}
+ * @param responseData {timestamps:[], closes:[], opens:[], highs:[], lows:[], volumes:[], adjcloses:[]}
+ * @returns {{chartData: [timestamps, opens, highs, lows, closes, volumes], adjData: []}}
  */
 function createChartData(responseData) {
     let ohlcvArray = [];
@@ -147,7 +163,6 @@ function createChartData(responseData) {
 
 function calcRelativeStrengthIndexForLastCourse(adjClose, observeTimeUnits) {
     let startIndex = adjClose.length - observeTimeUnits;
-
     if (startIndex < 0) {
         return "N/A";
     }
@@ -178,10 +193,10 @@ function createChartDataResponse(responseData) {
         sym: responseData.symbol,
         chart: mappedChartData.chartData,
         chartAdjclose: mappedChartData.adjData,
-        sma30: calcSMA(responseData.timestamps, close, 30),
-        sma100: calcSMA(responseData.timestamps, close,100),
-        macd: calcMACD(responseData.timestamps, close, 12, 26, 9),
-        rsi14: calcRSIOverAll(responseData.timestamps, close, 14)
+        sma30: calcSMA(responseData.timestamps, responseData.closes, 30),
+        sma100: calcSMA(responseData.timestamps, responseData.closes,100),
+        macd: calcMACD(responseData.timestamps, responseData.closes, 12, 26, 9),
+        rsi14: calcRSIOverAll(responseData.timestamps, responseData.closes, 14)
     }
 }
 
@@ -234,8 +249,8 @@ function getWatchItem(observedStock, range) {
 }
 
 /**
- * @param sym
- * @param range
+ * @param sym stock symbol
+ * @param range time range
  * @returns {Promise<unknown>}
  */
 function getStockData(sym, range) {

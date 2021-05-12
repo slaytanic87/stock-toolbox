@@ -1,20 +1,38 @@
 const stockDataService = require("./stockDataService.js");
-let watchlist = require("../watchlist.json");
+const watchListDao = require("../adapter/repository/watchListDao.js");
+const accountService = require("./accountService.js");
 
-function removeStock(watchStock) {
-    watchlist = watchlist.filter((stock) => stock.name.toUpperCase() !== watchStock.sym.toUpperCase());
+
+function deleteStock(watchStock, user) {
+    try {
+        let userEntity = accountService.validateUser(user.username, user.password);
+        watchListDao.removeStock(userEntity, watchStock.name);
+    } catch (exception) {
+        throw exception;
+    }
 }
 
-function addStock(watchStock) {
-    watchlist.push(watchStock);
+function insertStock(watchStock, user) {
+    try {
+        let userEntity = accountService.validateUser(user.username, user.password);
+        watchListDao.addStock(userEntity, watchStock);
+    } catch (exception) {
+        throw exception;
+    }
 }
 
-function getWatchlist() {
+/**
+ * Get mapped watchlist items for watchlist dashboard table.
+ * @param user user entity
+ * @returns {Promise<Object>}
+ */
+function fetchUiWatchList(user) {
+    let userEntity = accountService.validateUser(user.username, user.password);
     return new Promise((resolve, reject) => {
         let result = [];
         let promises = [];
 
-        watchlist.forEach((item) => {
+        userEntity.watchList.forEach((item) => {
             promises.push(new Promise((res, rej) => {
                 stockDataService.getWatchItem(item, "1mo").then((response) => {
                     result.push(response);
@@ -27,21 +45,25 @@ function getWatchlist() {
 
         Promise.allSettled(promises).then((results) => {
             resolve(result);
+        }).catch((error) => {
+            reject(error);
         });
     });
 }
 
-function getTagsFromWatchList() {
+
+function fetchTagsFromWatchList(user) {
+    let userEntity = accountService.validateUser(user.username, user.password);
     let tags = [];
-    watchlist.forEach((item) => {
-        tags = tags.concat(item.tags);
+    userEntity.watchList.forEach((item) => {
+        tags = tags.concat(item.tags)
     });
     return tags;
 }
 
 module.exports = {
-    removeStock,
-    addStock,
-    getWatchlist,
-    getTagsFromWatchList
+    deleteStock,
+    insertStock,
+    fetchUiWatchList,
+    fetchTagsFromWatchList
 }

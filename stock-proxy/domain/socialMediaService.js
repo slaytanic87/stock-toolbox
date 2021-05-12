@@ -9,8 +9,8 @@ function getRedditSubmission(tags) {
             let myUrl = urlBuilder
                 .subreddit(tag)
                 .fields(["url", "author", "title", "subreddit", "created_utc", "media"])
-                .before("10d").size(100).build();
-            promises.push(bigdata.getSubmission(myUrl))
+                .before("10d").size(50).build();
+            promises.push(bigdata.getSubmission(myUrl));
         });
         Promise.allSettled(promises).then((results) => {
             results.forEach((result) => {
@@ -27,12 +27,12 @@ function getRedditSubmission(tags) {
                         numberOfComments: 0,
                         numberOfSharing: 0,
                         numberOfLikes: 0
-                    })
-                })
+                    });
+                });
             });
             resolve(events);
         });
-    })
+    });
 }
 
 module.exports = {

@@ -7,6 +7,11 @@ npm install
 
 ### start backend
 ```
-node ./index.js
+npm run serve
 ```
 
+or
+
+```
+node ./index.js
+```
