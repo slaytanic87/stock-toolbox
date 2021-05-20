@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  name: "LoadingPage"
+  name: "LoadingSplash"
 }
 </script>
 

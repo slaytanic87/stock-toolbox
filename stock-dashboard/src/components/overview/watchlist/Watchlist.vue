@@ -166,7 +166,8 @@ export default {
         if (process.env.NODE_ENV === "development") {
           url = "http://localhost:9090/v2/watchlist";
         }
-        axios.get(url).then((res) => {
+      let user = this.$cookies.get("credentials");
+      axios.post(url, user).then((res) => {
           let watchList = res.data;
           if (this.stocks.length === 0) {
             this.stocks = watchList;
@@ -226,7 +227,10 @@ export default {
       if (process.env.NODE_ENV === "development") {
         url = "http://localhost:9090" + url;
       }
-      axios.patch(url, stock).then(() => {
+      axios.patch(url, {
+        stock: stock,
+        user: this.$cookies.get("credentials")
+      }).then(() => {
         let indexToBeRemoved = -1;
         for (let i = 0; i < this.stocks.length; i++) {
           let stockObj = this.stocks[i];

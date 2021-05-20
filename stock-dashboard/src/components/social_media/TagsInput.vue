@@ -73,7 +73,7 @@ export default {
       this.clearSearch();
     },
     removeTag (index) {
-      this.tags.splice(index, 1)
+      this.tags.splice(index, 1);
     },
     search () {
       this.toggleSearch();
@@ -90,7 +90,8 @@ export default {
       if (process.env.NODE_ENV === "development") {
         url = "http://localhost:9090/tags";
       }
-      axios.get(url).then((res) => {
+      let user = this.$cookies.get("credentials");
+      axios.post(url, user).then((res) => {
         this.tags = res.data;
         if (this.tags.length > 0) {
           this.selectTag(this.tags[0]);

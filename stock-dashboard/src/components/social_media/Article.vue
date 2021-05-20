@@ -1,6 +1,6 @@
 <template>
   <article class="border-t border-b border-gray-400 p-2 hover:bg-gray-800 flex flex-wrap items-start cursor-pointer">
-      <img src="https://pbs.twimg.com/profile_images/1111915116579086336/HKxtnLsO_reasonably_small.jpg" class="rounded-full w-12 h-12 mr-3" />
+      <img src="../../assets/planet.png" class="rounded-full w-12 h-12 mr-3" />
 
       <div class="flex flex-wrap justify-start items-start flex-1">
 

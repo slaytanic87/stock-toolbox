@@ -1,7 +1,7 @@
 <template>
       <section class="blog text-gray-400 body-font">
       <div class="container px-5 py-24 mx-auto">
-        <loading-page v-if="calendar.length === 0"></loading-page>
+        <loading-splash v-if="calendar.length === 0"></loading-splash>
         <div v-if="calendar.length > 0" class="flex flex-wrap w-full mb-20 flex-col items-center text-center">
           <h1 class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-300">Trading Event Calendar</h1>
           <p class="lg:w-1/2 w-full leading-relaxed text-base">
@@ -22,13 +22,13 @@
 
 <script>
 import Day from "@/components/calendar/Day.vue";
-import LoadingPage from "@/components/LoadingPage";
+import LoadingSplash from "@/components/LoadingSplash";
 import axios from "axios";
 export default {
   name: "Calendar",
   components: {
     "day": Day,
-    "loading-page": LoadingPage
+    "loading-splash": LoadingSplash
   },
   data () {
     return {

@@ -1,6 +1,6 @@
 <template>
   <div class="container w-full mx-auto pt-20">
-    <loading-page v-if="newsListModel.length === 0"></loading-page>
+    <loading-splash v-if="newsListModel.length === 0"></loading-splash>
     <div class="flex flex-col lg:grid lg:gap-4 2xl:gap-6 lg:grid-cols-4 2xl:row-span-2 2xl:pb-8 ml-2 pt-4 px-6">
       <article-card v-for="card in newsListModel" :key="card.index" :class="card.cardStyle"
                     v-bind:propOrigin="card.origin"
@@ -39,14 +39,14 @@
 
 <script>
 import ArticleCard from "@/components/news/ArticleCard.vue";
-import LoadingPage from "@/components/LoadingPage";
+import LoadingSplash from "@/components/LoadingSplash";
 import axios from "axios";
 
 export default {
   name: "News",
   components: {
     "article-card": ArticleCard,
-    "loading-page": LoadingPage
+    "loading-splash": LoadingSplash
   },
   data() {
     return {
@@ -76,7 +76,8 @@ export default {
       if (process.env.NODE_ENV === "development") {
         url = "http://localhost:9090/news";
       }
-      axios.get(url).then((resp) => {
+      let user = this.$cookies.get("credentials");
+      axios.post(url, user).then((resp) => {
         let newsList = resp.data;
         const spaces = 10;
         let mapped = this.createNewsModelList(newsList);
@@ -84,7 +85,7 @@ export default {
         this.pages = this.partitions.length;
         this.setNewsChunk(0);
       }).catch((err) => {
-        console.log(err);
+        console.error(err);
       });
     },
     createPartition(list, spaces) {
@@ -98,7 +99,7 @@ export default {
       let news = [];
       for (let i = 1; i <= unmappedNewsList.length; i++) {
         let cardType = (i % 5) === 0 ? 5 : (i % 5);
-        let article = unmappedNewsList[i-1];
+        let article = unmappedNewsList[i - 1];
         news.push({
           index: i - 1,
           title: article.title,

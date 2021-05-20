@@ -22,8 +22,16 @@ function addUser(username, password) {
     }
 }
 
-function validateUser(username, password) {
+function authenticate(username, password) {
     const hashedPassword = getCrypto().createHash("sha256").update(password).digest("hex");
+    let validatedUser = validateUser(username, hashedPassword);
+    return {
+        username: validatedUser.username,
+        password: validatedUser.password
+    }
+}
+
+function validateUser(username, hashedPassword) {
     let user = userDao.getUser(username);
     if (hashedPassword === user.password) {
         return user;
@@ -56,5 +64,6 @@ module.exports = {
     addUser,
     getUser,
     updateAccount,
-    validateUser
+    validateUser,
+    authenticate
 }

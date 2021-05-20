@@ -185,7 +185,11 @@ export default {
         if (process.env.NODE_ENV === "development") {
             url = "http://localhost:9090/addStock";
         }
-        axios.post(url, body).then((res) => {
+
+        axios.post(url, {
+          stock: body,
+          user: this.$cookies.get("credentials")
+        }).then((res) => {
             console.log(res.status);
         }).catch((error) => {
             console.log(error);

@@ -76,7 +76,8 @@ export default {
       if (process.env.NODE_ENV === "development") {
         url = "http://localhost:9090/indexlist";
       }
-      axios.get(url).then((res) => {
+      let user = this.$cookies.get("credentials");
+      axios.post(url, user).then((res) => {
         let list = res.data;
         this.indexList = [];
         list.forEach((data) => {
