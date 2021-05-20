@@ -5,7 +5,7 @@
       <div class="absolute bg-black opacity-60 inset-0 z-0"></div>
       <div class="w-full px-24 z-10">
         <h1 class="text-5xl font-bold text-left tracking-wide">Keep it special</h1>
-        <p class="text-3xl my-4">Capture your personal memory in unique way, anywhere.</p>
+        <p class="text-3xl my-4">{{ dailyQuote.quote }}</p>
       </div>
       <div class="bottom-0 absolute p-4 text-center right-0 left-0 flex justify-center space-x-4">
         <span>
@@ -78,14 +78,30 @@ export default {
     return {
       loginBg: loginBg,
       username: "",
-      password: ""
+      password: "",
+      dailyQuote: {
+        quote: "Capture your personal memory in unique way, anywhere."
+      }
     }
   },
   created () {
+      this.getDailyQuote();
   },
   methods: {
     changeView (viewName) {
       this.$store.commit("account/setView", viewName);
+    },
+    async getDailyQuote () {
+      let url = "/quote";
+      if (process.env.NODE_ENV === "development") {
+        url = `http://localhost:9090${url}`;
+      }
+      axios.get(url).then((resp) => {
+        let randomQuote = resp.data;
+        this.dailyQuote.quote = randomQuote.quote
+      }).catch((err) => {
+        console.error(err);
+      })
     },
     authenticate (username, password) {
       let url = "/user/authenticate";

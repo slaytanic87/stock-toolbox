@@ -24,7 +24,6 @@ export default {
   },
   created() {
     let user = this.$cookies.get("credentials");
-    console.log(user);
     if (user === null) {
       this.changeView("LoginPage");
       return;

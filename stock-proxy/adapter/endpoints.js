@@ -8,6 +8,7 @@ const calendarService = require("../domain/calendarService.js");
 const newsService = require("../domain/newsService.js");
 const stockDataService = require("../domain/stockDataService.js");
 const accountService = require("../domain/accountService.js");
+const quoteService = require("../domain/quoteService.js");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -174,6 +175,12 @@ app.post("/user/authenticate", (req, res) => {
         console.debug(e);
         res.sendStatus(UNAUTHORIZED);
     }
+    res.end();
+})
+
+app.get("/quote", (req, res) => {
+    let quote = quoteService.getRandomQuote()
+    res.json(quote);
     res.end();
 })
 

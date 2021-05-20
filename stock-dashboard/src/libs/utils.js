@@ -87,9 +87,9 @@ export function createWinLost(watchlist) {
         let diff = (stock.currentPrice * stock.quantity) - (stock.entryPrice * stock.quantity);
         if (diff > 0) {
             win += diff;
-        } else {
-            lost += diff;
+            return;
         }
+        lost += diff;
     });
     return {
         win: roundDigits(win, 4),
