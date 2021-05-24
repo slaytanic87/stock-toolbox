@@ -93,9 +93,7 @@ library.add(faUniversity, faMoneyBillAlt, faArrowCircleUp, faArrowCircleDown, fa
 faCaretUp, faCaretDown);
 export default {
   name: "App",
-  components: {
-
-  },
+  components: {},
   props: {
       propChartData: {
           required: true
@@ -103,10 +101,10 @@ export default {
   },
   watch: {
       propChartData: function (newVal) {
-          let calcedData = createWinLost(newVal);
-          this.invested = calcedData.invested;
-          this.win = calcedData.win;
-          this.lost = calcedData.lost;
+          let calculatedData = createWinLost(newVal);
+          this.invested = calculatedData.invested;
+          this.win = calculatedData.win;
+          this.lost = calculatedData.lost;
           this.total = roundDigits(this.win + this.lost, 4);
       }
   },

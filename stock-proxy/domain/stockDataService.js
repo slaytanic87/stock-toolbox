@@ -260,7 +260,7 @@ function getStockData(sym, range) {
             let watchItem = createChartDataResponse(responseData);
             resolve(watchItem);
         }).catch((err) => {
-            console.log(err);
+            console.error(err);
             reject(err);
         });
 

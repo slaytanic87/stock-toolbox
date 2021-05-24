@@ -178,6 +178,17 @@ app.post("/user/authenticate", (req, res) => {
     res.end();
 })
 
+app.post("/user/password/change", (req, res) => {
+    let userData = req.body;
+    try {
+        let changedUser = accountService.changePassword(userData.user, userData.newPassword);
+        res.json(changedUser)
+    } catch (e) {
+        console.debug(e);
+        res.sendStatus(UNAUTHORIZED);
+    }
+})
+
 app.get("/quote", (req, res) => {
     let quote = quoteService.getRandomQuote()
     res.json(quote);

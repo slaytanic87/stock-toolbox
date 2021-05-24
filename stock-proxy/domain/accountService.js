@@ -11,9 +11,13 @@ function getCrypto() {
     }
 }
 
+function getHashedPassword(password) {
+    return getCrypto().createHash("sha256").update(password).digest("hex");
+}
+
 function addUser(username, password) {
     try {
-        const hashedPassword = getCrypto().createHash("sha256").update(password).digest("hex");
+        const hashedPassword = getHashedPassword(password);
         return userDao.createUser(username, hashedPassword);
     } catch (exception) {
         return {
@@ -23,7 +27,7 @@ function addUser(username, password) {
 }
 
 function authenticate(username, password) {
-    const hashedPassword = getCrypto().createHash("sha256").update(password).digest("hex");
+    const hashedPassword = getHashedPassword(password);
     let validatedUser = validateUser(username, hashedPassword);
     return {
         username: validatedUser.username,
@@ -54,9 +58,18 @@ function updateAccount(userEntity) {
         validateUser(userEntity.username, userEntity.password);
         return userDao.updateUserAccount(userEntity);
     } catch (exception) {
-        return {
-            error: exception
-        }
+        throw exception;
+    }
+}
+
+function changePassword(userEntity, newPassword) {
+    try {
+        let oldPassword = getHashedPassword(userEntity.password);
+        let user = validateUser(userEntity.username, oldPassword);
+        user.password = getHashedPassword(newPassword);
+        return updateAccount(user);
+    } catch (e) {
+        throw e;
     }
 }
 
@@ -64,6 +77,7 @@ module.exports = {
     addUser,
     getUser,
     updateAccount,
+    changePassword,
     validateUser,
     authenticate
 }

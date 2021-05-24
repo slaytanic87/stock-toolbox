@@ -98,7 +98,7 @@ export default {
       }
       axios.get(url).then((resp) => {
         let randomQuote = resp.data;
-        this.dailyQuote.quote = randomQuote.quote
+        this.dailyQuote.quote = randomQuote.quote;
       }).catch((err) => {
         console.error(err);
       })

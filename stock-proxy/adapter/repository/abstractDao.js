@@ -6,16 +6,16 @@ function setPath(pathStr) {
     path = pathStr;
 }
 
-function save(profileName, data) {
-    fs.writeFile(`${path}${profileName}.json`, JSON.stringify(data, null, 4), (error) => {
+function save(dbName, data) {
+    fs.writeFile(`${path}${dbName}.json`, JSON.stringify(data, null, 4), (error) => {
         if (error) {
-            console.log(error);
+            console.error(error);
         }
     });
 }
 
-function open(profileName) {
-    let data = fs.readFileSync(`${path}${profileName}.json`, "utf-8");
+function open(dbName) {
+    let data = fs.readFileSync(`${path}${dbName}.json`, "utf-8");
     return JSON.parse(data);
 }
 
