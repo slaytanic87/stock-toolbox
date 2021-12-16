@@ -45,7 +45,6 @@ function parseArticle(dom, article) {
         if (title.text() === "" || main.text() === "") {
             return;
         }
-
         newsList.push({
             origin: article.name,
             href: article.row.link.baseUrl + hrefPath,

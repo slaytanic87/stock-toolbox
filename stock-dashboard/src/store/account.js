@@ -1,5 +1,10 @@
+import Vue from "vue";
+import VueCookies from 'vue-cookies'
+Vue.use(VueCookies)
+
 const state = {
-    view: "LoginPage"
+    view: null,
+    authedUser: Vue.$cookies.get("credentials")
 }
 
 const actions = {}

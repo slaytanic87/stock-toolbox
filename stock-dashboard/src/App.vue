@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <component v-bind:is="view"></component>
-</div>
+  </div>
 </template>
 
 <script>
@@ -23,7 +23,7 @@ export default {
     }
   },
   created() {
-    let user = this.$cookies.get("credentials");
+    let user = this.$store.state.account.authedUser;
     if (user === null) {
       this.changeView("LoginPage");
       return;

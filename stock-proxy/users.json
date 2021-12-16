@@ -147,21 +147,21 @@
                 "category": "Exclusive",
                 "url": "https://www.boersennews.de/nachrichten/id/183/",
                 "baseUrl": "https://www.boersennews.de",
-                "query": "div[class=row] div > a",
+                "query": "div[class='row row-cols-2 row-cols-md-4 g-3 mt-0'] div[class=col]",
                 "row": {
                     "title": {
-                        "query": "h4"
+                        "query": "span"
                     },
                     "main": {
-                        "query": "p"
+                        "query": "h4 > a"
                     },
                     "link": {
-                        "query": "",
+                        "query": "h4 > a",
                         "baseUrl": "https://www.boersennews.de",
                         "attr": "href"
                     },
                     "image": {
-                        "query": "p > img",
+                        "query": "img",
                         "baseUrl": "",
                         "attr": "data-src"
                     }

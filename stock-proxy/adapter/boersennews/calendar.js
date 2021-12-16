@@ -17,9 +17,9 @@ function fetchCalendar() {
         let calendarArr = [];
         axios.get(calendar).then((resp) => {
             const dom = cheerio.load(resp.data);
-            let rows = dom("div[class=row] table[id=calendarTable] > tbody > tr");
+            let rows = dom("div[class=row] table[id=calendar-DataTable] > tbody > tr");
             rows.each((index, elem) => {
-                let day = dom(elem).find("span[class=text-white]").text();
+                let day = dom(elem).find("td[class=bg-muted]").text();
                 let event = dom(elem).find("strong[class=text-black]").text();
                 let countriesArr = getCountryHeader(dom, dom(elem).find("tr[class='small text-center'] > th > span"));
                 let statusArr = getStatus(dom, dom(elem).find("tr[class=text-center] > td > i"));

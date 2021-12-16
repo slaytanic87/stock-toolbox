@@ -18,8 +18,9 @@
         <!-- selections -->
           <div v-for="(tag, index) in tags" v-bind:key="tag" class="bg-purple-600 inline-flex items-center text-sm rounded mt-2 mr-1">
             <div class="tag">
-            <span class="ml-2 mr-1 leading-relaxed truncate max-w-xs text-gray-200"
-                  @click="selectTag(tag)">{{tag}}</span>
+              <span class="ml-2 mr-1 leading-relaxed truncate max-w-xs text-gray-200"
+                    @click="selectTag(tag)">{{tag}}
+              </span>
             </div>
             <button @click="removeTag(index)" class="w-6 h-8 inline-block align-middle text-gray-500 hover:text-gray-600 focus:outline-none">
               <font-awesome-icon :icon="['fa', 'times']" class="mr-2 fa-inverse"/>
