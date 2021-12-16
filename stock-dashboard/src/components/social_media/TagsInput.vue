@@ -10,7 +10,7 @@
           <div class="absolute z-40 left-0 mt-2 w-full">
             <div class="py-1 text-black bg-white rounded shadow-lg border border-gray-300">
               <a class="block py-1 px-5 cursor-pointer hover:bg-indigo-600 hover:text-white">
-                Add tag "<span class="font-semibold">{{textInput}}</span>"
+                Hit enter "<span class="font-semibold">{{textInput}}</span>"
               </a>
             </div>
           </div>

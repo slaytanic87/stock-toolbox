@@ -138,6 +138,18 @@
                 "quantity": 1,
                 "countryCode": "US",
                 "tags": []
+            },
+            {
+                "name": "AH9.F",
+                "companyName": "AMC Entertainment Holdings, Inc.",
+                "entryPrice": "26",
+                "currency": "EUR",
+                "observeOnly": true,
+                "quantity": 101,
+                "countryCode": "DE",
+                "tags": [
+                    "amc", "wallstreet"
+                ]
             }
         ],
         "indexList": [
