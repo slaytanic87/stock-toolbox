@@ -1,22 +1,47 @@
 const axios = require("axios");
 const indices = require("./indices.js");
 
-function fetchStockData(symbol, range) {
+/**
+ * Fetch stock data
+ * @param symbol stock symbol follows with market place e.g LHL.F = Lenovo/Frankfurt
+ * @param range valid ranges ["1d","5d","1mo","3mo","6mo","1y","2y","5y","10y","ytd","max"]
+ * @param interval data granularity ["15m", "1d"]
+ * @param lang language e.g de-DE, ch-FR, en-US
+ * @param region country e.g DE, CH, FR, US
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+function fetchStockData(symbol, range, interval = "1d", lang = "de-DE", region = "DE") {
     let baseUrl = "https://query1.finance.yahoo.com/v8/finance/chart/";
-    let path = "?formatted=true&lang=de-DE&region=DE&includeAdjustedClose=true&interval=1d&range="
-        + range + "&corsDomain=de.finance.yahoo.com";
+    let path = `?formatted=true
+                &lang=${lang}
+                &region=${region}
+                &includeAdjustedClose=true
+                &interval=${interval}
+                &range=${range}
+                &corsDomain=de.finance.yahoo.com`;
 
     return axios.get(baseUrl + symbol + path,{ headers: {}});
 }
 
-function fetchFinancials(symbol) {
+/**
+ * Get yahoo financials
+ * @param symbol
+ * @param lang
+ * @param region
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+function fetchFinancials(symbol, lang = "en-US", region = "US") {
     let baseUrl = "https://query2.finance.yahoo.com/v10/finance/quoteSummary/";
-    let path = "?formatted=true&lang=en-US&region=US&modules=incomeStatementHistory,cashflowStatementHistory,balanceSheetHistory,incomeStatementHistoryQuarterly,cashflowStatementHistoryQuarterly,balanceSheetHistoryQuarterly,earnings&corsDomain=finance.yahoo.com"
+    let path = `?formatted=true
+                &lang=${lang}
+                &region=${region}
+                &modules=incomeStatementHistory,cashflowStatementHistory,balanceSheetHistory,incomeStatementHistoryQuarterly,cashflowStatementHistoryQuarterly,balanceSheetHistoryQuarterly,earnings
+                &corsDomain=finance.yahoo.com`
     return axios.get(baseUrl + symbol + path);
 }
 
 function mapStockData(responseData) {
-    let timestamps = responseData.chart.result[0].timestamp.map(time => time * 1000);
+    let timestamps = responseData.chart.result[0].timestamp.map(timeSeconds => timeSeconds * 1000);
     let currency = responseData.chart.result[0].meta.currency;
     let regularMarketPrice = responseData.chart.result[0].meta.regularMarketPrice;
     let symbol = responseData.chart.result[0].meta.symbol;

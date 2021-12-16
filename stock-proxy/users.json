@@ -6,13 +6,15 @@
             {
                 "name": "TL0.DE",
                 "companyName": "Tesla, Inc.",
-                "entryPrice": 594.0,
+                "entryPrice": 594,
                 "currency": "EUR",
                 "quantity": 1,
                 "observeOnly": true,
                 "category": "OTHER",
                 "countryCode": "US",
-                "tags": ["tesla"]
+                "tags": [
+                    "tesla"
+                ]
             },
             {
                 "name": "APC.F",
@@ -23,12 +25,14 @@
                 "observeOnly": false,
                 "category": "LONG",
                 "countryCode": "US",
-                "tags": ["apple"]
+                "tags": [
+                    "apple"
+                ]
             },
             {
                 "name": "RY6.F",
                 "companyName": "Realty Income Corporation",
-                "entryPrice": 50.00,
+                "entryPrice": 50,
                 "currency": "EUR",
                 "quantity": 40,
                 "observeOnly": false,
@@ -45,7 +49,9 @@
                 "observeOnly": false,
                 "category": "LONG",
                 "countryCode": "NO",
-                "tags": ["zaptec"]
+                "tags": [
+                    "zaptec"
+                ]
             },
             {
                 "name": "3CP.F",
@@ -56,7 +62,9 @@
                 "observeOnly": false,
                 "category": "LONG",
                 "countryCode": "CN",
-                "tags": ["xiaomi"]
+                "tags": [
+                    "xiaomi"
+                ]
             },
             {
                 "name": "LHL.F",
@@ -67,7 +75,9 @@
                 "observeOnly": false,
                 "category": "DIVIDEND",
                 "countryCode": "HK",
-                "tags": ["lenovo"]
+                "tags": [
+                    "lenovo"
+                ]
             },
             {
                 "name": "EJZN.F",
@@ -89,18 +99,22 @@
                 "observeOnly": false,
                 "category": "LONG",
                 "countryCode": "US",
-                "tags": ["sigma labs"]
+                "tags": [
+                    "sigma labs"
+                ]
             },
             {
                 "name": "PLUN.F",
                 "companyName": "Plug Power Inc.",
-                "entryPrice": 52.30,
+                "entryPrice": 52.3,
                 "currency": "EUR",
                 "quantity": 1,
                 "observeOnly": true,
                 "category": "OTHER",
                 "countryCode": "US",
-                "tags": ["plug power"]
+                "tags": [
+                    "plug power"
+                ]
             },
             {
                 "name": "22UA.F",
@@ -111,87 +125,19 @@
                 "observeOnly": true,
                 "category": "SHORT_PERIOD",
                 "countryCode": "DE",
-                "tags": ["biontech"]
-            }
-        ],
-        "newsScraperRules": [
-            {
-                "name": "Börsennews.de",
-                "renderingType": "server",
-                "category": "TopNews",
-                "url": "https://www.boersennews.de/nachrichten/top-news/",
-                "baseUrl": "https://www.boersennews.de",
-                "query": "div[class=row] div > a",
-                "row": {
-                    "title": {
-                        "query": "h4"
-                    },
-                    "main": {
-                        "query": "p"
-                    },
-                    "link": {
-                        "query": "",
-                        "baseUrl": "https://www.boersennews.de",
-                        "attr": "href"
-                    },
-                    "image": {
-                        "query": "p > img",
-                        "baseUrl": "",
-                        "attr": "data-src"
-                    }
-                }
+                "tags": [
+                    "biontech"
+                ]
             },
             {
-                "name": "Börsennews.de",
-                "renderingType": "server",
-                "category": "Exclusive",
-                "url": "https://www.boersennews.de/nachrichten/id/183/",
-                "baseUrl": "https://www.boersennews.de",
-                "query": "div[class='row row-cols-2 row-cols-md-4 g-3 mt-0'] div[class=col]",
-                "row": {
-                    "title": {
-                        "query": "span"
-                    },
-                    "main": {
-                        "query": "h4 > a"
-                    },
-                    "link": {
-                        "query": "h4 > a",
-                        "baseUrl": "https://www.boersennews.de",
-                        "attr": "href"
-                    },
-                    "image": {
-                        "query": "img",
-                        "baseUrl": "",
-                        "attr": "data-src"
-                    }
-                }
-            },
-            {
-                "name": "trendingnews.de",
-                "renderingType": "server",
-                "category": "IT-Trends",
-                "url": "https://trendingnews.de/category/it-trends",
-                "baseUrl": "https://trendingnews.de",
-                "query": "article",
-                "row": {
-                    "title": {
-                        "query": "h2[class='post-title entry-title']"
-                    },
-                    "main": {
-                        "query": "div[class=entry-content] > p"
-                    },
-                    "link": {
-                        "query": "h2[class='post-title entry-title'] > a",
-                        "baseUrl": "",
-                        "attr": "href"
-                    },
-                    "image": {
-                        "query": "figure > a > img",
-                        "baseUrl": "",
-                        "attr": "src"
-                    }
-                }
+                "name": "LTP.F",
+                "companyName": "Ltc Properties Inc.",
+                "entryPrice": "29.36",
+                "currency": "EUR",
+                "observeOnly": true,
+                "quantity": 1,
+                "countryCode": "US",
+                "tags": []
             }
         ],
         "indexList": [

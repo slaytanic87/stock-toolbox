@@ -6,7 +6,7 @@ const accountService = require("./accountService.js");
 function deleteStock(watchStock, user) {
     try {
         let userEntity = accountService.validateUser(user.username, user.password);
-        watchListDao.removeStock(userEntity, watchStock.name);
+        watchListDao.removeStock(userEntity, watchStock.sym);
     } catch (exception) {
         throw exception;
     }
