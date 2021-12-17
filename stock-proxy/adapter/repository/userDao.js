@@ -46,7 +46,7 @@ function mapUser(userOld, userNew) {
     updatedUser.username = userNew.username !== undefined ? userNew.username : userOld.username;
     updatedUser.password = userNew.password !== undefined ? userNew.password : userOld.password;
     updatedUser.watchList = userNew.watchList !== undefined ? userNew.watchList : userOld.watchList;
-    updatedUser.newsScraper = userNew.newsScraper !== undefined ? userNew.newsScraper : userOld.newsScraper;
+    updatedUser.newsScraperRules = userNew.newsScraperRules !== undefined ? userNew.newsScraperRules : userOld.newsScraperRules;
     updatedUser.indexList = userNew.indexList !== undefined ? userNew.indexList : userOld.indexList;
     return updatedUser;
 }
