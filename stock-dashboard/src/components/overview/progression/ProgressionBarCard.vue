@@ -28,7 +28,8 @@
         <tr>
           <th>Milestones</th>
         </tr>
-        <tr v-for="(item) in milestonesList" :key="item" class="bg-indigo-800 border-b border-gray-600">
+        <tr v-for="(item) in milestonesList" :key="item" :style='{ backgroundColor: `rgb(${color()}, ${color()}, ${color()})` }'
+            class="border-b border-gray-600">
           <td class="px-4 py-3 lg:hover:bg-indigo-600 text-center">
               {{item}}{{propCurrency}}
               <font-awesome-icon :icon="['fa', 'check']" class="rounded bg-green-500"/>
@@ -70,6 +71,8 @@ export default {
       milestonesList: []
     }
   },
+  computed: {
+  },
   watch: {
     propChartData: function (newValue) {
       let calcedData = createWinLost(newValue);
@@ -86,6 +89,11 @@ export default {
       }
       this.milestonesList = this.milestonesList.reverse();
       this.currentPercentage = total * 100 / this.currentTarget;
+    }
+  },
+  methods: {
+    color () {
+      return Math.floor(Math.random() * 210);
     }
   }
 }

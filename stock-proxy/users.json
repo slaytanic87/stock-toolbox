@@ -104,32 +104,6 @@
                 ]
             },
             {
-                "name": "PLUN.F",
-                "companyName": "Plug Power Inc.",
-                "entryPrice": 52.3,
-                "currency": "EUR",
-                "quantity": 1,
-                "observeOnly": true,
-                "category": "OTHER",
-                "countryCode": "US",
-                "tags": [
-                    "plug power"
-                ]
-            },
-            {
-                "name": "22UA.F",
-                "companyName": "BioNTech",
-                "entryPrice": 84.05,
-                "currency": "EUR",
-                "quantity": 23,
-                "observeOnly": true,
-                "category": "SHORT_PERIOD",
-                "countryCode": "DE",
-                "tags": [
-                    "biontech"
-                ]
-            },
-            {
                 "name": "LTP.F",
                 "companyName": "Ltc Properties Inc.",
                 "entryPrice": "29.36",
@@ -142,13 +116,27 @@
             {
                 "name": "AH9.F",
                 "companyName": "AMC Entertainment Holdings, Inc.",
-                "entryPrice": "26",
+                "entryPrice": "27.4067",
                 "currency": "EUR",
                 "observeOnly": true,
-                "quantity": 101,
+                "quantity": 105,
                 "countryCode": "DE",
                 "tags": [
-                    "amc", "wallstreet"
+                    "amc",
+                    "wallstreet"
+                ]
+            },
+            {
+                "name": "0XP.F",
+                "companyName": "Argo Blockchain plc",
+                "entryPrice": "1.08515",
+                "currency": "EUR",
+                "observeOnly": false,
+                "quantity": 2000,
+                "countryCode": "GB",
+                "tags": [
+                    "bitcoin",
+                    "argo blockchain"
                 ]
             }
         ],
