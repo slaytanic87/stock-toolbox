@@ -243,6 +243,7 @@ function getWatchItem(observedStock, range) {
             let watchItem = createWatchItem(observedStock, responseData);
             resolve(watchItem);
         }).catch((err)=> {
+            console.error(err);
             reject(err);
         });
     });
@@ -263,7 +264,6 @@ function getStockData(sym, range) {
             console.error(err);
             reject(err);
         });
-
     })
 }
 

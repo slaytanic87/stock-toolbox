@@ -47,7 +47,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="stock in searched" :key="stock.name" class="bg-gray-750 border-2 lg:hover:bg-blue-900 border-gray-700">
+        <tr v-for="stock in filteredBySearch" :key="stock.name" class="bg-gray-750 border-2 lg:hover:bg-blue-900 border-gray-700">
           <td class="py-2 text-center">
             <span>
               <font-awesome-icon :icon="['fa', 'industry']" class="fa-fw mr-3"/>
@@ -160,7 +160,7 @@ export default {
   data() {
     return {
       search: null,
-      searched: [],
+      filteredBySearch: [],
       stocks: [],
       interval: null,
       selectedChart: {},
@@ -174,7 +174,7 @@ export default {
   watch: {
     stocks: function (val) {
         this.$emit("chartToCard", val);
-        this.$emit("watchlistToCard", this.searched);
+        this.$emit("watchlistToCard", this.filteredBySearch);
     }
   },
   methods: {
@@ -200,7 +200,7 @@ export default {
               }
             }
           }
-          this.searched = this.stocks;
+          this.filteredBySearch = this.stocks;
       }).catch((error) => {
         console.error(error);
       });
@@ -234,7 +234,7 @@ export default {
       return items;
     },
     searchOnTable() {
-      this.searched = this.searchByName(this.stocks, this.search);
+      this.filteredBySearch = this.searchByName(this.stocks, this.search);
     },
     pollingData() {
       this.interval = setInterval(this.fetchWatchList, 300000);
@@ -280,7 +280,7 @@ export default {
           return;
         }
         this.stocks.splice(indexToBeRemoved, 1);
-        this.searched = this.stocks;
+        this.filteredBySearch = this.stocks;
       }).catch((error) => {
         console.error(error);
       })
