@@ -53,6 +53,27 @@ function getUser(username, password) {
     }
 }
 
+function getObservedStock(username, password, symbol) {
+    try {
+        let validatedUser = validateUser(username, password);
+        let watchList = validatedUser.watchList;
+        return watchList.find((stock) => stock.name === symbol)
+    } catch (exception) {
+        throw exception;
+    }
+}
+
+function updateObservedStock(username, password, stock) {
+    try {
+        let validatedUser = validateUser(username, password);
+        let index = validatedUser.watchList.findIndex((currentStock) => stock.name === currentStock.name);
+        validatedUser.watchList[index] = stock;
+        userDao.updateUserAccount(validatedUser);
+    } catch (exception) {
+        throw exception;
+    }
+}
+
 function updateAccount(userEntity) {
     try {
         validateUser(userEntity.username, userEntity.password);
@@ -79,5 +100,7 @@ module.exports = {
     updateAccount,
     changePassword,
     validateUser,
-    authenticate
+    authenticate,
+    getObservedStock,
+    updateObservedStock
 }

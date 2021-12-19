@@ -3,10 +3,10 @@ const axios = require("axios");
 const baseUrl = "https://query1.finance.yahoo.com/v8/finance/chart/";
 
 function fetchIndex(symbol, interval, range) {
-    let path = "?includePrePost=false&useYfid=true" +
-        "&interval=" + interval +
-        "&range=" + range +
-        "&corsDomain=de.finance.yahoo.com&.tsrc=finance";
+    let path = `?includePrePost=false&useYfid=true
+               &interval=${interval}
+               &range=${range}
+               &corsDomain=de.finance.yahoo.com&.tsrc=finance`;
 
     return axios.get(baseUrl + symbol + path);
 }

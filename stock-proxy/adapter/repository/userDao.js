@@ -41,7 +41,7 @@ function getUser(username) {
     return userObj;
 }
 
-function mapUser(userOld, userNew) {
+function mapUserAccountData(userOld, userNew) {
     let updatedUser = {}
     updatedUser.username = userNew.username !== undefined ? userNew.username : userOld.username;
     updatedUser.password = userNew.password !== undefined ? userNew.password : userOld.password;
@@ -56,7 +56,7 @@ function updateUserAccount(updatedUser) {
     for (let i = 0; i < users.length; i++) {
         let user = users[i];
         if (user.username.toLowerCase() === updatedUser.username.toLowerCase()) {
-            users[i] = mapUser(users[i], updatedUser);
+            users[i] = mapUserAccountData(users[i], updatedUser);
             abstractDao.save(USER_DB_NAME, users);
             return users[i];
         }

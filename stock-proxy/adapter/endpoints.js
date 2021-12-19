@@ -54,7 +54,7 @@ app.post("/v2/watchlist", (req, res) => {
         res.json(result);
         res.end();
     }).catch((err) => {
-        console.log(err);
+        console.error(err);
         res.error();
     })
 })
@@ -65,7 +65,7 @@ app.post("/marketIndex", (req, res) => {
         res.json(result);
         res.end();
     }).catch((err) => {
-        console.log(err);
+        console.error(err);
         res.error();
     });
 })
@@ -171,6 +171,29 @@ app.post("/user/authenticate", (req, res) => {
     try {
         let authenticatedUserEntity = accountService.authenticate(user.username, user.password)
         res.json(authenticatedUserEntity);
+    } catch (e) {
+        console.debug(e);
+        res.sendStatus(UNAUTHORIZED);
+    }
+    res.end();
+})
+
+app.post("/watchedStock", (req, res) => {
+    let requestObj = req.body;
+    try {
+        let stock = accountService.getObservedStock(requestObj.user.username, requestObj.user.password, requestObj.symbol);
+        res.json(stock);
+    } catch (e) {
+        console.debug(e)
+        res.sendStatus(UNAUTHORIZED);
+    }
+    res.end();
+})
+
+app.post("/updateWatchedStock", (req, res) => {
+    let requestObj = req.body;
+    try {
+        accountService.updateObservedStock(requestObj.user.username, requestObj.user.password, requestObj.stock);
     } catch (e) {
         console.debug(e);
         res.sendStatus(UNAUTHORIZED);

@@ -27,13 +27,16 @@
             <span class="text-gray-300">Win</span>
           </th>
           <th class="py-2">
-            <span class="text-gray-300">Quantity</span>
+            <span class="text-gray-300">Shares</span>
           </th>
           <th class="py-2">
             <span class="text-gray-300">RSI (14)</span>
           </th>
           <th class="py-2">
             <span class="text-gray-300">Mode</span>
+          </th>
+          <th class="py-2">
+            <span class="text-gray-300">Edit</span>
           </th>
           <th class="py-2">
             <span class="text-gray-300">Remove</span>
@@ -88,6 +91,11 @@
             </span>
           </td>
           <td class="py-2 text-center">
+            <button @click="openEditStock(stock)">
+              <font-awesome-icon :icon="['fa', 'edit']" class="fa-fw cus-course-light-blue"/>
+            </button>
+          </td>
+          <td class="py-2 text-center">
             <button @click="removeStock(stock)">
               <font-awesome-icon :icon="['fa', 'trash-alt']" class="fa-fw cus-course-red"/>
             </button>
@@ -103,23 +111,28 @@
       </tbody>
     </table>
     <stock-chart
-      v-bind:showDialog="showChartModal"
-      v-bind:stockName="selectedName"
-      v-bind:chartData="selectedChart"
-      v-on:chartToDashMessage="closeChartDialog">
+        v-bind:showDialog="showChartModal"
+        v-bind:stockName="selectedName"
+        v-bind:chartData="selectedChart"
+        v-on:chartToDashMessage="closeChartDialog">
     </stock-chart>
     <stock-add-modal
-      v-bind:showDialog="showAddStockModal"
-      v-on:addChartModalToDashMessage="closeAddStockModal"
-      >
+        v-bind:showDialog="showAddStockModal"
+        v-on:messageFromAddChartModalToDash="closeAddStockModal">
     </stock-add-modal>
+    <stock-edit-modal
+        v-bind:stock="selectedStock"
+        v-bind:showDialog="showEditStockModal"
+        v-on:messageFromEditChartModalToDash="closeEditStockModal">
+    </stock-edit-modal>
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import StockChart from "../chartmodal/StockChart.vue";
-import StockAddModal from "./StockAddModal.vue";
+import AddStockModal from "./AddStockModal.vue";
+import EditStockModal from "@/components/overview/watchlist/EditStockModal";
 import { DataCube } from "trading-vue-js";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
@@ -128,9 +141,10 @@ import {
   faChartBar,
   faIndustry,
   faPlusCircle,
-  faTrashAlt
+  faTrashAlt,
+  faEdit
 } from "@fortawesome/free-solid-svg-icons";
-library.add(faEye, faMoneyBillAlt, faChartBar, faIndustry, faPlusCircle, faTrashAlt);
+library.add(faEye, faMoneyBillAlt, faChartBar, faIndustry, faPlusCircle, faTrashAlt, faEdit);
 
 export default {
   name: "Watchlist",
@@ -140,7 +154,8 @@ export default {
   },
   components: {
     "stock-chart": StockChart,
-    "stock-add-modal": StockAddModal
+    "stock-add-modal": AddStockModal,
+    "stock-edit-modal": EditStockModal
   },
   data() {
     return {
@@ -150,8 +165,10 @@ export default {
       interval: null,
       selectedChart: {},
       selectedName: "",
+      selectedStock: null,
       showChartModal: false,
-      showAddStockModal: false
+      showAddStockModal: false,
+      showEditStockModal: false
     };
   },
   watch: {
@@ -162,22 +179,22 @@ export default {
   },
   methods: {
     fetchWatchList () {
-        let url = "/v2/watchlist";
-        if (process.env.NODE_ENV === "development") {
-          url = "http://localhost:9090/v2/watchlist";
-        }
+      let url = "/v2/watchlist";
+      if (process.env.NODE_ENV === "development") {
+        url = "http://localhost:9090/v2/watchlist";
+      }
       let user = this.$cookies.get("credentials");
       axios.post(url, user).then((res) => {
           let watchList = res.data;
           if (this.stocks.length === 0) {
             this.stocks = watchList;
           } else {
-            for (let i = 0; i < this.stocks.length; i++) {
-              let currentStock = this.stocks[i];
-              for (let j = i; j < watchList.length; j++) {
-                let stockNew = watchList[j];
+            for (let posCurrentStock = 0; posCurrentStock < this.stocks.length; posCurrentStock++) {
+              let currentStock = this.stocks[posCurrentStock];
+              for (let posFetchedStock = posCurrentStock; posFetchedStock < watchList.length; posFetchedStock++) {
+                let stockNew = watchList[posFetchedStock];
                 if (currentStock.name === stockNew.name && currentStock.observeOnly === stockNew.observeOnly) {
-                  this.stocks[i] = stockNew;
+                  this.stocks[posCurrentStock] = stockNew;
                   break;
                 }
               }
@@ -185,7 +202,24 @@ export default {
           }
           this.searched = this.stocks;
       }).catch((error) => {
-        console.log(error);
+        console.error(error);
+      });
+    },
+    fetchWatchedStock(symbol) {
+      let self = this;
+      let url = "/watchedStock";
+      if (process.env.NODE_ENV === "development") {
+        url = `http://localhost:9090${url}`;
+      }
+      axios.post(url, {
+        symbol: symbol,
+        user: this.$cookies.get("credentials")
+      }).then((res) => {
+        self.selectedStock = res.data;
+        self.showEditStockModal = true;
+        console.log(res.status);
+      }).catch((error) => {
+        console.error(error);
       });
     },
     toLower(text) {
@@ -219,8 +253,11 @@ export default {
           self.selectedName = chartName;
           self.showChartModal = true;
       }).catch((error) => {
-        console.log(error);
+        console.error(error);
       })
+    },
+    openEditStock(stock) {
+      this.fetchWatchedStock(stock.sym);
     },
     removeStock(stock) {
       let url = "/removeStock";
@@ -234,7 +271,7 @@ export default {
         let indexToBeRemoved = -1;
         for (let i = 0; i < this.stocks.length; i++) {
           let stockObj = this.stocks[i];
-          if (stockObj.name === stock.name) {
+          if (stockObj.sym === stock.sym) {
             indexToBeRemoved = i;
             break;
           }
@@ -245,7 +282,7 @@ export default {
         this.stocks.splice(indexToBeRemoved, 1);
         this.searched = this.stocks;
       }).catch((error) => {
-        console.log(error);
+        console.error(error);
       })
     },
     showAddStock() {
@@ -307,6 +344,9 @@ export default {
     },
     closeAddStockModal(show) {
       this.showAddStockModal = show;
+    },
+    closeEditStockModal(show) {
+      this.showEditStockModal = show;
     }
   }
 };

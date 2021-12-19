@@ -2,7 +2,7 @@
   <div>
     <div v-if="showDialog" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
       <div class="relative w-auto my-6 mx-auto max-w-6xl">
-        <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-gray-600 text-purple-50 outline-none focus:outline-none">
+        <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-blue-900 text-purple-50 outline-none focus:outline-none">
           <div class="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t">
             <h3 class="text-3xl font-semibold">Add Stock</h3>
           </div>
@@ -12,7 +12,7 @@
                   <div class="border focus-within:border-blue-500 focus-within:text-blue-500 transition-all duration-500 relative rounded p-1">
                       <div class="-mt-4 absolute tracking-wider px-1 uppercase text-xs">
                         <p>
-                          <label for="symbol" class="bg-white text-blue-600 px-1">Symbol</label>
+                          <label for="symbol" class="bg-blue-900 text-white px-1">Symbol</label>
                         </p>
                       </div>
                       <p>
@@ -22,7 +22,7 @@
                   <div class="border focus-within:border-blue-500 focus-within:text-blue-500 transition-all duration-500 relative rounded p-1">
                       <div class="-mt-4 absolute tracking-wider px-1 uppercase text-xs">
                         <p>
-                          <label for="stockName" class="bg-white text-blue-600 px-1">Stock name</label>
+                          <label for="stockName" class="bg-blue-900 text-white px-1">Company name</label>
                         </p>
                       </div>
                       <p>
@@ -32,7 +32,7 @@
                   <div class="border focus-within:border-blue-500 focus-within:text-blue-500 transition-all duration-500 relative rounded p-1">
                       <div class="-mt-4 absolute tracking-wider px-1 uppercase text-xs">
                         <p>
-                          <label for="entryPrice" class="bg-white text-blue-600 px-1">Entry price</label>
+                          <label for="entryPrice" class="bg-blue-900 text-white px-1">Entry price</label>
                         </p>
                       </div>
                       <p>
@@ -42,7 +42,7 @@
                   <div class="border focus-within:border-blue-500 focus-within:text-blue-500 transition-all duration-500 relative rounded p-1">
                       <div class="-mt-4 absolute tracking-wider px-1 uppercase text-xs">
                         <p>
-                          <label for="quantity" class="bg-white text-blue-600 px-1">Quantity</label>
+                          <label for="quantity" class="bg-blue-900 text-white px-1">Quantity</label>
                         </p>
                       </div>
                       <p>
@@ -52,7 +52,7 @@
                   <div class="border focus-within:border-blue-500 focus-within:text-blue-500 transition-all duration-500 relative rounded p-1">
                       <div class="-mt-4 absolute tracking-wider px-1 uppercase text-xs">
                         <p>
-                          <label for="currency" class="bg-white text-blue-600 px-1">Currency</label>
+                          <label for="currency" class="bg-blue-900 text-white px-1">Currency</label>
                         </p>
                       </div>
                       <p>
@@ -68,10 +68,10 @@
                       </span>
                     </label>
                   </div>
-                  <div class="focus-within:border-blue-500 focus-within:text-blue-500 transition-all duration-500 relative rounded p-1">
+                  <div class="border focus-within:border-blue-500 focus-within:text-blue-500 transition-all duration-500 relative rounded p-1">
                     <div class="-mt-4 absolute tracking-wider px-1 uppercase text-xs">
                       <p>
-                        <label for="countryCode" class="bg-white text-blue-600 px-1">Country</label>
+                        <label for="countryCode" class="bg-blue-900 text-white px-1">Country</label>
                       </p>
                     </div>
                     <p>
@@ -115,7 +115,7 @@
             <button @click="addStock()" class="px-4 mr-2 bg-transparent text-white px-4 py-2 border rounded-md hover:bg-indigo hover:border-indigo-500 hover:text-indigo">
               Add
             </button>
-            <button @click="closeModal()" class="px-4 bg-indigo-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
+            <button @click="closeModal()" class="px-4 bg-red-500 text-white px-4 py-2 border rounded-md hover:bg-blue-500 hover:border-blue-800 hover:text-black">
               Close
             </button>
           </div>
@@ -136,7 +136,7 @@ import {
 library.add(faEye);
 
 export default {
-  name: "StockAddModal",
+  name: "AddStockModal",
   props: {
     showDialog: {
       type: Boolean,
@@ -191,14 +191,14 @@ export default {
           user: this.$cookies.get("credentials")
         }).then((res) => {
             this.closeModal();
-            console.log(res.status);
+            console.debug(res.status);
         }).catch((error) => {
-            console.log(error);
+            console.error(error);
         });
       },
-      closeModal() {
+      closeModal () {
         this.showDialog = false;
-        this.$emit("addChartModalToDashMessage", this.showDialog);
+        this.$emit("messageFromAddChartModalToDash", this.showDialog);
       },
       addTag () {
         this.textInput = this.textInput.trim();
