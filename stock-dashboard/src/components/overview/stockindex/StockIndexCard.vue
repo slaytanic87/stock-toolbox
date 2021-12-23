@@ -85,7 +85,7 @@ export default {
       }).then((response) => {
         this.dataCube = this.createDataCube(response.data.chartData);
       }).catch((err) => {
-        console.log(err);
+        console.error(err);
       });
     },
     createDataCube(chartData) {

@@ -1,5 +1,5 @@
 
-export function roundDigits(number, decimalPlaces) {
+export function roundDigits (number, decimalPlaces) {
     const factorOfTen = Math.pow(10, decimalPlaces);
     return Math.round(number * factorOfTen) / factorOfTen;
 }
@@ -7,7 +7,7 @@ export function roundDigits(number, decimalPlaces) {
 /**
  * @param {Array} watchlist
  */
-export function createWinPieDiagram(watchlist) {
+export function createWinPieDiagram (watchlist) {
     let pieNameLabel = [];
     let pieColors = [];
     let pieWinPercentage = [];
@@ -17,7 +17,6 @@ export function createWinPieDiagram(watchlist) {
 
         if (diffPrice > 0 && !stock.observeOnly) {
             let randomColor = Math.floor(Math.random() * 16777215).toString(16);
-
             pieNameLabel.push(stock.name);
             pieColors.push("#" + randomColor);
             pieWinPercentage.push(diffPrice);
@@ -30,7 +29,7 @@ export function createWinPieDiagram(watchlist) {
     }
 }
 
-export function createWinLostList(watchlist) {
+export function createWinLostList (watchlist) {
     let win = {};
     let lost = {};
     watchlist.forEach(stock => {
@@ -75,7 +74,7 @@ export function createWinLostList(watchlist) {
     }
 }
 
-export function createWinLost(watchlist) {
+export function createWinLost (watchlist) {
     let win = 0;
     let lost = 0;
     let investedCapital = 0;
@@ -98,13 +97,31 @@ export function createWinLost(watchlist) {
     }
 }
 
-export function getCurrencySymbol(currency) {
-    let currencyMap = {
-        EUR: "€",
-        USD: "$"
-    }
-    if (currencyMap[currency]) {
-        return currencyMap[currency];
-    }
-    return currency;
+export function createStatusTreemapDataList (watchlist) {
+    let plus = [
+        ["0", "Plus", -1] // cluster group plus
+    ];
+    let minus = [
+        ["1", "Minus", -1] // cluster group minus
+    ];
+    let counterPlus = 0;
+    let counterMinus = 0;
+    watchlist.forEach(stock => {
+        if (stock.observeOnly) {
+            return;
+        }
+        let diff = (stock.currentPrice * stock.quantity) - (stock.entryPrice * stock.quantity);
+        diff = roundDigits(diff, 2);
+        let entryArray = ["", `${stock.sym} ${diff}`, roundDigits(stock.entryPrice * stock.quantity, 2)];
+        if (diff > 0) {
+            entryArray[0] = `0.${counterPlus}`
+            plus.push(entryArray);
+            counterPlus++;
+            return;
+        }
+        entryArray[0] = `1.${counterMinus}`;
+        minus.push(entryArray);
+        counterMinus++;
+    });
+    return plus.concat(minus);
 }

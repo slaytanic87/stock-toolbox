@@ -169,7 +169,7 @@ export default {
       showChartModal: false,
       showAddStockModal: false,
       showEditStockModal: false
-    };
+    }
   },
   watch: {
     stocks: function (val) {
@@ -217,7 +217,7 @@ export default {
       }).then((res) => {
         self.selectedStock = res.data;
         self.showEditStockModal = true;
-        console.log(res.status);
+        console.debug(res.status);
       }).catch((error) => {
         console.error(error);
       });
@@ -339,13 +339,13 @@ export default {
       };
       return new DataCube(chartViewData);
     },
-    closeChartDialog(show) {
+    closeChartDialog (show) {
       this.showChartModal = show;
     },
-    closeAddStockModal(show) {
+    closeAddStockModal (show) {
       this.showAddStockModal = show;
     },
-    closeEditStockModal(show) {
+    closeEditStockModal (show) {
       this.showEditStockModal = show;
     }
   }

@@ -22,6 +22,7 @@
                       v-bind:indexName="stockindex.name"
                       v-bind:symbol="stockindex.symbol"
                       v-bind:chartData="stockindex.chartDataCube"></stock-index-card>
+    <heatmap-card v-bind:datasets="treemapData"></heatmap-card>
   </div>
 </div>
 </template>
@@ -34,7 +35,9 @@ import DataCard from "./data/DataCard.vue";
 import ProgressionBarCard from "@/components/overview/progression/ProgressionBarCard";
 import LocationCard from "@/components/overview/map/LocationCard";
 import StockIndexCard from "@/components/overview/stockindex/StockIndexCard";
-import { createWinPieDiagram } from "../../libs/utils.js";
+import HeatmapCard from "@/components/overview/treemapchart/HeatmapCard";
+
+import { createWinPieDiagram, createStatusTreemapDataList } from "../../libs/utils.js";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faBinoculars
@@ -50,13 +53,15 @@ export default {
     "datacard": DataCard,
     "progression-bar-card": ProgressionBarCard,
     "location-card": LocationCard,
-    "stock-index-card": StockIndexCard
+    "stock-index-card": StockIndexCard,
+    "heatmap-card": HeatmapCard
   },
   data() {
     return {
       chartData: {},
       watchlist: [],
-      indexList: []
+      indexList: [],
+      treemapData: []
     }
   },
   created() {
@@ -65,16 +70,18 @@ export default {
     this.fetchChartIndices();
   },
   methods: {
-    setChartData(data) {
+    setChartData (data) {
       this.chartData = createWinPieDiagram(data);
+      this.treemapData = createStatusTreemapDataList(data);
+      console.log(this.treemapData);
     },
-    setWatchlistData(watchlistData) {
+    setWatchlistData (watchlistData) {
       this.watchlist = watchlistData;
     },
-    async fetchChartIndices() {
+    async fetchChartIndices () {
       let url = "/indexlist";
       if (process.env.NODE_ENV === "development") {
-        url = "http://localhost:9090/indexlist";
+        url = `http://localhost:9090${url}`;
       }
       let user = this.$cookies.get("credentials");
       axios.post(url, user).then((res) => {
@@ -91,7 +98,7 @@ export default {
         console.error(error);
       });
     },
-    createDataCube(chartData) {
+    createDataCube (chartData) {
       let chartViewData = {
         chart: {
           type: "Candles",
