@@ -23,8 +23,8 @@ export default {
   data () {
     return {
       defaultCountryFillColor: '#01013c',
-      highColor: 'blue',
-      lowColor: 'red',
+      highColor: 'red',
+      lowColor: 'blue',
       countryStrokeColor: 'green'
     }
   }

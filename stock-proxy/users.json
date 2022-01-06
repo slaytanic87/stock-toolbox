@@ -2,6 +2,8 @@
     {
         "username": "testuser@test.de",
         "password": "652c7dc687d98c9889304ed2e408c74b611e86a40caa51c4b43f1dd5913c5cd0",
+        "firstName": "Demo",
+        "name": "User",
         "watchList": [
             {
                 "name": "TL0.DE",
@@ -145,32 +147,6 @@
             {
                 "name": "Börsennews.de",
                 "renderingType": "server",
-                "category": "TopNews",
-                "url": "https://www.boersennews.de/nachrichten/top-news/",
-                "baseUrl": "https://www.boersennews.de",
-                "query": "div[class=row] div > a",
-                "row": {
-                    "title": {
-                        "query": "h4"
-                    },
-                    "main": {
-                        "query": "p"
-                    },
-                    "link": {
-                        "query": "",
-                        "baseUrl": "https://www.boersennews.de",
-                        "attr": "href"
-                    },
-                    "image": {
-                        "query": "p > img",
-                        "baseUrl": "",
-                        "attr": "data-src"
-                    }
-                }
-            },
-            {
-                "name": "Börsennews.de",
-                "renderingType": "server",
                 "category": "Exclusive",
                 "url": "https://www.boersennews.de/nachrichten/id/183/",
                 "baseUrl": "https://www.boersennews.de",
@@ -191,6 +167,84 @@
                         "query": "img",
                         "baseUrl": "",
                         "attr": "data-src"
+                    }
+                }
+            },
+            {
+                "name": "finanztrends.de",
+                "renderingType": "server",
+                "category": "News",
+                "url": "https://www.finanztrends.de/thema/news/",
+                "baseUrl": "",
+                "query": "div[class='td_module_16 td_module_wrap td-animation-stack']",
+                "row": {
+                    "title": {
+                        "query": "h3[class='entry-title td-module-title'] > a"
+                    },
+                    "main": {
+                        "query": "div[class=item-details] div[class='td-excerpt']"
+                    },
+                    "link": {
+                        "query": "div[class='td-module-thumb'] > a",
+                        "baseUrl": "",
+                        "attr": "href"
+                    },
+                    "image": {
+                        "query": "div[class='td-module-thumb'] > a > img",
+                        "baseUrl": "",
+                        "attr": "data-src"
+                    }
+                }
+            },
+            {
+                "name": "tagesschau.de",
+                "renderingType": "server",
+                "category": "Marktberichte (aktuell)",
+                "url": "https://www.tagesschau.de/wirtschaft/finanzen/marktberichte/",
+                "baseUrl": "",
+                "query": "div[class='teaser teaser--top']",
+                "row": {
+                    "title": {
+                        "query": "h3[class='teaser__headline-wrapper'] span[class='teaser__headline']"
+                    },
+                    "main": {
+                        "query": "div[class='teaser__teaserinfo'] > p"
+                    },
+                    "link": {
+                        "query": "a",
+                        "baseUrl": "",
+                        "attr": "href"
+                    },
+                    "image": {
+                        "query": "",
+                        "baseUrl": "",
+                        "attr": ""
+                    }
+                }
+            },
+            {
+                "name": "tagesschau.de",
+                "renderingType": "server",
+                "category": "Marktberichte (Vergangen)",
+                "url": "https://www.tagesschau.de/wirtschaft/finanzen/marktberichte/",
+                "baseUrl": "",
+                "query": "div[class='teaser teaser--small  ']",
+                "row": {
+                    "title": {
+                        "query": "h3[class='teaser__headline-wrapper'] span[class='teaser__headline']"
+                    },
+                    "main": {
+                        "query": "div[class='teaser__teaserinfo'] > p"
+                    },
+                    "link": {
+                        "query": "a",
+                        "baseUrl": "",
+                        "attr": "href"
+                    },
+                    "image": {
+                        "query": "",
+                        "baseUrl": "",
+                        "attr": ""
                     }
                 }
             },
@@ -236,9 +290,12 @@
     },
     {
         "username": "testuser2",
+        "firstName": "Demo",
+        "name": "User",
         "password": "77146644c17e93418c0aef1046d158eda3b41b238db9c651c9551fd664d151de",
         "watchList": [],
         "newsScraperRules": [],
-        "indexList": []
+        "indexList": [],
+        "calendarScraperRules": []
     }
 ]

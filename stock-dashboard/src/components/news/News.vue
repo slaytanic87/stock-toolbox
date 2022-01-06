@@ -1,5 +1,10 @@
 <template>
   <div class="container w-full mx-auto pt-20">
+    <div>
+      <button class="ml-8">
+        <font-awesome-icon :icon="['fa', 'cogs']" class="fa-fw mr-3"/>
+      </button>
+    </div>
     <loading-splash v-if="newsListModel.length === 0"></loading-splash>
     <div class="flex flex-col lg:grid lg:gap-4 2xl:gap-6 lg:grid-cols-4 2xl:row-span-2 2xl:pb-8 ml-2 pt-4 px-6">
       <article-card v-for="card in newsListModel" :key="card.index" :class="card.cardStyle"
@@ -10,7 +15,6 @@
                     v-bind:propTitle="card.title"
                     v-bind:propMain="card.main"
                     v-bind:propImage="card.image"></article-card>
-
     </div>
     <div class="flex flex-col items-center my-12">
       <div class="flex text-gray-200">
@@ -20,12 +24,13 @@
           </svg>
         </div>
         <div class="flex h-12 font-medium rounded-full bg-gray-700">
-          <div @click="setNewsChunk(p - 1)"
-               class="w-12 md:flex justify-center items-center hidden cursor-pointer leading-5 transition duration-150 ease-in rounded-full"
-               v-for="p in pages" :key="p">
-            <div v-if="(p - 1) === currentPage" class="text-red-500">{{p}}</div>
-            <div v-else>{{p}}</div>
-          </div>
+        </div>
+        <div v-for="p in pages" :key="p"
+             @click="setNewsChunk(p - 1)"
+             class="w-12 md:flex justify-center items-center hidden cursor-pointer leading-5 transition duration-150 ease-in rounded-full"
+        >
+          <div v-if="(p - 1) === currentPage" class="text-red-500">{{p}}</div>
+          <div v-else>{{p}}</div>
         </div>
         <div @click="switchPage(1)" class="h-12 w-12 ml-1 flex justify-center items-center rounded-full bg-blue-700 cursor-pointer">
           <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right w-6 h-6">
@@ -38,9 +43,15 @@
 </template>
 
 <script>
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+  faCogs
+} from "@fortawesome/free-solid-svg-icons";
 import ArticleCard from "@/components/news/ArticleCard.vue";
 import LoadingSplash from "@/components/LoadingSplash";
 import axios from "axios";
+
+library.add(faCogs);
 
 export default {
   name: "News",

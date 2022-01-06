@@ -9,7 +9,7 @@ function getRedditSubmission(tags) {
             let myUrl = urlBuilder
                 .subreddit(tag)
                 .fields(["url", "author", "title", "subreddit", "created_utc", "media"])
-                .before("10d").size(50).build();
+                .after("5d").size(50).build();
             promises.push(bigdata.getSubmission(myUrl));
         });
         Promise.allSettled(promises).then((results) => {

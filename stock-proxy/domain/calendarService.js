@@ -1,7 +1,7 @@
-const boersenNews = require("../adapter/boersennews");
+const calendar = require("../adapter/boersennews");
 
 function getCalendar() {
-    return boersenNews.fetchCalendar();
+    return calendar.fetchCalendar();
 }
 
 module.exports = {

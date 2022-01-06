@@ -45,6 +45,9 @@
             <input v-model="password" class="block w-full p-4 text-lg rounded-sm bg-black" type="password" name="password" id="password" placeholder="Password">
           </div>
           <div class="text-right text-gray-400 hover:underline hover:text-gray-100">
+            <a href="#" @click="openSignUpPage()">Sign Up</a>
+          </div>
+          <div class="text-right text-gray-400 hover:underline hover:text-gray-100">
             <a href="#">Forgot your password?</a>
           </div>
           <div class="px-4 pb-2 pt-4">
@@ -122,6 +125,9 @@ export default {
       }).catch((err) => {
         console.error(err);
       });
+    },
+    openSignUpPage () {
+      this.changeView("SignUpPage");
     }
   }
 }

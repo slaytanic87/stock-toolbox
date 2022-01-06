@@ -14,7 +14,7 @@
         “ {{propMain}} ”
       </p>
       <div class="mb-3 relative">
-        <a v-if="propLink" :href="propLink" class="no-underline hover:underline 2xl:pb-8 2xl:pl-3 lg:pl-8 2xl:mx-9 mb-3">Link</a>
+        <a v-if="propLink" :href="propLink" target="_blank" rel="noopener noreferrer" class="no-underline hover:underline 2xl:pb-8 2xl:pl-3 lg:pl-8 2xl:mx-9 mb-3">Link</a>
       </div>
     </div>
 
@@ -32,7 +32,7 @@
         “ {{propMain}} ”
       </p>
       <div class="mb-3 mt-3">
-        <a v-if="propLink" :href="propLink" class="no-underline hover:underline pl-3 2xl:mx-5">Link</a>
+        <a v-if="propLink" :href="propLink" target="_blank" rel="noopener noreferrer" class="no-underline hover:underline pl-3 2xl:mx-5">Link</a>
       </div>
     </div>
 
@@ -50,7 +50,7 @@
           “ {{propMain}} ”
       </p>
       <div class="mt-3">
-        <a v-if="propLink" :href="propLink" class="no-underline hover:underline 2xl:px-3 mb-3 2xl:pb-8">Link</a>
+        <a v-if="propLink" :href="propLink" target="_blank" rel="noopener noreferrer" class="no-underline hover:underline 2xl:px-3 mb-3 2xl:pb-8">Link</a>
       </div>
     </div>
 
@@ -68,7 +68,7 @@
         “ {{propMain}} ”
       </p>
       <div class="mb-3">
-      <a v-if="propLink" :href="propLink" class="no-underline hover:underline mb-2 2xl:pb-8 2xl:mx-3">Link</a>
+      <a v-if="propLink" :href="propLink" target="_blank" rel="noopener noreferrer" class="no-underline hover:underline mb-2 2xl:pb-8 2xl:mx-3">Link</a>
       </div>
     </div>
 
@@ -86,7 +86,7 @@
         “ {{propMain}} ”
       </p>
       <div class="mb-4 mt-3">
-        <a v-if="propLink" :href="propLink" class="no-underline hover:underline mb-3 lg:pl-3 2xl:pl-1 2xl:pb-8 2xl:mx-3">Link</a>
+        <a v-if="propLink" :href="propLink" target="_blank" rel="noopener noreferrer" class="no-underline hover:underline mb-3 lg:pl-3 2xl:pl-1 2xl:pb-8 2xl:mx-3">Link</a>
       </div>
     </div>
   </div>

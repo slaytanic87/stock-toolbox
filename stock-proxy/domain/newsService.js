@@ -1,4 +1,4 @@
-const scraper = require("../lib/scraper.js");
+const articleScraper = require("../lib/articleScraper.js");
 const accountService = require("./accountService.js");
 
 function fetchNews(user) {
@@ -8,10 +8,10 @@ function fetchNews(user) {
         let parsed = [];
         userEntity.newsScraperRules.forEach((article) => {
             if (article.renderingType === "client".toLowerCase()) {
-                promises.push(scraper.scrapeCSR(article));
+                promises.push(articleScraper.scrapeCSR(article));
                 return;
             }
-            promises.push(scraper.scrapeSSR(article));
+            promises.push(articleScraper.scrapeSSR(article));
         });
 
         Promise.allSettled(promises).then((results) => {

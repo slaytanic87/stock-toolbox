@@ -1,7 +1,9 @@
 const yahoo = require("../adapter/yahoo");
+const alphavantage = require("../adapter/alphavantage");
+const tokenService = require("./apiTokenService.js");
 
 /**
- * Simple Moving Average
+ * Simple Moving Average.
  * @param timestamps []
  * @param close []
  * @param lastPeriodDays number of days
@@ -27,7 +29,7 @@ function calcSMA(timestamps, close, lastPeriodDays) {
 }
 
 /**
- * Exponential moving average
+ * Exponential moving average.
  * @param timestamp []
  * @param close []
  * @param lastPeriodDays number of days
@@ -58,13 +60,13 @@ function calcEMA(timestamp, close, lastPeriodDays) {
 }
 
 /**
- * Moving average convergence divergence
+ * Moving average convergence divergence.
  * @param timestamp []
  * @param close []
  * @param shortPeriod number of days
  * @param longPeriod number of days
  * @param signalPeriod number of days
- * @returns {[]}
+ * @returns {[]} [[timestamp, macd, signal]]
  */
 function calcMACD(timestamp, close, shortPeriod, longPeriod, signalPeriod) {
     let emaShortTerm = calcEMA(timestamp, close, shortPeriod);
@@ -250,24 +252,46 @@ function getWatchItem(observedStock, range) {
 }
 
 /**
+ * Stock data from yahoo.
  * @param sym stock symbol
  * @param range time range
  * @returns {Promise<unknown>}
  */
-function getStockData(sym, range) {
+function getStockDataYahoo(sym, range) {
     return new Promise((resolve, reject) => {
-        yahoo.fetchStockData(sym, range).then((response)=> {
+        yahoo.fetchStockData(sym, range).then((response) => {
             let responseData = yahoo.mapStockData(response.data);
-            let watchItem = createChartDataResponse(responseData);
-            resolve(watchItem);
+            let chartDataMapped = createChartDataResponse(responseData);
+            resolve(chartDataMapped);
         }).catch((err) => {
             console.error(err);
             reject(err);
         });
-    })
+    });
+}
+
+/**
+ * Stock data from ALPHA VANTAGE
+ * @param sym
+ * @param interval
+ * @param functionType
+ * @returns {Promise<unknown>}
+ */
+function getStockDataAlphaVantage(sym, interval, functionType) {
+    return new Promise((resolve, reject) => {
+        alphavantage.fetchStockTimeSeries(functionType, sym, interval, tokenService.getAlphavantageToken()).then((response) => {
+            let responseData = alphavantage.mapStockData(response.data);
+            let chartDataMapped = createChartDataResponse(responseData);
+            resolve(chartDataMapped);
+        }).catch((err) => {
+            console.error(err);
+            reject(err);
+        });
+    });
 }
 
 module.exports = {
-    getStockData,
+    getStockDataYahoo,
+    getStockDataAlphaVantage,
     getWatchItem
 }

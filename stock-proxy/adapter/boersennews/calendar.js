@@ -32,7 +32,7 @@ function fetchCalendar() {
             });
             resolve(calendarArr);
         }).catch((err) => {
-            console.log(err);
+            console.error(err);
             rejected(err);
         });
     })

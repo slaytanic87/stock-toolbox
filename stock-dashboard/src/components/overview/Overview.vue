@@ -40,10 +40,11 @@ import HeatmapCard from "@/components/overview/treemapchart/HeatmapCard";
 import { createWinPieDiagram, createStatusTreemapDataList } from "../../libs/utils.js";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
-  faBinoculars
+  faBinoculars,
+  faSignal
 } from "@fortawesome/free-solid-svg-icons";
 import { DataCube } from "trading-vue-js";
-library.add(faBinoculars);
+library.add(faBinoculars, faSignal);
 
 export default {
   name: "App",
@@ -73,7 +74,6 @@ export default {
     setChartData (data) {
       this.chartData = createWinPieDiagram(data);
       this.treemapData = createStatusTreemapDataList(data);
-      console.log(this.treemapData);
     },
     setWatchlistData (watchlistData) {
       this.watchlist = watchlistData;

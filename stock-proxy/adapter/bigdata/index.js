@@ -15,7 +15,7 @@ function getSubmission(url) {
                 let responseJson = response.data;
                 resolve(responseJson);
             }).catch((ex) => {
-                console.log("url "+ url + ": " +ex.message);
+                console.error("url "+ url + ": " + ex.message);
                 reject(ex);
             })
         }, randomTimeout);

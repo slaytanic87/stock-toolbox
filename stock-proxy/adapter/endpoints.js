@@ -9,6 +9,7 @@ const newsService = require("../domain/newsService.js");
 const stockDataService = require("../domain/stockDataService.js");
 const accountService = require("../domain/accountService.js");
 const quoteService = require("../domain/quoteService.js");
+const renderingService = require("../domain/renderingService.js");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -16,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 const UNAUTHORIZED = 401;
 const INTERNAL_ERROR = 500;
 
-// TODO implement & replace with real account
+// TODO remove
 let user = {
     username: "testuser@test.de",
     password: "652c7dc687d98c9889304ed2e408c74b611e86a40caa51c4b43f1dd5913c5cd0" // mysecret
@@ -36,7 +37,7 @@ app.post("/indexlist", (req, res) => {
         res.json(result);
         res.end();
     }).catch((err) => {
-        console.log(err);
+        console.error(err);
         res.error();
     });
 })
@@ -73,13 +74,26 @@ app.post("/marketIndex", (req, res) => {
 app.post("/stock", (req, res) => {
     let range = req.body.range;
     let sym = req.body.sym;
-    stockDataService.getStockData(sym, range).then((result) => {
+    stockDataService.getStockDataYahoo(sym, range).then((result) => {
         res.json(result);
         res.end();
     }).catch((err) => {
         console.error(err);
-        res.error();
-    })
+        res.sendStatus(INTERNAL_ERROR);
+    });
+})
+
+app.post("/alphavantage/stock", (req, res) => {
+    let sym = req.body.sym;
+    let interval = req.body.interval;
+    let functionType = req.body.functionType;
+    stockDataService.getStockDataAlphaVantage(sym, interval, functionType).then((result) => {
+        res.json(result);
+        res.end();
+    }).catch((err) => {
+        console.error(err);
+        res.sendStatus(INTERNAL_ERROR);
+    });
 })
 
 app.post("/addStock", (req, res) => {
@@ -87,6 +101,7 @@ app.post("/addStock", (req, res) => {
     try {
         watchListService.insertStock(postData.stock, postData.user);
     } catch (e) {
+        console.error(e);
         res.sendStatus(INTERNAL_ERROR);
     }
     res.end();
@@ -124,23 +139,6 @@ app.get("/calendar", (req, res) => {
     })
 })
 
-//TODO remove?
-app.get("/social", (req, res) => {
-    let social = [];
-    social.push({
-        author: "MC Magga",
-        username: "@mcmagga",
-        date: new Date().toLocaleDateString(),
-        content: "Hello traders!!!",
-        url: "https://pbs.twimg.com/media/D3h0Ot3U0AAoX7j?format=jpg&name=large",
-        numberOfComments: 0,
-        numberOfSharing: 0,
-        numberOfLikes: 0
-    });
-    res.json(social);
-    res.end();
-})
-
 app.post("/reddit", (req, res) => {
     let tags = req.body;
     socialMediaService.getRedditSubmission(tags).then((events) => {
@@ -154,9 +152,14 @@ app.post("/reddit", (req, res) => {
 
 app.post("/user/create", (req, res) => {
     let user = req.body;
-    let userEntity = accountService.addUser(user.username, user.password);
-    res.json(userEntity);
-    res.end();
+    try {
+        let userEntity = accountService.addUser(user.username, user.password, user.firstName, user.name);
+        res.json(userEntity);
+        res.end();
+    } catch (e) {
+        console.error(e);
+        res.sendStatus(UNAUTHORIZED);
+    }
 })
 
 app.post("/user/info", (req, res) => {
@@ -172,7 +175,7 @@ app.post("/user/authenticate", (req, res) => {
         let authenticatedUserEntity = accountService.authenticate(user.username, user.password)
         res.json(authenticatedUserEntity);
     } catch (e) {
-        console.debug(e);
+        console.error(e);
         res.sendStatus(UNAUTHORIZED);
     }
     res.end();
@@ -184,7 +187,7 @@ app.post("/watchedStock", (req, res) => {
         let stock = accountService.getObservedStock(requestObj.user.username, requestObj.user.password, requestObj.symbol);
         res.json(stock);
     } catch (e) {
-        console.debug(e)
+        console.error(e);
         res.sendStatus(UNAUTHORIZED);
     }
     res.end();
@@ -195,7 +198,7 @@ app.post("/updateWatchedStock", (req, res) => {
     try {
         accountService.updateObservedStock(requestObj.user.username, requestObj.user.password, requestObj.stock);
     } catch (e) {
-        console.debug(e);
+        console.error(e);
         res.sendStatus(UNAUTHORIZED);
     }
     res.end();
@@ -207,7 +210,7 @@ app.post("/user/password/change", (req, res) => {
         let changedUser = accountService.changePassword(userData.user, userData.newPassword);
         res.json(changedUser)
     } catch (e) {
-        console.debug(e);
+        console.error(e);
         res.sendStatus(UNAUTHORIZED);
     }
 })
@@ -216,6 +219,17 @@ app.get("/quote", (req, res) => {
     let quote = quoteService.getRandomQuote()
     res.json(quote);
     res.end();
+})
+
+app.post("/render", (req, res) => {
+    let url = req.body.url;
+    renderingService.renderPageAsImage(url).then((based64ScreenShot) => {
+        res.send(based64ScreenShot);
+        res.end();
+    }).catch((err) => {
+        console.error(err);
+        res.error();
+    });
 })
 
 module.exports = {

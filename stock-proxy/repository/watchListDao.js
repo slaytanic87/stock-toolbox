@@ -13,7 +13,7 @@ function saveWatchList(user, watchList) {
 function addStock(user, watchStock) {
     let userEntity = userDao.getUser(user.username);
     if (userEntity === null) {
-        throw `user ${user.name} does not exists`;
+        throw Error(`user ${user.name} does not exists`);
     }
     userEntity.watchList.push(watchStock);
     userDao.updateUserAccount(userEntity);

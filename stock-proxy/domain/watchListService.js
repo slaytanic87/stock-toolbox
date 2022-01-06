@@ -1,5 +1,5 @@
 const stockDataService = require("./stockDataService.js");
-const watchListDao = require("../adapter/repository/watchListDao.js");
+const watchListDao = require("../repository/watchListDao.js");
 const accountService = require("./accountService.js");
 
 

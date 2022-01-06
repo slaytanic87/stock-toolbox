@@ -292,12 +292,12 @@ export default {
       let chartViewData = {
         chart: {
           type: "Candles",
-          data: chartData.chart, // [timestamp, open, high, low, close, volume]
+          data: chartData.chart, // [[timestamp, open, high, low, close, volume]]
         },
         onchart: [{
           name: "SMA, 100",
           type: "PlotOverlay",
-          data: chartData.sma100, // [timestamp, adjclose]
+          data: chartData.sma100, // [[timestamp, adjclose]]
           settings: {
             upper: 70,
             lower: 30,
@@ -329,7 +329,7 @@ export default {
           {
             name: "MACD Signal, 12/26/9",
             type: "Splines",
-            data: chartData.macd,
+            data: chartData.macd, // [[timestamp, macd, signal]]
             settings: {
               upper: 70,
               lower: 30

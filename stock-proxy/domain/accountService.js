@@ -1,4 +1,4 @@
-const userDao = require("../adapter/repository/userDao.js");
+const userDao = require("../repository/userDao.js");
 
 function getCrypto() {
     let crypto;
@@ -15,14 +15,12 @@ function getHashedPassword(password) {
     return getCrypto().createHash("sha256").update(password).digest("hex");
 }
 
-function addUser(username, password) {
+function addUser(username, password, firstName, name) {
     try {
         const hashedPassword = getHashedPassword(password);
-        return userDao.createUser(username, hashedPassword);
+        return userDao.createUser(username, hashedPassword, firstName, name);
     } catch (exception) {
-        return {
-            error: exception
-        }
+        throw exception;
     }
 }
 

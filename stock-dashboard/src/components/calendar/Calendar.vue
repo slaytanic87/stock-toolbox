@@ -45,20 +45,10 @@ export default {
       this.calendar = [];
       let url = "/calendar";
       if (process.env.NODE_ENV === "development") {
-        url = "http://localhost:9090/calendar";
+        url = `http://localhost:9090${url}`;
       }
       axios.get(url).then((resp)=> {
-        let dataArr = resp.data;
-        dataArr.forEach( (elem) => {
-          let dayArr = elem.day.split(".");
-          let currentYear = new Date().getFullYear();
-          let currentMonth = new Date().getMonth() + 1;
-          if (currentYear === parseInt("20" + dayArr[2]) &&
-              currentMonth <= parseInt(dayArr[1])) {
-            this.calendar.push(elem);
-          }
-
-        });
+        this.calendar = resp.data;
       });
     }
   }

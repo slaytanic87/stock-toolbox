@@ -12,13 +12,13 @@ const indices = require("./indices.js");
  */
 function fetchStockData(symbol, range, interval = "1d", lang = "de-DE", region = "DE") {
     let baseUrl = "https://query1.finance.yahoo.com/v8/finance/chart/";
-    let path = `?formatted=true
-                &lang=${lang}
-                &region=${region}
-                &includeAdjustedClose=true
-                &interval=${interval}
-                &range=${range}
-                &corsDomain=de.finance.yahoo.com`;
+    let path = `?formatted=true` +
+                `&lang=${lang}`+
+                `&region=${region}` +
+                `&includeAdjustedClose=true` +
+                `&interval=${interval}` +
+                `&range=${range}` +
+                `&corsDomain=de.finance.yahoo.com`;
 
     return axios.get(baseUrl + symbol + path,{ headers: {}});
 }
@@ -32,11 +32,11 @@ function fetchStockData(symbol, range, interval = "1d", lang = "de-DE", region =
  */
 function fetchFinancials(symbol, lang = "en-US", region = "US") {
     let baseUrl = "https://query2.finance.yahoo.com/v10/finance/quoteSummary/";
-    let path = `?formatted=true
-                &lang=${lang}
-                &region=${region}
-                &modules=incomeStatementHistory,cashflowStatementHistory,balanceSheetHistory,incomeStatementHistoryQuarterly,cashflowStatementHistoryQuarterly,balanceSheetHistoryQuarterly,earnings
-                &corsDomain=finance.yahoo.com`
+    let path = `?formatted=true` +
+                `&lang=${lang}` +
+                `&region=${region}` +
+                `&modules=incomeStatementHistory,cashflowStatementHistory,balanceSheetHistory,incomeStatementHistoryQuarterly,cashflowStatementHistoryQuarterly,balanceSheetHistoryQuarterly,earnings` +
+                `&corsDomain=finance.yahoo.com`
     return axios.get(baseUrl + symbol + path);
 }
 

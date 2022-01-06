@@ -26,8 +26,10 @@
         <div class="w-full">
           <p class="my-1">{{event.content}}</p>
 
+          <p><a :href="event.url" target="_blank" rel="noopener noreferrer">Link</a></p>
+
           <div class="rounded-lg">
-            <link-prevue :url="event.url"/>
+            <img :src="imageSource" style="max-width: 60%;"/>
           </div>
 
           <div class="flex items-center justify-start py-2">
@@ -67,16 +69,45 @@
 </template>
 
 <script>
-import LinkPrevue from "link-prevue";
+
+import axios from "axios";
 
 export default {
   name: "Article",
   components: {
-    "link-prevue": LinkPrevue
   },
   props: {
     event: {
       required: true
+    }
+  },
+  data () {
+    return {
+      imageSource: "",
+      imageTypes: [".jpg", ".png", ".jpeg", ".tiff", ".gif", ".tiff"]
+    }
+  },
+  mounted () {
+    let url = this.imageTypes.find((value) => this.event.url.toLowerCase().endsWith(value))
+    if (url === undefined) {
+      this.fetchRenderedHtml(this.event.url);
+    } else {
+      this.imageSource = this.event.url;
+    }
+  },
+  methods: {
+    fetchRenderedHtml (urlToBeFetch) {
+      let url = "/render";
+      if (process.env.NODE_ENV === "development") {
+        url = `http://localhost:9090${url}`;
+      }
+      axios.post(url, {
+        url: urlToBeFetch
+      }).then((res) => {
+        this.imageSource = res.data;
+      }).catch((error) => {
+        console.error(error);
+      });
     }
   }
 }

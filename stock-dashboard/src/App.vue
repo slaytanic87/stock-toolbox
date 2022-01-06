@@ -7,11 +7,13 @@
 <script>
 import LoginPage from "@/components/LoginPage";
 import MainPage from "@/components/MainPage";
+import SignUpPage from "@/components/SignUpPage";
 export default {
   name: "App",
   components: {
     LoginPage,
-    MainPage
+    MainPage,
+    SignUpPage
   },
   data() {
     return {

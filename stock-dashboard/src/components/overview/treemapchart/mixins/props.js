@@ -42,22 +42,22 @@ export default {
         paddingTop: {
             type: Number,
             required: false,
-            default: 50
+            default: 0
         },
         paddingRight: {
             type: Number,
             required: false,
-            default: 50
+            default: 0
         },
         paddingBottom: {
             type: Number,
             required: false,
-            default: 50
+            default: 0
         },
         paddingLeft: {
             type: Number,
             required: false,
-            default: 50
+            default: 0
         },
         focusStart: {
             type: Number,

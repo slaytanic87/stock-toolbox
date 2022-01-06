@@ -33,7 +33,7 @@
         <div class="flex flex-col bg-gray-800 max-w-sm px-4 py-4 mx-auto rounded-lg shadow-md">
           <ul class="-mx-4">
             <li v-for="(user, index) in authors" v-bind:key="index" class="flex items-center mt-6">
-              <img src="../../assets/reddit_profil.png" alt="avatar" class="w-10 h-10 object-cover rounded-full mx-4">
+              <img :src="getRedditImage()" alt="avatar" class="w-10 h-10 object-cover rounded-full mx-4">
               <p>
                 <a class="font-bold mx-1 hover:underline">{{user.author}}</a>
                 <span class="text-gray-400 md:block sm:block lg:inline-block text-sm text-xs font-light">Created {{user.posts}} Posts</span>
@@ -69,7 +69,16 @@ export default {
     return {
       events: [],
       options: ["Reddit"],
-      authors: []
+      authors: [],
+      profileRedditAvatar: [
+          require("../../assets/reddit/reddit_diamond_hands.png"),
+          require("../../assets/reddit/reddit_bowen_music.png"),
+          require("../../assets/reddit/reddit_draonix.png"),
+          require("../../assets/reddit/reddit_profil.png"),
+          require("../../assets/reddit/reddit_afro.png"),
+          require("../../assets/reddit/reddit_bunny.png"),
+          require("../../assets/reddit/reddit_frog.png")
+      ]
     }
   },
   watch: {
@@ -101,6 +110,7 @@ export default {
   },
   methods: {
     async fetchEvents (tags) {
+      this.events = [];
       let url = "/reddit";
       if (process.env.NODE_ENV === "development") {
         url = "http://localhost:9090/reddit";
@@ -109,6 +119,10 @@ export default {
         this.events = response.data;
       })
     },
+    getRedditImage() {
+      let index = Math.round(Math.random() * (this.profileRedditAvatar.length - 1))
+      return this.profileRedditAvatar[index];
+    }
   }
 }
 </script>

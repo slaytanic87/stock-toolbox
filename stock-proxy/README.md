@@ -1,5 +1,7 @@
 # stock-proxy
 
+BFF/Gateway for all microservices
+
 ## Project setup
 ```
 npm install

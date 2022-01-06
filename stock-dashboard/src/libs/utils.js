@@ -99,29 +99,32 @@ export function createWinLost (watchlist) {
 
 export function createStatusTreemapDataList (watchlist) {
     let plus = [
-        ["0", "Plus", -1] // cluster group plus
+        ["0", "Positive", -1] // cluster group plus
     ];
     let minus = [
-        ["1", "Minus", -1] // cluster group minus
+        ["1", "Negative", -1] // cluster group minus
     ];
-    let counterPlus = 0;
-    let counterMinus = 0;
+    let plusCounter = 0;
+    let minusCounter = 0;
     watchlist.forEach(stock => {
         if (stock.observeOnly) {
             return;
         }
         let diff = (stock.currentPrice * stock.quantity) - (stock.entryPrice * stock.quantity);
         diff = roundDigits(diff, 2);
-        let entryArray = ["", `${stock.sym} ${diff}`, roundDigits(stock.entryPrice * stock.quantity, 2)];
+        const priceInvestigated = roundDigits(stock.entryPrice * stock.quantity, 2);
+        let entryArray = ["", `${stock.sym} ${priceInvestigated}`, priceInvestigated];
         if (diff > 0) {
-            entryArray[0] = `0.${counterPlus}`
+            entryArray[0] = `0.${plusCounter}`
+            entryArray[1] = entryArray[1] + " ▲"
             plus.push(entryArray);
-            counterPlus++;
+            plusCounter++;
             return;
         }
-        entryArray[0] = `1.${counterMinus}`;
+        entryArray[0] = `1.${minusCounter}`;
+        entryArray[1] = entryArray[1] + " ▼"
         minus.push(entryArray);
-        counterMinus++;
+        minusCounter++;
     });
     return plus.concat(minus);
 }

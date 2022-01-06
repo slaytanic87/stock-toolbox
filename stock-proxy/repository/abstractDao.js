@@ -10,6 +10,7 @@ function save(dbName, data) {
     fs.writeFile(`${path}${dbName}.json`, JSON.stringify(data, null, 4), (error) => {
         if (error) {
             console.error(error);
+            throw Error(error.message)
         }
     });
 }

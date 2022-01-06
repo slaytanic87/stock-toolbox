@@ -4,7 +4,7 @@
       <div class="border-b border-gray-800 p-3">
         <h5 class="font-bold uppercase text-gray-600">
           Heatmap Chart
-          <font-awesome-icon :icon="['fa', 'chart-pie']"/>
+          <font-awesome-icon :icon="['fa', 'signal']"/>
         </h5>
       </div>
       <div class="p-5">
@@ -17,7 +17,7 @@
               :text-vertical-align="'bottom'"
               :colors="['#259c19', '#EC2500']"
               :values="datasets">
-            <note :text="'Stock Heatmap'" :align="'left'"></note>
+            <note :text="''" :align="'left'"></note>
             <tooltip :position="'top'"></tooltip> <!-- TODO not working, need some investigation -->
           </treemap>
         </div>
