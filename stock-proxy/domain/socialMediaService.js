@@ -31,6 +31,8 @@ function getRedditSubmission(tags) {
                 });
             });
             resolve(events);
+        }).catch(ex => {
+            reject(ex);
         });
     });
 }

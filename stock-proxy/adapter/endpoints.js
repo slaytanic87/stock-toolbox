@@ -11,6 +11,9 @@ const accountService = require("../domain/accountService.js");
 const quoteService = require("../domain/quoteService.js");
 const renderingService = require("../domain/renderingService.js");
 
+const path = __dirname + "/../dist/"
+
+app.use(express.static(path));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -23,13 +26,17 @@ let user = {
     password: "652c7dc687d98c9889304ed2e408c74b611e86a40caa51c4b43f1dd5913c5cd0" // mysecret
 }
 
-
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "POST, GET, PUT, PATCH, DELETE, OPTIONS");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
+
+
+app.get("/", (req, res) => {
+  res.sendFile(path + "index.html");
+})
 
 app.post("/indexlist", (req, res) => {
     let userCrendential = req.body;
