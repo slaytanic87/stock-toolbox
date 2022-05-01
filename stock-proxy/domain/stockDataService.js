@@ -244,7 +244,7 @@ function getWatchItem(observedStock, range) {
             let responseData = yahoo.mapStockData(response.data);
             let watchItem = createWatchItem(observedStock, responseData);
             resolve(watchItem);
-        }).catch((err)=> {
+        }).catch((err) => {
             console.error(err);
             reject(err);
         });

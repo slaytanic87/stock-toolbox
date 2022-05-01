@@ -4,7 +4,7 @@
          :style="{'background-image': 'url(' + loginBg + ')'}">
       <div class="absolute bg-black opacity-60 inset-0 z-0"></div>
       <div class="w-full px-24 z-10">
-        <h1 class="text-5xl font-bold text-left tracking-wide">Keep it special</h1>
+        <h1 class="text-5xl font-bold text-left tracking-wide">Message of the day</h1>
         <p class="text-3xl my-4">{{ dailyQuote.quote }}</p>
       </div>
       <div class="bottom-0 absolute p-4 text-center right-0 left-0 flex justify-center space-x-4">
