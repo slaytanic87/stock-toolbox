@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-center pt-10">
+  <div class="flex justify-center pt-10 sign-up">
     <div class="container w-full max-w-lg">
       <div class="pb-5 flex items-center justify-center text-center">
         <img class="h-28 w-auto"
@@ -134,4 +134,8 @@ export default {
 </script>
 
 <style scoped>
+.sign-up {
+  background-color: #005757;
+  height: 100vh;
+}
 </style>

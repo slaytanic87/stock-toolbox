@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import VueWorldMap from "vue-world-map";
+import VueWorldMap from "./lib/VueWorldMap";
 
 export default {
   name: "Map",
