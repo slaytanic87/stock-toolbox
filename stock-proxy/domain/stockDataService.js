@@ -7,7 +7,7 @@ const tokenService = require("./apiTokenService.js");
  * @param timestamps []
  * @param close []
  * @param lastPeriodDays number of days
- * @returns {*[][]|[]}
+ * @returns {*[][]|[]} [[timestamp, sma],..]
  */
 function calcSMA(timestamps, close, lastPeriodDays) {
     let sma = [];

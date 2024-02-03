@@ -110,12 +110,12 @@
         </tr>
       </tbody>
     </table>
-    <stock-chart
+    <stock-chart-kline
         v-bind:showDialog="showChartModal"
         v-bind:stockName="selectedName"
         v-bind:chartData="selectedChart"
         v-on:chartToDashMessage="closeChartDialog">
-    </stock-chart>
+    </stock-chart-kline>
     <stock-add-modal
         v-bind:showDialog="showAddStockModal"
         v-on:messageFromAddChartModalToDash="closeAddStockModal">
@@ -130,11 +130,12 @@
 
 <script>
 import axios from "axios";
-import StockChart from "../chartmodal/StockChart.vue";
+import StockChartKline from "@/components/overview/chartmodal/StockChartKline";
 import AddStockModal from "./AddStockModal.vue";
 import EditStockModal from "@/components/overview/watchlist/EditStockModal";
 import { DataCube } from "trading-vue-js";
 import { library } from "@fortawesome/fontawesome-svg-core";
+import { mapToKlineChartData } from "@/libs/klineChartDataMapper";
 import {
   faEye,
   faMoneyBillAlt,
@@ -153,9 +154,9 @@ export default {
     this.pollingData();
   },
   components: {
-    "stock-chart": StockChart,
     "stock-add-modal": AddStockModal,
-    "stock-edit-modal": EditStockModal
+    "stock-edit-modal": EditStockModal,
+    "stock-chart-kline": StockChartKline
   },
   data() {
     return {
@@ -163,7 +164,7 @@ export default {
       filteredBySearch: [],
       stocks: [],
       interval: null,
-      selectedChart: {},
+      selectedChart: null,
       selectedName: "",
       selectedStock: null,
       showChartModal: false,
@@ -249,7 +250,7 @@ export default {
         sym: chartData.sym,
         range: "3y"
       }).then((response) => {
-          self.selectedChart = self.createDataCube(response.data);
+          self.selectedChart = mapToKlineChartData(response.data.chart); //self.createDataCube(response.data);
           self.selectedName = chartName;
           self.showChartModal = true;
       }).catch((error) => {

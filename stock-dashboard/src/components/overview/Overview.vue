@@ -18,10 +18,11 @@
     <windiagramcard v-bind:propData="chartData"></windiagramcard>
     <progression-bar-card v-bind:propChartData="watchlist"
                           v-bind:propTargetStep="2000"></progression-bar-card>
-    <stock-index-card v-for="stockindex in indexList" :key="stockindex.symbol"
+    <stock-index-card v-for="(stockindex, index) in indexList" :key="stockindex.symbol"
                       v-bind:indexName="stockindex.name"
                       v-bind:symbol="stockindex.symbol"
-                      v-bind:chartData="stockindex.chartDataCube"></stock-index-card>
+                      v-bind:chartData="stockindex.chartData"
+                      v-bind:id="index"></stock-index-card>
     <heatmap-card v-bind:datasets="treemapData"></heatmap-card>
   </div>
 </div>
@@ -91,7 +92,8 @@ export default {
           this.indexList.push({
             symbol: data.symbol,
             name: data.name,
-            chartDataCube: this.createDataCube(data.chartData)
+            chartDataCube: this.createDataCube(data.chartData),
+            chartData: data.chartData.chart
           });
         });
       }).catch((error) => {

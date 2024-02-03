@@ -9,30 +9,27 @@
           </button>
         </h5>
       </div>
-      <div class="p-3">
-        <div class="bg-gray-800" ref="indexCard">
-
-          <trading-vue :title-txt="indexName"
-                       :toolbar="false"
-                       :chart-config="config"
-                       :data="dataCube"
-                       :width="width"
-                       :height="height"></trading-vue>
+      <div class="">
+        <div class="bg-gray-800 k-line-index-chart-container" ref="indexCard">
+          <Layout :title="this.indexName">
+            <div :id="`chart-index-type-k-line-${this.id}`" class="k-line-chart"/>
+            <div class="k-line-chart-menu-container"></div>
+          </Layout>
         </div>
       </div>
     </div>
   </div>
-
 </template>
 
 <script>
 import axios from "axios";
-import { DataCube } from "trading-vue-js";
-import { TradingVue } from "trading-vue-js";
+import { dispose, init } from 'klinecharts';
+import { mapToKlineChartData } from "@/libs/klineChartDataMapper";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faSync
 } from "@fortawesome/free-solid-svg-icons";
+import Layout from "@/components/overview/stockindex/Layout";
 library.add(faSync);
 
 export default {
@@ -43,14 +40,17 @@ export default {
     },
     chartData: {
       required: true,
-      default: {}
+      default: []
     },
     symbol: {
+      required: true
+    },
+    id: {
       required: true
     }
   },
   components: {
-    "trading-vue": TradingVue
+    Layout
   },
   data () {
     return {
@@ -63,8 +63,12 @@ export default {
         GRIDX: 100,
         VOLSCALE: 1.0
       },
-      dataCube: {}
+      dataCube: {},
+      localChartData: [],
     }
+  },
+  destroyed() {
+    dispose(`chart-index-type-k-line-${this.id}`);
   },
   methods: {
     setSize () {
@@ -83,24 +87,43 @@ export default {
       axios.post(url, {
         symbol: this.symbol
       }).then((response) => {
-        this.dataCube = this.createDataCube(response.data.chartData);
+        this.localChartData = mapToKlineChartData(response.data.chartData.chart);
       }).catch((err) => {
         console.error(err);
       });
     },
-    createDataCube(chartData) {
-      let chartViewData = {
-        chart: {
-          type: "Candles",
-          data: chartData.chart, // [timestamp, open, high, low, close, volume]
-        }
-      };
-      return new DataCube(chartViewData);
-    }
   },
   mounted() {
     this.setSize();
-    this.dataCube = this.chartData;
+    this.localChartData = mapToKlineChartData(this.chartData);
+    this.kLineChartIndex = init(`chart-index-type-k-line-${this.id}`,
+        {
+          grid: {
+            horizontal: {
+              show: true,
+              size: 1,
+              color: '#393939',
+              // 'solid'|'dash'
+              style: 'solid',
+            },
+            vertical: {
+              show: true,
+              size: 1,
+              color: '#393939',
+              // 'solid'|'dash'
+              style: 'solid',
+            }
+          },
+          candle: {
+            type: 'candle_solid',
+            tooltip: {
+              showType: 'standard',
+              showRule: 'always',
+              labels: ['T：', 'O：', 'C：', 'H：', 'L：', 'V：']
+            }
+          }
+        });
+    this.kLineChartIndex.applyNewData(this.localChartData);
     window.addEventListener("resize", this.onResize);
   },
   beforeDestroy() {
@@ -110,5 +133,17 @@ export default {
 </script>
 
 <style scoped>
+.k-line-chart {
+  display: flex;
+  flex: 1;
+}
 
+.k-line-index-chart-container {
+  display: flex;
+  margin: 15px;
+  border-radius: 2px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .3);
+  width: 690px;
+  height: 700px;
+}
 </style>
